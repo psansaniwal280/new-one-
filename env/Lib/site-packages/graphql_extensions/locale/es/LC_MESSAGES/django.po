@@ -1,0 +1,40 @@
+# Domake.io i18n
+# Copyright (C) mongkok 2019
+# This file is distributed under the same license as the django-graphql-extensions package.
+# Translators:
+# mongkok <domake.io@gmail.com>, 2019.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Django GraphQL Extensions\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-06-04 11:37+0700\n"
+"POT-Creation-Date: 2021-06-04 11:37+0700\n"
+"Last-Translator: mongkok <domake.io@gmail.com>\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: exceptions.py:5
+msgid "A server error occurred"
+msgstr "Error en el servidor"
+
+#: exceptions.py:22
+msgid "You do not have permission to perform this action"
+msgstr "No tienes permiso para realizar esta operación"
+
+#: exceptions.py:27
+msgid "Invalid input"
+msgstr "Los datos no son correctos"
+
+#: exceptions.py:32
+msgid "GraphQL object not found"
+msgstr "GraphQL objecto no encontrado"
+
+#: views.py:34
+msgid "Internal server error"
+msgstr "Error interno del servidor"

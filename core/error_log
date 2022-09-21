@@ -1,0 +1,938 @@
+[Sun Sep 12 00:33:03.523906 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 46.101.82.40:53678] Not Found: /.env
+[Sun Sep 12 00:33:03.866685 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 46.101.82.40:54486] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 01:46:37.792878 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 192.241.220.21:59818] Not Found: /actuator/health
+[Sun Sep 12 02:43:04.382381 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 135.125.244.48:38522] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 02:43:04.696990 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 135.125.244.48:38790] Not Found: /.env
+[Sun Sep 12 03:11:47.993913 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 196.77.108.57:61162] Not Found: /.env
+[Sun Sep 12 03:11:48.365705 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 196.77.108.57:42931] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 03:26:46.244139 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 192.241.213.168:37374] Not Found: /actuator/health
+[Sun Sep 12 03:31:46.588992 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 46.101.82.40:32938] Not Found: /.env
+[Sun Sep 12 03:31:46.890606 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 46.101.82.40:33782] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 04:20:44.132600 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 35.228.213.137:52435] Not Found: /.env
+[Sun Sep 12 04:20:44.852055 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 35.228.213.137:53711] Forbidden (Referer checking failed - no Referer.): /
+[Sun Sep 12 05:26:31.089434 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 141.98.83.139:60156] Not Found: /owa/auth.owa
+[Sun Sep 12 05:32:39.671254 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 46.101.82.40:49206] Not Found: /.env
+[Sun Sep 12 05:32:39.978646 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 46.101.82.40:50042] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 05:45:22.268980 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 135.125.244.48:59122] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 05:45:22.583391 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 135.125.244.48:59356] Not Found: /.env
+[Sun Sep 12 06:36:25.310040 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 104.207.130.247:58774] Not Found: /.env
+[Sun Sep 12 06:36:25.837899 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 104.207.130.247:58792] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 06:36:27.132423 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 104.207.130.247:58858] Not Found: /.env
+[Sun Sep 12 06:36:27.940066 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 104.207.130.247:58936] Forbidden (Referer checking failed - no Referer.): /
+[Sun Sep 12 07:02:36.193340 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 40.65.99.132:49919] Not Found: /.env
+[Sun Sep 12 07:02:36.359372 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 40.65.99.132:57230] Not Found: /conf/.env
+[Sun Sep 12 07:02:37.855788 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 40.65.99.132:64861] Not Found: /wp-content/.env
+[Sun Sep 12 07:02:37.916107 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 40.65.99.132:59454] Not Found: /wp-admin/.env
+[Sun Sep 12 07:02:39.465260 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 40.65.99.132:60973] Not Found: /library/.env
+[Sun Sep 12 07:02:40.878012 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 40.65.99.132:62756] Not Found: /new/.env
+[Sun Sep 12 07:02:42.423713 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 40.65.99.132:55468] Not Found: /vendor/.env
+[Sun Sep 12 07:02:43.943374 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 40.65.99.132:57631] Not Found: /old/.env
+[Sun Sep 12 07:02:45.875855 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 40.65.99.132:53440] Not Found: /local/.env
+[Sun Sep 12 07:02:45.989303 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 40.65.99.132:61604] Not Found: /api/.env
+[Sun Sep 12 07:02:47.548056 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 40.65.99.132:63370] Not Found: /blog/.env
+[Sun Sep 12 07:02:49.214055 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 40.65.99.132:58221] Not Found: /crm/.env
+[Sun Sep 12 07:02:52.352451 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 40.65.99.132:60656] Not Found: /laravel/.env
+[Sun Sep 12 07:02:53.881535 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 40.65.99.132:59955] Not Found: /app/.env
+[Sun Sep 12 07:02:55.526004 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 40.65.99.132:59771] Not Found: /app/config/.env
+[Sun Sep 12 07:02:57.195084 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 40.65.99.132:58137] Not Found: /apps/.env
+[Sun Sep 12 07:02:59.130613 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 40.65.99.132:60754] Not Found: /audio/.env
+[Sun Sep 12 07:03:02.384546 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 40.65.99.132:61721] Not Found: /backend/.env
+[Sun Sep 12 07:03:02.491311 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 40.65.99.132:61343] Not Found: /src/.env
+[Sun Sep 12 07:03:03.846701 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 40.65.99.132:62908] Not Found: /base/.env
+[Sun Sep 12 07:03:05.644608 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 40.65.99.132:63864] Not Found: /core/.env
+[Sun Sep 12 07:03:07.413373 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 40.65.99.132:61676] Not Found: /vendor/laravel/.env
+[Sun Sep 12 07:03:08.821694 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 40.65.99.132:59932] Not Found: /storage/.env
+[Sun Sep 12 07:03:10.373903 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 40.65.99.132:54764] Not Found: /protected/.env
+[Sun Sep 12 07:03:12.208436 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 40.65.99.132:56979] Not Found: /newsite/.env
+[Sun Sep 12 07:03:13.950571 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 40.65.99.132:64531] Not Found: /www/.env
+[Sun Sep 12 07:03:17.406399 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 40.65.99.132:59804] Not Found: /sites/all/libraries/mailchimp/.env
+[Sun Sep 12 07:03:19.125141 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 40.65.99.132:59423] Not Found: /database/.env
+[Sun Sep 12 07:03:20.773981 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 40.65.99.132:57177] Not Found: /public/.env
+[Sun Sep 12 07:03:22.485602 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 40.65.99.132:57915] Not Found: /ec2-18-144-101-175.us-west-1.compute.amazonaws.com/.env
+[Sun Sep 12 07:03:23.861972 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 40.65.99.132:53525] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 07:03:25.471782 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 40.65.99.132:56674] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Sun Sep 12 08:17:57.381333 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 193.242.145.12:55470] Not Found: /adminer.php
+[Sun Sep 12 08:18:53.480663 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 45.146.164.110:58962] Not Found: /console/
+[Sun Sep 12 08:18:53.492908 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 45.146.164.110:58960] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Sun Sep 12 08:18:55.235586 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 45.146.164.110:52230] Not Found: /Autodiscover/Autodiscover.xml
+[Sun Sep 12 08:18:55.620214 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 45.146.164.110:39908] Not Found: /solr/admin/info/system
+[Sun Sep 12 08:18:55.621226 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 45.146.164.110:39900] Not Found: /api/jsonws/invoke
+[Sun Sep 12 08:18:55.994275 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 45.146.164.110:38972] Not Found: /wp-content/plugins/wp-file-manager/readme.txt
+[Sun Sep 12 08:18:56.355990 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 45.146.164.110:57184] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Sun Sep 12 08:18:57.009411 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 45.146.164.110:50206] Not Found: /index.php
+[Sun Sep 12 08:18:57.380883 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 45.146.164.110:38270] Not Found: /_ignition/execute-solution
+[Sun Sep 12 08:32:51.510998 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 46.101.82.40:54708] Not Found: /.env
+[Sun Sep 12 08:32:51.809522 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 46.101.82.40:55580] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 08:47:19.508371 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 135.125.244.48:56686] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 08:47:19.820006 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 135.125.244.48:56948] Not Found: /.env
+[Sun Sep 12 08:59:41.358825 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 222.186.19.235:53640] Not Found: /404/index.html
+[Sun Sep 12 08:59:41.389401 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 222.186.19.235:53642] Not Found: /404/index.html
+[Sun Sep 12 09:36:31.888704 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 191.243.199.12:50410] Not Found: /.env
+[Sun Sep 12 09:36:34.337952 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 191.243.199.12:50371] Not Found: /vendor/.env
+[Sun Sep 12 09:36:36.235785 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 191.243.199.12:61573] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 09:36:37.326597 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 191.243.199.12:64285] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Sun Sep 12 10:09:35.194099 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 164.90.201.16:21234] Not Found: /_ignition/execute-solution
+[Sun Sep 12 11:33:14.879744 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 46.101.82.40:37898] Not Found: /.env
+[Sun Sep 12 11:33:15.188792 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 46.101.82.40:38752] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 11:48:29.130146 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 135.125.244.48:44824] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 11:48:29.443220 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 135.125.244.48:45084] Not Found: /.env
+[Sun Sep 12 12:09:24.771907 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 142.93.146.198:56658] Not Found: /sipa7a5c510aaf7b0039a03491f8bed7777/e4e2e9eea1acefa1b4b8e0e5b0e3b3e7e2b6b5
+[Sun Sep 12 12:13:01.317060 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 192.241.218.12:35552] Not Found: /owa/auth/logon.aspx
+[Sun Sep 12 12:48:50.974228 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 209.141.46.56:38870] Not Found: /boaform/admin/formLogin
+[Sun Sep 12 13:13:36.067650 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 110.35.249.21:3722] Not Found: /HNAP1/
+[Sun Sep 12 13:13:47.378709 2021] [wsgi:error] [pid 1652:tid 140152173037312] [client 110.35.249.21:3722] mod_wsgi (pid=1652): Request data read error when proxying data to daemon process: Partial results are valid but processing is incomplete.
+[Sun Sep 12 13:39:48.503591 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 186.33.101.3:34177] Not Found: /setup.cgi
+[Sun Sep 12 14:05:51.646509 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 18.222.210.87:54283] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 14:05:51.872397 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 18.222.210.87:53904] Not Found: /.env
+[Sun Sep 12 14:15:26.075301 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 135.125.244.48:36326] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 14:15:26.383076 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 135.125.244.48:36528] Not Found: /.env
+[Sun Sep 12 14:33:15.421597 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 46.101.82.40:39280] Not Found: /.env
+[Sun Sep 12 14:33:15.728350 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 46.101.82.40:40078] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 15:03:36.946407 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 192.241.196.216:52990] Not Found: /owa/auth/x.js
+[Sun Sep 12 15:06:04.979533 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 192.241.221.230:41730] Not Found: /ecp/Current/exporttool/microsoft.exchange.ediscovery.exporttool.application
+[Sun Sep 12 15:14:32.596338 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 192.241.209.42:57700] Not Found: /owa/auth/logon.aspx
+[Sun Sep 12 16:21:40.770717 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 135.125.244.48:39060] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 16:21:41.097651 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 135.125.244.48:39364] Not Found: /.env
+[Sun Sep 12 16:43:11.484355 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 77.122.241.150:49556] Not Found: /setup.cgi
+[Sun Sep 12 16:50:57.807608 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 35.203.118.150:38140] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 17:22:37.303161 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 205.185.121.47:52098] Not Found: /boaform/admin/formLogin
+[Sun Sep 12 17:24:09.863258 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 91.132.58.162:38804] Not Found: /remote/fgt_lang
+[Sun Sep 12 17:25:19.159402 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 205.185.116.29:39366] Not Found: /boaform/admin/formLogin
+[Sun Sep 12 17:33:27.283898 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 46.101.82.40:42086] Not Found: /.env
+[Sun Sep 12 17:33:27.577127 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 46.101.82.40:42948] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 17:50:11.958001 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 50.21.179.186:54443] Not Found: /.env
+[Sun Sep 12 17:50:12.138917 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 50.21.179.186:58976] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 18:09:05.429150 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 35.228.213.137:53700] Not Found: /.env
+[Sun Sep 12 18:09:06.165616 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 35.228.213.137:55069] Forbidden (Referer checking failed - no Referer.): /
+[Sun Sep 12 19:01:59.394108 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 80.241.212.242:36158] Not Found: /.env
+[Sun Sep 12 19:01:59.719826 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 80.241.212.242:36172] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 19:12:40.905309 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 20.197.227.185:56694] Not Found: /.env
+[Sun Sep 12 19:12:41.878176 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 20.197.227.185:57091] Forbidden (Referer checking failed - no Referer.): /
+[Sun Sep 12 19:22:17.757978 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 135.125.244.48:46342] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 19:22:18.072976 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 135.125.244.48:46620] Not Found: /.env
+[Sun Sep 12 19:32:18.184429 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 45.146.164.110:43510] Not Found: /api/jsonws/invoke
+[Sun Sep 12 19:32:18.207070 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 45.146.164.110:43514] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Sun Sep 12 19:32:19.347382 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 45.146.164.110:48288] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Sun Sep 12 19:32:20.547207 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 45.146.164.110:56446] Not Found: /index.php
+[Sun Sep 12 19:32:23.318705 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 45.146.164.110:50544] Not Found: /wp-content/plugins/wp-file-manager/readme.txt
+[Sun Sep 12 19:32:23.789498 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 45.146.164.110:51152] Not Found: /mifs/.;/services/LogService
+[Sun Sep 12 19:32:23.963171 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 45.146.164.110:42864] Not Found: /console/
+[Sun Sep 12 19:32:26.501716 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 45.146.164.110:55460] Not Found: /Autodiscover/Autodiscover.xml
+[Sun Sep 12 19:32:26.640549 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 45.146.164.110:41988] Not Found: /_ignition/execute-solution
+[Sun Sep 12 20:21:46.540362 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 40.117.117.64:52148] Not Found: /.env
+[Sun Sep 12 20:21:46.728586 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 40.117.117.64:52253] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 20:21:46.973052 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 40.117.117.64:52435] Not Found: /.env
+[Sun Sep 12 20:21:47.234774 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 40.117.117.64:52733] Forbidden (Referer checking failed - no Referer.): /
+[Sun Sep 12 20:21:53.783150 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 40.117.117.64:57350] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Sun Sep 12 20:22:56.981840 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 192.241.221.234:56702] Not Found: /manager/text/list
+[Sun Sep 12 20:33:27.085197 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 46.101.82.40:56578] Not Found: /.env
+[Sun Sep 12 20:33:27.439627 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 46.101.82.40:57402] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 21:49:57.289912 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 167.99.63.116:60660] Not Found: /tree
+[Sun Sep 12 21:50:41.719136 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 143.244.169.254:42004] Not Found: /.env
+[Sun Sep 12 21:50:41.895752 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 143.244.169.254:42424] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 21:55:44.380645 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 167.99.63.116:54608] Not Found: /lab
+[Sun Sep 12 22:22:43.362889 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 135.125.244.48:54652] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 22:22:43.691749 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 135.125.244.48:54948] Not Found: /.env
+[Sun Sep 12 23:12:15.640932 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 185.235.14.146:64765] Not Found: /.env
+[Sun Sep 12 23:12:15.795927 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 185.235.14.146:64782] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 23:12:16.407584 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 185.235.14.146:64817] Not Found: /.env
+[Sun Sep 12 23:12:16.840549 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 185.235.14.146:65062] Forbidden (Referer checking failed - no Referer.): /
+[Sun Sep 12 23:12:21.874184 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 185.235.14.146:49629] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Sun Sep 12 23:22:18.050502 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 192.241.217.68:50538] Not Found: /ecp/Current/exporttool/microsoft.exchange.ediscovery.exporttool.application
+[Sun Sep 12 23:26:11.142195 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 129.146.125.128:54292] Not Found: /.env
+[Sun Sep 12 23:26:11.593276 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 129.146.125.128:54392] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 23:26:12.051344 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 129.146.125.128:54459] Not Found: /.env
+[Sun Sep 12 23:26:12.228738 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 129.146.125.128:54527] Forbidden (CSRF cookie not set.): /
+[Sun Sep 12 23:32:40.322671 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 46.101.82.40:47950] Not Found: /.env
+[Sun Sep 12 23:32:40.669639 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 46.101.82.40:48790] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 00:44:17.377587 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 20.199.122.97:55377] Not Found: /.env
+[Mon Sep 13 00:44:17.689291 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 20.199.122.97:55416] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 01:17:38.937029 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 137.184.22.16:44712] Not Found: /.env
+[Mon Sep 13 01:17:39.092773 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 137.184.22.16:44744] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 01:24:03.393770 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 135.125.244.48:46190] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 01:24:03.711626 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 135.125.244.48:46510] Not Found: /.env
+[Mon Sep 13 02:20:18.326690 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 45.146.164.110:55850] Not Found: /console/
+[Mon Sep 13 02:20:18.339842 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 45.146.164.110:55862] Not Found: /api/jsonws/invoke
+[Mon Sep 13 02:20:19.338898 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 45.146.164.110:59124] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Mon Sep 13 02:20:19.716497 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 45.146.164.110:36704] Not Found: /solr/admin/info/system
+[Mon Sep 13 02:20:19.829687 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 45.146.164.110:36368] Not Found: /Autodiscover/Autodiscover.xml
+[Mon Sep 13 02:20:20.094958 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 45.146.164.110:42300] Not Found: /index.php
+[Mon Sep 13 02:20:21.183048 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 45.146.164.110:55278] Not Found: /_ignition/execute-solution
+[Mon Sep 13 02:20:21.549348 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 45.146.164.110:60950] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Mon Sep 13 02:20:21.628554 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 45.146.164.110:60840] Not Found: /wp-content/plugins/wp-file-manager/readme.txt
+[Mon Sep 13 02:25:18.514577 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 192.241.215.103:55580] Not Found: /actuator/health
+[Mon Sep 13 02:28:39.930733 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 209.160.106.26:58204] Not Found: /.env
+[Mon Sep 13 02:31:38.603393 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 46.101.82.40:34284] Not Found: /.env
+[Mon Sep 13 02:31:38.899396 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 46.101.82.40:35176] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 03:52:39.405347 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 105.155.13.182:55952] Not Found: /.env
+[Mon Sep 13 03:52:39.822034 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 105.155.13.182:44051] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 04:24:38.490119 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 135.125.244.48:41020] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 04:24:38.803119 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 135.125.244.48:41256] Not Found: /.env
+[Mon Sep 13 05:29:50.485008 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 20.55.0.108:56616] Not Found: /.env
+[Mon Sep 13 05:29:50.795318 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 20.55.0.108:57017] Forbidden (Referer checking failed - no Referer.): /
+[Mon Sep 13 05:33:32.216650 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 46.101.82.40:56574] Not Found: /.env
+[Mon Sep 13 05:33:32.536028 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 46.101.82.40:57424] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 07:02:09.726735 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 45.90.160.107:41722] Not Found: /w00tw00t.at.blackhats.romanian.anti-sec:)
+[Mon Sep 13 07:02:10.024414 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 45.90.160.107:42162] Not Found: /phpMyAdmin/scripts/setup.php
+[Mon Sep 13 07:22:28.088768 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 49.143.32.6:1091] Not Found: /shell
+[Mon Sep 13 07:25:58.418470 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 135.125.244.48:41684] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 07:25:58.732952 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 135.125.244.48:41976] Not Found: /.env
+[Mon Sep 13 07:53:39.790396 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 45.146.164.110:59370] Not Found: /index.php
+[Mon Sep 13 07:53:41.368939 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 45.146.164.110:59376] Not Found: /_ignition/execute-solution
+[Mon Sep 13 07:53:43.619905 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 45.146.164.110:39412] Not Found: /api/jsonws/invoke
+[Mon Sep 13 07:53:46.318652 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 45.146.164.110:51544] Not Found: /mifs/.;/services/LogService
+[Mon Sep 13 07:53:46.860244 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 45.146.164.110:60688] Not Found: /wp-content/plugins/wp-file-manager/readme.txt
+[Mon Sep 13 07:53:50.165475 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 45.146.164.110:48798] Not Found: /console/
+[Mon Sep 13 07:53:51.654901 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 45.146.164.110:53572] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Mon Sep 13 07:53:51.742840 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 45.146.164.110:36454] Not Found: /Autodiscover/Autodiscover.xml
+[Mon Sep 13 07:53:54.767178 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 45.146.164.110:57142] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Mon Sep 13 08:33:05.187930 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 46.101.82.40:37878] Not Found: /.env
+[Mon Sep 13 08:33:05.509028 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 46.101.82.40:38664] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 08:53:48.234979 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 82.127.219.204:58625] Not Found: /user/register
+[Mon Sep 13 09:06:11.676699 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 188.166.91.210:42164] Not Found: /api/v1
+[Mon Sep 13 09:38:11.722312 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.131.90.225:36492] Not Found: /.env
+[Mon Sep 13 09:38:11.863997 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 3.131.90.225:36600] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 10:28:10.068295 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 135.125.244.48:53026] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 10:28:10.380549 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 135.125.244.48:53280] Not Found: /.env
+[Mon Sep 13 11:05:09.258374 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 60.223.171.75:41449] Not Found: /setup.cgi
+[Mon Sep 13 11:34:49.231576 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 46.101.82.40:50434] Not Found: /.env
+[Mon Sep 13 11:34:49.583485 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 46.101.82.40:51310] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 12:19:43.330064 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 45.95.147.19:32954] Not Found: /remote/fgt_lang
+[Mon Sep 13 13:31:14.087603 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 137.184.15.8:36508] Not Found: /.env
+[Mon Sep 13 13:31:14.095972 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 137.184.15.8:36514] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 14:38:01.672710 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 46.101.82.40:39228] Not Found: /.env
+[Mon Sep 13 14:38:02.025007 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 46.101.82.40:39838] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 15:28:35.006058 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 91.132.58.33:54760] Not Found: /remote/fgt_lang
+[Mon Sep 13 15:35:07.538716 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 192.241.207.223:58228] Not Found: /ecp/Current/exporttool/microsoft.exchange.ediscovery.exporttool.application
+[Mon Sep 13 15:38:30.897930 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 192.241.221.231:33604] Not Found: /owa/auth/logon.aspx
+[Mon Sep 13 15:39:32.251535 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 198.199.112.66:40934] Not Found: /owa/auth/x.js
+[Mon Sep 13 16:21:33.735455 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 105.155.13.182:51436] Not Found: /.env
+[Mon Sep 13 16:21:34.195468 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 105.155.13.182:11129] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 16:41:10.299618 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 188.126.89.135:42132] Not Found: /remote/fgt_lang
+[Mon Sep 13 16:54:07.171168 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 135.125.244.48:49436] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 16:54:07.509093 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 135.125.244.48:49690] Not Found: /.env
+[Mon Sep 13 17:16:58.155753 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 35.228.213.137:63327] Not Found: /.env
+[Mon Sep 13 17:16:58.856235 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 35.228.213.137:64573] Forbidden (Referer checking failed - no Referer.): /
+[Mon Sep 13 17:32:07.854455 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 143.244.169.254:60012] Not Found: /.env
+[Mon Sep 13 17:32:08.473414 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 143.244.169.254:60722] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 17:35:17.901291 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 46.101.82.40:51294] Not Found: /.env
+[Mon Sep 13 17:35:18.238738 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 46.101.82.40:52070] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 18:55:23.615403 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 136.24.69.6:57610] Not Found: /.env
+[Mon Sep 13 18:55:24.035142 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 136.24.69.6:57662] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 19:41:37.766626 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 188.126.89.135:53490] Not Found: /remote/fgt_lang
+[Mon Sep 13 19:44:52.389319 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 34.132.218.32:60434] Not Found: /.env
+[Mon Sep 13 19:44:52.506820 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 34.132.218.32:60475] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 19:44:52.771665 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 34.132.218.32:60904] Not Found: /.env
+[Mon Sep 13 19:44:53.043821 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 34.132.218.32:61158] Forbidden (Referer checking failed - no Referer.): /
+[Mon Sep 13 19:44:53.180510 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 34.132.218.32:61355] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Mon Sep 13 19:55:14.480508 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 135.125.244.48:35898] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 19:55:14.802292 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 135.125.244.48:36170] Not Found: /.env
+[Mon Sep 13 20:02:42.994443 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 139.162.145.250:38470] Not Found: /bag2
+[Mon Sep 13 20:08:11.184271 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 103.122.244.146:54826] Not Found: /phpmyadmin/index.php
+[Mon Sep 13 20:08:12.094122 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 103.122.244.146:54826] Not Found: /pmd/index.php
+[Mon Sep 13 20:08:13.864383 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 103.122.244.146:54826] Not Found: /phpmyadmin4.8.5/index.php
+[Mon Sep 13 20:12:32.303926 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 18.222.210.87:57492] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 20:12:32.592958 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 18.222.210.87:57516] Not Found: /.env
+[Mon Sep 13 20:31:17.237557 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 13.82.239.113:59126] Not Found: /.env
+[Mon Sep 13 20:31:17.501330 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 13.82.239.113:59166] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 20:31:18.167083 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 13.82.239.113:59192] Not Found: /.env
+[Mon Sep 13 20:31:18.564361 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 13.82.239.113:59249] Forbidden (Referer checking failed - no Referer.): /
+[Mon Sep 13 20:35:48.939889 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 46.101.82.40:39418] Not Found: /.env
+[Mon Sep 13 20:35:49.300049 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 46.101.82.40:40250] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 20:37:06.540292 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 54.244.60.219:56041] Not Found: /.env
+[Mon Sep 13 20:37:06.592525 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 54.244.60.219:61308] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 20:52:09.957501 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 45.146.164.110:49116] Not Found: /api/jsonws/invoke
+[Mon Sep 13 20:52:09.958200 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 45.146.164.110:49118] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Mon Sep 13 20:52:10.337200 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 45.146.164.110:58838] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Mon Sep 13 20:52:10.338448 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 45.146.164.110:58994] Not Found: /solr/admin/info/system
+[Mon Sep 13 20:52:10.711636 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 45.146.164.110:38432] Not Found: /index.php
+[Mon Sep 13 20:52:11.095865 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 45.146.164.110:47892] Not Found: /wp-content/plugins/wp-file-manager/readme.txt
+[Mon Sep 13 20:52:11.479319 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 45.146.164.110:55270] Not Found: /Autodiscover/Autodiscover.xml
+[Mon Sep 13 20:52:11.481863 2021] [wsgi:error] [pid 1274:tid 140153376171776] [remote 45.146.164.110:55004] Not Found: /console/
+[Mon Sep 13 20:52:11.862543 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 45.146.164.110:33732] Not Found: /_ignition/execute-solution
+[Mon Sep 13 21:35:46.378038 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 137.184.15.8:45778] Not Found: /.env
+[Mon Sep 13 21:35:46.388391 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 137.184.15.8:45786] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 22:57:40.389253 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 135.125.244.48:35686] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 22:57:40.703075 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 135.125.244.48:35932] Not Found: /.env
+[Mon Sep 13 22:58:45.016918 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 54.244.60.219:55256] Not Found: /.env
+[Mon Sep 13 22:58:45.067773 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 54.244.60.219:62068] Forbidden (CSRF cookie not set.): /
+[Mon Sep 13 23:03:20.547482 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 185.142.236.43:51164] Not Found: /sitemap.xml
+[Mon Sep 13 23:03:21.622421 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 185.142.236.43:52394] Not Found: /.well-known/security.txt
+[Mon Sep 13 23:20:56.498125 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 91.191.209.164:42215] Not Found: /remote/fgt_lang
+[Mon Sep 13 23:33:38.853861 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 46.101.82.40:44090] Not Found: /.env
+[Mon Sep 13 23:33:39.161648 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 46.101.82.40:44916] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 00:10:10.907139 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 45.146.164.110:53738] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 00:10:11.191247 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 45.146.164.110:53736] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 00:10:13.078965 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 45.146.164.110:35912] Not Found: /index.php
+[Tue Sep 14 00:10:15.963176 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 45.146.164.110:44368] Not Found: /wp-content/plugins/wp-file-manager/readme.txt
+[Tue Sep 14 00:10:17.389917 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 45.146.164.110:43880] Not Found: /console/
+[Tue Sep 14 00:10:18.111170 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 45.146.164.110:36064] Not Found: /Autodiscover/Autodiscover.xml
+[Tue Sep 14 00:10:19.118211 2021] [wsgi:error] [pid 1275:tid 140153359386368] [remote 45.146.164.110:35330] Not Found: /mifs/.;/services/LogService
+[Tue Sep 14 00:10:19.118862 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 45.146.164.110:54606] Not Found: /_ignition/execute-solution
+[Tue Sep 14 00:10:20.498971 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 45.146.164.110:53866] Not Found: /api/jsonws/invoke
+[Tue Sep 14 00:51:17.972073 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 34.71.221.21:41076] Not Found: /.env
+[Tue Sep 14 00:51:18.130992 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 34.71.221.21:41120] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 01:59:59.708989 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 135.125.244.48:33262] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 02:00:00.023925 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 135.125.244.48:33536] Not Found: /.env
+[Tue Sep 14 02:21:32.991475 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 193.107.216.145:50006] Not Found: /a2billing/customer/templates/default/footer.tpl
+[Tue Sep 14 02:25:54.619535 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 192.241.216.41:42408] Not Found: /actuator/health
+[Tue Sep 14 02:32:56.943249 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 46.101.82.40:53992] Not Found: /.env
+[Tue Sep 14 02:32:57.272542 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 46.101.82.40:54814] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 03:02:57.220974 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 42.52.165.6:48783] Not Found: /GponForm/diag_Form
+[Tue Sep 14 03:27:23.970838 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 35.228.213.137:63364] Not Found: /.env
+[Tue Sep 14 03:27:24.672355 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 35.228.213.137:49537] Forbidden (Referer checking failed - no Referer.): /
+[Tue Sep 14 03:32:19.286172 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 105.159.22.95:53708] Not Found: /.env
+[Tue Sep 14 03:32:19.663363 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 105.159.22.95:2729] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 04:23:14.836368 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 107.189.31.252:52048] Not Found: /config/getuser
+[Tue Sep 14 05:00:56.601851 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 135.125.244.48:37176] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 05:00:56.915420 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 135.125.244.48:37420] Not Found: /.env
+[Tue Sep 14 05:33:49.536745 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 46.101.82.40:37152] Not Found: /.env
+[Tue Sep 14 05:33:49.837201 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 46.101.82.40:37930] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 06:07:08.305790 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 120.85.93.76:6604] Not Found: /shell
+[Tue Sep 14 06:34:30.335676 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 167.179.84.61:45606] Not Found: /pages/createpage-entervariables.action
+[Tue Sep 14 07:18:59.095395 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 34.219.193.132:60673] Not Found: /.env
+[Tue Sep 14 07:18:59.194325 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 34.219.193.132:54215] Forbidden (Referer checking failed - no Referer.): /
+[Tue Sep 14 07:27:50.321129 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 35.226.54.246:50958] Not Found: /.env
+[Tue Sep 14 07:27:50.491401 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 35.226.54.246:51001] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 07:27:50.730670 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 35.226.54.246:51059] Not Found: /.env
+[Tue Sep 14 07:27:50.990897 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 35.226.54.246:51123] Forbidden (Referer checking failed - no Referer.): /
+[Tue Sep 14 07:57:20.994405 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 222.139.65.225:39212] Not Found: /HNAP1/
+[Tue Sep 14 07:57:32.193658 2021] [wsgi:error] [pid 1652:tid 140152332498688] [client 222.139.65.225:39212] mod_wsgi (pid=1652): Request data read error when proxying data to daemon process: Partial results are valid but processing is incomplete.
+[Tue Sep 14 08:02:55.402218 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 135.125.244.48:47204] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 08:02:55.709613 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 135.125.244.48:47442] Not Found: /.env
+[Tue Sep 14 08:13:03.155471 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 51.254.220.139:39110] Not Found: /mysql-admin/index.php
+[Tue Sep 14 08:13:03.454787 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 51.254.220.139:39236] Not Found: /mysqlmanager/index.php
+[Tue Sep 14 08:13:03.752981 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 51.254.220.139:39356] Not Found: /phpMyAdmin1/index.php
+[Tue Sep 14 08:13:04.053270 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 51.254.220.139:39482] Not Found: /phpMyAdmin1/index.php
+[Tue Sep 14 08:17:10.011472 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.135.30.44:54560] Not Found: /.env
+[Tue Sep 14 08:17:10.099941 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.135.30.44:54560] Not Found: /.remote
+[Tue Sep 14 08:17:10.161910 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.135.30.44:54560] Not Found: /.local
+[Tue Sep 14 08:17:10.225335 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.135.30.44:54560] Not Found: /.production
+[Tue Sep 14 08:17:10.436355 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.135.30.44:54560] Not Found: /vendor/.env
+[Tue Sep 14 08:17:10.504629 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.135.30.44:54560] Not Found: /lib/.env
+[Tue Sep 14 08:17:10.563110 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.135.30.44:54560] Not Found: /lab/.env
+[Tue Sep 14 08:17:10.854845 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.135.30.44:54560] Not Found: /cronlab/.env
+[Tue Sep 14 08:17:10.927633 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.135.30.44:54560] Not Found: /cron/.env
+[Tue Sep 14 08:17:10.993525 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.135.30.44:54560] Not Found: /core/.env
+[Tue Sep 14 08:17:11.081076 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.135.30.44:54560] Not Found: /core/app/.env
+[Tue Sep 14 08:17:11.149395 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.135.30.44:54560] Not Found: /core/Datavase/.env
+[Tue Sep 14 08:17:11.220714 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.135.30.44:54560] Not Found: /database/.env
+[Tue Sep 14 08:17:11.421660 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.135.30.44:54560] Not Found: /config/.env
+[Tue Sep 14 08:17:11.488996 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.135.30.44:54560] Not Found: /assets/.env
+[Tue Sep 14 08:17:11.582615 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.135.30.44:54560] Not Found: /app/.env
+[Tue Sep 14 08:17:11.790724 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.135.30.44:54560] Not Found: /apps/.env
+[Tue Sep 14 08:17:12.250028 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.135.30.44:54560] Not Found: /uploads/.env
+[Tue Sep 14 08:17:12.313858 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.135.30.44:54560] Not Found: /sitemaps/.env
+[Tue Sep 14 08:17:12.436833 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.135.30.44:54560] Not Found: /saas/.env
+[Tue Sep 14 08:17:12.576796 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.135.30.44:54560] Not Found: /api/.env
+[Tue Sep 14 08:17:12.649614 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.135.30.44:54560] Not Found: /psnlink/.env
+[Tue Sep 14 08:17:12.722270 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.135.30.44:54560] Not Found: /exapi/.env
+[Tue Sep 14 08:17:12.843984 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.135.30.44:54560] Not Found: /site/.env
+[Tue Sep 14 08:17:13.304005 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.135.30.44:54560] Not Found: /web/.env
+[Tue Sep 14 08:17:13.365695 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.135.30.44:54560] Not Found: /public/.env
+[Tue Sep 14 08:17:13.499822 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.135.30.44:54560] Not Found: /en/.env
+[Tue Sep 14 08:17:13.559928 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.135.30.44:54560] Not Found: /tools/.env
+[Tue Sep 14 08:17:13.645209 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.135.30.44:54560] Not Found: /v1/.env
+[Tue Sep 14 08:17:13.714273 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.135.30.44:54560] Not Found: /v2/.env
+[Tue Sep 14 08:17:14.028646 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.135.30.44:54560] Not Found: /administrator/.env
+[Tue Sep 14 08:17:14.130041 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.135.30.44:54560] Not Found: /laravel/.env
+[Tue Sep 14 08:17:14.334892 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.135.30.44:54826] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 08:17:14.657846 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.135.30.44:54852] Forbidden (CSRF cookie not set.): /admin/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:14.773631 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.135.30.44:54852] Not Found: /api/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:14.878705 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.135.30.44:54852] Not Found: /backup/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:14.993470 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.135.30.44:54852] Not Found: /blog/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:15.065900 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.135.30.44:54852] Not Found: /cms/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:15.137592 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.135.30.44:54852] Not Found: /demo/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:15.218683 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.135.30.44:54852] Not Found: /dev/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:15.339597 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.135.30.44:54852] Not Found: /laravel/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:15.429507 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.135.30.44:54852] Not Found: /lib/phpunit/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:15.534565 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.135.30.44:54852] Not Found: /lib/phpunit/phpunit/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:15.604152 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.135.30.44:54852] Not Found: /lib/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:15.686311 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.135.30.44:54852] Not Found: /lib/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:15.793860 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.135.30.44:54852] Not Found: /new/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:15.907507 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.135.30.44:54852] Not Found: /old/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:16.105631 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.135.30.44:54852] Not Found: /panel/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:16.233949 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.135.30.44:54852] Not Found: /phpunit/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:16.386972 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.135.30.44:54852] Not Found: /phpunit/phpunit/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:16.459868 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.135.30.44:54852] Not Found: /phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:16.531458 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.135.30.44:54852] Not Found: /phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:16.686150 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.135.30.44:54852] Not Found: /protected/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:16.809793 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.135.30.44:54852] Not Found: /sites/all/libraries/mailchimp/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:17.118115 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.135.30.44:54852] Not Found: /vendor/phpunit/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:17.184865 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.135.30.44:54852] Not Found: /vendor/phpunit/phpunit/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:17.304446 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.135.30.44:54852] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:17.364843 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.135.30.44:54852] Not Found: /vendor/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:17.455188 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.135.30.44:54852] Not Found: /wp-content/plugins/cloudflare/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:17.564852 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.135.30.44:54852] Not Found: /wp-content/plugins/dzs-videogallery/class_parts/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:17.730099 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.135.30.44:54852] Not Found: /wp-content/plugins/jekyll-exporter/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:17.858289 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.135.30.44:54852] Not Found: /wp-content/plugins/mm-plugin/inc/vendors/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:17:18.071973 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.135.30.44:54852] Not Found: /www/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 08:33:57.107914 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 46.101.82.40:45334] Not Found: /.env
+[Tue Sep 14 08:33:57.415297 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 46.101.82.40:46034] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 08:40:40.343317 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 220.198.209.185:60174] Not Found: /GponForm/diag_Form
+[Tue Sep 14 09:06:33.412220 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 13.212.126.119:36198] Not Found: /.env
+[Tue Sep 14 09:06:33.761511 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 13.212.126.119:36492] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 11:03:44.713042 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 135.125.244.48:35324] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 11:03:45.025019 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 135.125.244.48:35586] Not Found: /.env
+[Tue Sep 14 11:08:41.869095 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 190.81.117.218:35902] Not Found: /.env
+[Tue Sep 14 11:08:42.235921 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 190.81.117.218:35924] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 11:35:00.236116 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 34.71.221.21:35976] Not Found: /.env
+[Tue Sep 14 11:35:00.344919 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 34.71.221.21:36004] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 11:35:00.543542 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 34.71.221.21:36031] Not Found: /.env
+[Tue Sep 14 11:35:00.787368 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 34.71.221.21:36081] Forbidden (Referer checking failed - no Referer.): /
+[Tue Sep 14 11:35:00.976376 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 34.71.221.21:36133] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 11:53:43.893249 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 114.34.206.143:43391] Not Found: /GponForm/diag_Form
+[Tue Sep 14 12:14:02.540538 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 192.241.216.5:56050] Not Found: /owa/auth/logon.aspx
+[Tue Sep 14 12:57:38.467698 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 135.125.246.189:48586] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 12:57:38.780964 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 135.125.246.189:48756] Not Found: /.env
+[Tue Sep 14 13:10:43.901148 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 5.188.87.4:33566] Not Found: /autodiscover/autodiscover.json
+[Tue Sep 14 13:10:44.359741 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 5.188.87.4:34070] Not Found: /autodiscover/autodiscover.json
+[Tue Sep 14 13:33:33.023500 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 49.119.182.27:34245] Not Found: /shell
+[Tue Sep 14 14:43:06.193605 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 107.189.31.252:45548] Not Found: /config/getuser
+[Tue Sep 14 15:38:24.795854 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 192.241.214.15:50472] Not Found: /owa/auth/x.js
+[Tue Sep 14 15:41:45.966080 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 192.241.210.240:33506] Not Found: /ecp/Current/exporttool/microsoft.exchange.ediscovery.exporttool.application
+[Tue Sep 14 15:42:18.851545 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 192.241.221.174:47930] Not Found: /owa/auth/logon.aspx
+[Tue Sep 14 15:45:46.124524 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 143.244.169.254:44442] Not Found: /.env
+[Tue Sep 14 15:45:46.288642 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 143.244.169.254:44780] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 16:00:35.178847 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 45.146.164.110:52328] Not Found: /index.php
+[Tue Sep 14 16:00:35.179324 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 45.146.164.110:52326] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 16:00:35.559064 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 45.146.164.110:51718] Not Found: /_ignition/execute-solution
+[Tue Sep 14 16:00:36.371066 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 45.146.164.110:52918] Not Found: /Autodiscover/Autodiscover.xml
+[Tue Sep 14 16:00:36.952155 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 45.146.164.110:41354] Not Found: /wp-content/plugins/wp-file-manager/readme.txt
+[Tue Sep 14 16:00:37.151545 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 45.146.164.110:57938] Not Found: /console/
+[Tue Sep 14 16:00:37.513258 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 45.146.164.110:52032] Not Found: /solr/admin/info/system
+[Tue Sep 14 16:00:38.064911 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 45.146.164.110:41424] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 16:00:40.354909 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 45.146.164.110:53022] Not Found: /api/jsonws/invoke
+[Tue Sep 14 16:58:59.671662 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 20.102.123.158:60070] Not Found: /.env
+[Tue Sep 14 16:59:01.555382 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 20.102.123.158:62842] Forbidden (Referer checking failed - no Referer.): /
+[Tue Sep 14 17:19:19.715350 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 47.103.143.221:15932] Not Found: /.env
+[Tue Sep 14 17:19:20.074306 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 47.103.143.221:18914] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 17:52:06.621080 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.139.242.119:60060] Not Found: /.env
+[Tue Sep 14 17:52:06.681756 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.139.242.119:60060] Not Found: /.remote
+[Tue Sep 14 17:52:06.738753 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.139.242.119:60060] Not Found: /.local
+[Tue Sep 14 17:52:06.796135 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.139.242.119:60060] Not Found: /.production
+[Tue Sep 14 17:52:06.857425 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.139.242.119:60060] Not Found: /vendor/.env
+[Tue Sep 14 17:52:06.915658 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.139.242.119:60060] Not Found: /lib/.env
+[Tue Sep 14 17:52:06.974034 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.139.242.119:60060] Not Found: /lab/.env
+[Tue Sep 14 17:52:07.031540 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.139.242.119:60060] Not Found: /cronlab/.env
+[Tue Sep 14 17:52:07.088711 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.139.242.119:60060] Not Found: /cron/.env
+[Tue Sep 14 17:52:07.149479 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.139.242.119:60060] Not Found: /core/.env
+[Tue Sep 14 17:52:07.208320 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.139.242.119:60060] Not Found: /core/app/.env
+[Tue Sep 14 17:52:07.267898 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.139.242.119:60060] Not Found: /core/Datavase/.env
+[Tue Sep 14 17:52:07.325358 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.139.242.119:60060] Not Found: /database/.env
+[Tue Sep 14 17:52:07.384270 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.139.242.119:60060] Not Found: /config/.env
+[Tue Sep 14 17:52:07.442494 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.139.242.119:60060] Not Found: /assets/.env
+[Tue Sep 14 17:52:07.499992 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.139.242.119:60060] Not Found: /app/.env
+[Tue Sep 14 17:52:07.568155 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.139.242.119:60060] Not Found: /apps/.env
+[Tue Sep 14 17:52:07.625589 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.139.242.119:60060] Not Found: /uploads/.env
+[Tue Sep 14 17:52:07.683881 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.139.242.119:60060] Not Found: /sitemaps/.env
+[Tue Sep 14 17:52:07.741433 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.139.242.119:60060] Not Found: /saas/.env
+[Tue Sep 14 17:52:07.827241 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.139.242.119:60060] Not Found: /api/.env
+[Tue Sep 14 17:52:07.884730 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.139.242.119:60060] Not Found: /psnlink/.env
+[Tue Sep 14 17:52:07.944339 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.139.242.119:60060] Not Found: /exapi/.env
+[Tue Sep 14 17:52:08.002027 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.139.242.119:60060] Not Found: /site/.env
+[Tue Sep 14 17:52:08.184752 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.139.242.119:60060] Not Found: /web/.env
+[Tue Sep 14 17:52:08.242695 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.139.242.119:60060] Not Found: /public/.env
+[Tue Sep 14 17:52:08.300583 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.139.242.119:60060] Not Found: /en/.env
+[Tue Sep 14 17:52:08.360011 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.139.242.119:60060] Not Found: /tools/.env
+[Tue Sep 14 17:52:08.420478 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.139.242.119:60060] Not Found: /v1/.env
+[Tue Sep 14 17:52:08.477750 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.139.242.119:60060] Not Found: /v2/.env
+[Tue Sep 14 17:52:08.535554 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.139.242.119:60060] Not Found: /administrator/.env
+[Tue Sep 14 17:52:08.592783 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.139.242.119:60060] Not Found: /laravel/.env
+[Tue Sep 14 17:52:08.699158 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.139.242.119:60336] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 17:52:08.809114 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.139.242.119:60354] Forbidden (CSRF cookie not set.): /admin/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:08.867543 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.139.242.119:60354] Not Found: /api/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:08.925802 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.139.242.119:60354] Not Found: /backup/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:08.984462 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.139.242.119:60354] Not Found: /blog/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:09.043321 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.139.242.119:60354] Not Found: /cms/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:09.101643 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.139.242.119:60354] Not Found: /demo/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:09.159724 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.139.242.119:60354] Not Found: /dev/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:09.218219 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.139.242.119:60354] Not Found: /laravel/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:09.278102 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.139.242.119:60354] Not Found: /lib/phpunit/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:09.336477 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.139.242.119:60354] Not Found: /lib/phpunit/phpunit/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:09.395544 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.139.242.119:60354] Not Found: /lib/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:09.454449 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.139.242.119:60354] Not Found: /lib/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:09.513016 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.139.242.119:60354] Not Found: /new/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:09.571214 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.139.242.119:60354] Not Found: /old/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:09.629786 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.139.242.119:60354] Not Found: /panel/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:09.687927 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.139.242.119:60354] Not Found: /phpunit/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:09.746318 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.139.242.119:60354] Not Found: /phpunit/phpunit/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:09.805496 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.139.242.119:60354] Not Found: /phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:09.863691 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.139.242.119:60354] Not Found: /phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:09.921978 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.139.242.119:60354] Not Found: /protected/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:09.980373 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.139.242.119:60354] Not Found: /sites/all/libraries/mailchimp/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:10.040878 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.139.242.119:60354] Not Found: /vendor/phpunit/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:10.099027 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.139.242.119:60354] Not Found: /vendor/phpunit/phpunit/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:10.160358 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.139.242.119:60354] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:10.218513 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.139.242.119:60354] Not Found: /vendor/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:10.276785 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.139.242.119:60354] Not Found: /wp-content/plugins/cloudflare/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:10.335337 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 3.139.242.119:60354] Not Found: /wp-content/plugins/dzs-videogallery/class_parts/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:10.400298 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 3.139.242.119:60354] Not Found: /wp-content/plugins/jekyll-exporter/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:10.462136 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 3.139.242.119:60354] Not Found: /wp-content/plugins/mm-plugin/inc/vendors/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 17:52:10.521140 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 3.139.242.119:60354] Not Found: /www/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Tue Sep 14 19:11:11.792697 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 193.56.29.183:53936] Not Found: /.env
+[Tue Sep 14 19:11:12.431112 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 193.56.29.183:53981] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 19:11:13.055346 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 193.56.29.183:54022] Not Found: /core/.env
+[Tue Sep 14 19:11:13.649009 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 193.56.29.183:54065] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 19:11:14.346141 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 193.56.29.183:54106] Not Found: /app/.env
+[Tue Sep 14 19:11:14.951958 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 193.56.29.183:54154] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 19:11:15.616335 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 193.56.29.183:54198] Not Found: /public/.env
+[Tue Sep 14 19:11:16.235115 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 193.56.29.183:54244] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 19:39:17.116301 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 199.19.224.165:51708] Not Found: /config/getuser
+[Tue Sep 14 19:48:39.220802 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 5.188.210.227:36612] Not Found: /echo.php
+[Tue Sep 14 20:23:02.352009 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 54.186.122.127:49953] Not Found: /.env
+[Tue Sep 14 20:23:02.399918 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 54.186.122.127:62977] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 20:27:13.068954 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 135.125.246.110:59622] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 20:27:13.376915 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 135.125.246.110:59826] Not Found: /.env
+[Tue Sep 14 21:20:02.168076 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 54.186.122.127:57622] Not Found: /.env
+[Tue Sep 14 21:20:02.216402 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 54.186.122.127:60063] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 21:56:15.937988 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 143.198.18.179:47220] Not Found: /.env
+[Tue Sep 14 21:56:17.044388 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 143.198.18.179:49840] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 22:19:03.258132 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 107.189.31.252:44684] Not Found: /config/getuser
+[Tue Sep 14 22:28:14.546307 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 192.241.220.87:46152] Not Found: /ReportServer
+[Tue Sep 14 22:46:31.738350 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 192.241.213.224:54240] Not Found: /login
+[Tue Sep 14 23:03:27.193442 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 167.71.69.245:46372] Not Found: /_ignition/execute-solution
+[Tue Sep 14 23:21:13.863799 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 192.241.214.224:40400] Not Found: /ecp/Current/exporttool/microsoft.exchange.ediscovery.exporttool.application
+[Tue Sep 14 23:33:11.235727 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 135.125.246.110:42972] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 23:33:11.543703 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 135.125.246.110:43130] Not Found: /.env
+[Tue Sep 14 23:43:38.875672 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 206.189.185.88:49530] Not Found: /.env
+[Tue Sep 14 23:43:40.158987 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 206.189.185.88:49756] Forbidden (CSRF cookie not set.): /
+[Tue Sep 14 23:50:13.640084 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 208.100.26.231:38546] Not Found: /nmaplowercheck1631663413
+[Tue Sep 14 23:50:13.950188 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 208.100.26.231:38908] Not Found: /evox/about
+[Tue Sep 14 23:50:16.082482 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 208.100.26.231:41608] Not Found: /sdk
+[Tue Sep 14 23:50:16.182369 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 208.100.26.231:41732] Not Found: /HNAP1
+[Wed Sep 15 00:26:55.418369 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 45.146.164.110:37276] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Wed Sep 15 00:26:55.959951 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 45.146.164.110:37278] Not Found: /api/jsonws/invoke
+[Wed Sep 15 00:26:55.971484 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 45.146.164.110:60046] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Wed Sep 15 00:26:57.703498 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 45.146.164.110:56646] Not Found: /console/
+[Wed Sep 15 00:26:58.025058 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 45.146.164.110:36952] Not Found: /Autodiscover/Autodiscover.xml
+[Wed Sep 15 00:26:59.800068 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 45.146.164.110:41288] Not Found: /wp-content/plugins/wp-file-manager/readme.txt
+[Wed Sep 15 00:27:01.425071 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 45.146.164.110:37444] Not Found: /mifs/.;/services/LogService
+[Wed Sep 15 00:27:01.653107 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 45.146.164.110:45372] Not Found: /_ignition/execute-solution
+[Wed Sep 15 00:27:10.464568 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 45.146.164.110:42902] Not Found: /index.php
+[Wed Sep 15 00:58:59.878779 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 143.198.18.179:60694] Not Found: /.env
+[Wed Sep 15 00:59:01.500726 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 143.198.18.179:33526] Forbidden (CSRF cookie not set.): /
+[Wed Sep 15 01:18:21.825982 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 199.19.224.165:33202] Not Found: /config/getuser
+[Wed Sep 15 01:25:57.817011 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 140.249.50.137:58550] Not Found: /TP/public/index.php
+[Wed Sep 15 01:25:58.161695 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 140.249.50.137:58860] Not Found: /TP/index.php
+[Wed Sep 15 01:25:58.509008 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 140.249.50.137:59090] Not Found: /thinkphp/html/public/index.php
+[Wed Sep 15 01:25:58.834268 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 140.249.50.137:38146] Not Found: /html/public/index.php
+[Wed Sep 15 01:25:59.171776 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 140.249.50.137:38604] Not Found: /public/index.php
+[Wed Sep 15 01:25:59.517913 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 140.249.50.137:38972] Not Found: /TP/html/public/index.php
+[Wed Sep 15 01:25:59.868917 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 140.249.50.137:46086] Not Found: /elrekt.php
+[Wed Sep 15 01:26:00.209947 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 140.249.50.137:46532] Not Found: /index.php
+[Wed Sep 15 01:41:15.764132 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 209.141.58.209:49034] Not Found: /boaform/admin/formLogin
+[Wed Sep 15 02:31:33.793673 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 192.241.217.35:46478] Not Found: /actuator/health
+[Wed Sep 15 02:36:39.223117 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 135.125.246.110:44148] Forbidden (CSRF cookie not set.): /
+[Wed Sep 15 02:36:39.534672 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 135.125.246.110:44308] Not Found: /.env
+[Wed Sep 15 02:43:51.051566 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 193.200.50.189:51704] Not Found: /.env
+[Wed Sep 15 02:43:51.728386 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 193.200.50.189:51764] Forbidden (CSRF cookie not set.): /
+[Wed Sep 15 03:09:58.006327 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 192.241.215.91:55934] Not Found: /portal/redlion
+[Wed Sep 15 03:15:13.980861 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 185.254.31.134:41730] Not Found: /.env
+[Wed Sep 15 03:17:30.630964 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 41.142.110.115:60370] Not Found: /.env
+[Wed Sep 15 03:17:31.002920 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 41.142.110.115:43993] Forbidden (CSRF cookie not set.): /
+[Wed Sep 15 03:35:08.807293 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 209.141.46.56:49088] Not Found: /boaform/admin/formLogin
+[Wed Sep 15 03:36:21.916115 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 192.241.221.23:47182] Not Found: /actuator/health
+[Wed Sep 15 03:38:19.416699 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 35.228.213.137:59517] Not Found: /.env
+[Wed Sep 15 03:38:20.117105 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 35.228.213.137:61012] Forbidden (Referer checking failed - no Referer.): /
+[Wed Sep 15 03:39:50.627371 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 143.198.18.179:51432] Not Found: /.env
+[Wed Sep 15 03:39:51.503789 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 143.198.18.179:52276] Forbidden (CSRF cookie not set.): /
+[Wed Sep 15 03:54:38.531099 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 209.141.33.44:55014] Not Found: /boaform/admin/formLogin
+[Wed Sep 15 04:09:29.910283 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 192.241.220.243:41042] Not Found: /hudson
+[Wed Sep 15 04:27:39.202883 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 205.185.121.47:33586] Not Found: /boaform/admin/formLogin
+[Wed Sep 15 04:57:40.304773 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 107.189.31.252:50642] Not Found: /config/getuser
+[Wed Sep 15 05:37:14.243688 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 39.106.30.70:51138] Not Found: /administrator/phpmyadmin/index.php
+[Wed Sep 15 05:37:14.626864 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 39.106.30.70:51296] Not Found: /phpmyadmin2021/index.php
+[Wed Sep 15 05:37:15.018476 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 39.106.30.70:51464] Not Found: /administrator/db/index.php
+[Wed Sep 15 05:37:15.400932 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 39.106.30.70:51622] Not Found: /PMA2012/index.php
+[Wed Sep 15 05:37:15.781837 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 39.106.30.70:51774] Not Found: /mysql/dbadmin/index.php
+[Wed Sep 15 05:37:16.168665 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 39.106.30.70:51932] Not Found: /PMA2017/index.php
+[Wed Sep 15 05:37:16.550519 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 39.106.30.70:52090] Not Found: /sql/myadmin/index.php
+[Wed Sep 15 05:37:16.936756 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 39.106.30.70:52262] Not Found: /phpmyadmin3/index.php
+[Wed Sep 15 05:39:56.525486 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 135.125.246.110:47992] Forbidden (CSRF cookie not set.): /
+[Wed Sep 15 05:39:56.839315 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 135.125.246.110:48150] Not Found: /.env
+[Wed Sep 15 06:04:33.960021 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 212.154.7.246:40416] Not Found: /.env
+[Wed Sep 15 06:04:35.525653 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 212.154.7.246:40536] Forbidden (CSRF cookie not set.): /
+[Wed Sep 15 06:07:36.469002 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 23.90.160.114:35680] Not Found: /owa/
+[Wed Sep 15 06:27:34.861512 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 205.185.120.188:57094] Not Found: /boaform/admin/formLogin
+[Wed Sep 15 07:41:08.413808 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 143.198.18.179:42746] Not Found: /.env
+[Wed Sep 15 07:41:08.903172 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 143.198.18.179:43266] Forbidden (CSRF cookie not set.): /
+[Wed Sep 15 08:40:55.868038 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 135.125.246.110:49892] Forbidden (CSRF cookie not set.): /
+[Wed Sep 15 08:40:56.191392 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 135.125.246.110:50080] Not Found: /.env
+[Wed Sep 15 09:23:43.758145 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 45.146.164.110:47086] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Wed Sep 15 09:23:43.759041 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 45.146.164.110:47100] Not Found: /api/jsonws/invoke
+[Wed Sep 15 09:23:44.132567 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 45.146.164.110:57216] Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[Wed Sep 15 09:23:44.506377 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 45.146.164.110:36480] Not Found: /console/
+[Wed Sep 15 09:23:45.251925 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 45.146.164.110:54852] Not Found: /solr/admin/info/system
+[Wed Sep 15 09:23:46.164029 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 45.146.164.110:57338] Not Found: /wp-content/plugins/wp-file-manager/readme.txt
+[Wed Sep 15 09:23:46.526012 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 45.146.164.110:39720] Not Found: /Autodiscover/Autodiscover.xml
+[Wed Sep 15 09:23:46.629527 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 45.146.164.110:33248] Not Found: /index.php
+[Wed Sep 15 09:23:46.988000 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 45.146.164.110:47374] Not Found: /_ignition/execute-solution
+[Wed Sep 15 11:42:19.412020 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 135.125.246.110:60082] Forbidden (CSRF cookie not set.): /
+[Wed Sep 15 11:42:19.718183 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 135.125.246.110:60236] Not Found: /.env
+[Wed Sep 15 12:17:14.125718 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 199.19.224.165:40060] Not Found: /config/getuser
+[Wed Sep 15 12:21:20.606657 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 192.241.215.230:46002] Not Found: /owa/auth/logon.aspx
+[Wed Sep 15 12:57:44.960875 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 18.117.70.64:43348] Not Found: /.env
+[Wed Sep 15 12:57:45.440412 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 18.117.70.64:43540] Forbidden (Referer checking failed - no Referer.): /
+[Wed Sep 15 13:22:40.107359 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 143.198.18.179:36078] Not Found: /.env
+[Wed Sep 15 13:22:40.815080 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 143.198.18.179:38948] Forbidden (CSRF cookie not set.): /
+[Wed Sep 15 15:37:27.217515 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 192.241.216.61:46468] Not Found: /owa/auth/x.js
+[Wed Sep 15 15:39:43.058152 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 192.241.213.50:39838] Not Found: /ecp/Current/exporttool/microsoft.exchange.ediscovery.exporttool.application
+[Wed Sep 15 15:47:49.147852 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 192.241.209.42:42858] Not Found: /owa/auth/logon.aspx
+[Wed Sep 15 16:05:41.774494 2021] [wsgi:error] [pid 1274:tid 140153367779072] [remote 54.186.122.127:65518] Not Found: /.env
+[Wed Sep 15 16:05:41.824026 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 54.186.122.127:50115] Forbidden (CSRF cookie not set.): /
+[Wed Sep 15 16:13:50.085268 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 107.189.31.19:56336] Not Found: /config/getuser
+[Wed Sep 15 16:44:05.334756 2021] [wsgi:error] [pid 1275:tid 140153376171776] [remote 24.234.96.215:61064] Bad Request: /graphql/
+[Wed Sep 15 17:03:22.555327 2021] [wsgi:error] [pid 1274:tid 140153359386368] [remote 54.186.122.127:53901] Not Found: /.env
+[Wed Sep 15 17:03:22.607195 2021] [wsgi:error] [pid 1275:tid 140153367779072] [remote 54.186.122.127:62085] Forbidden (CSRF cookie not set.): /
+[Wed Sep 15 17:22:32.747539 2021] [mpm_event:notice] [pid 1271:tid 140153513958272] AH00491: caught SIGTERM, shutting down
+Exception ignored in: <function BaseEventLoop.__del__ at 0x7f77fe666040>
+Traceback (most recent call last):
+  File "/opt/bitnami/python/lib/python3.8/asyncio/base_events.py", line 654, in __del__
+NameError: name 'ResourceWarning' is not defined
+Exception ignored in: <function Local.__del__ at 0x7f77fe5dcc10>
+Traceback (most recent call last):
+  File "/opt/bitnami/python/lib/python3.8/site-packages/asgiref/local.py", line 96, in __del__
+NameError: name 'TypeError' is not defined
+Exception ignored in: <function Local.__del__ at 0x7f77fe5dcc10>
+Traceback (most recent call last):
+  File "/opt/bitnami/python/lib/python3.8/site-packages/asgiref/local.py", line 96, in __del__
+NameError: name 'TypeError' is not defined
+Exception ignored in: <function BaseEventLoop.__del__ at 0x7f77fe665040>
+Traceback (most recent call last):
+  File "/opt/bitnami/python/lib/python3.8/asyncio/base_events.py", line 654, in __del__
+NameError: name 'ResourceWarning' is not defined
+Exception ignored in: <function Local.__del__ at 0x7f77fe5dcc10>
+Traceback (most recent call last):
+  File "/opt/bitnami/python/lib/python3.8/site-packages/asgiref/local.py", line 96, in __del__
+NameError: name 'TypeError' is not defined
+Exception ignored in: <function Local.__del__ at 0x7f77fe5dcc10>
+Traceback (most recent call last):
+  File "/opt/bitnami/python/lib/python3.8/site-packages/asgiref/local.py", line 96, in __del__
+NameError: name 'TypeError' is not defined
+Exception ignored in: <function Local.__del__ at 0x7f77ef93c4c0>
+Traceback (most recent call last):
+  File "/opt/bitnami/python/lib/python3.8/site-packages/asgiref/local.py", line 96, in __del__
+NameError: name 'TypeError' is not defined
+[Wed Sep 15 17:22:33.183508 2021] [ssl:warn] [pid 23467:tid 139923872045952] AH01909: www.example.com:443:0 server certificate does NOT include an ID which matches the server name
+[Wed Sep 15 17:22:33.183938 2021] [ssl:warn] [pid 23467:tid 139923872045952] AH01909: www.example.com:443:0 server certificate does NOT include an ID which matches the server name
+[Wed Sep 15 17:22:33.193971 2021] [ssl:warn] [pid 23468:tid 139923872045952] AH01909: www.example.com:443:0 server certificate does NOT include an ID which matches the server name
+[Wed Sep 15 17:22:33.194328 2021] [ssl:warn] [pid 23468:tid 139923872045952] AH01909: www.example.com:443:0 server certificate does NOT include an ID which matches the server name
+[Wed Sep 15 17:22:33.195558 2021] [mpm_event:notice] [pid 23468:tid 139923872045952] AH00489: Apache/2.4.48 (Unix) OpenSSL/1.1.1d mod_wsgi/4.7.1 Python/3.8 configured -- resuming normal operations
+[Wed Sep 15 17:22:33.195591 2021] [core:notice] [pid 23468:tid 139923872045952] AH00094: Command line: '/opt/bitnami/apache/bin/httpd -f /opt/bitnami/apache/conf/httpd.conf'
+[Wed Sep 15 17:22:36.658866 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098] mod_wsgi (pid=23471): Failed to exec Python script file '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:22:36.658928 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098] mod_wsgi (pid=23471): Exception occurred processing WSGI script '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:22:36.659774 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098] Traceback (most recent call last):
+[Wed Sep 15 17:22:36.659832 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098]   File "/opt/bitnami/projects/core/core/wsgi.py", line 16, in <module>
+[Wed Sep 15 17:22:36.659840 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098]     application = get_wsgi_application()
+[Wed Sep 15 17:22:36.659850 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+[Wed Sep 15 17:22:36.659856 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098]     django.setup(set_prefix=False)
+[Wed Sep 15 17:22:36.659865 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/__init__.py", line 24, in setup
+[Wed Sep 15 17:22:36.659870 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098]     apps.populate(settings.INSTALLED_APPS)
+[Wed Sep 15 17:22:36.659879 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/registry.py", line 114, in populate
+[Wed Sep 15 17:22:36.659884 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098]     app_config.import_models()
+[Wed Sep 15 17:22:36.659897 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/config.py", line 301, in import_models
+[Wed Sep 15 17:22:36.659903 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098]     self.models_module = import_module(models_module_name)
+[Wed Sep 15 17:22:36.659911 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098]   File "/opt/bitnami/python/lib/python3.8/importlib/__init__.py", line 127, in import_module
+[Wed Sep 15 17:22:36.659917 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098]     return _bootstrap._gcd_import(name[level:], package, level)
+[Wed Sep 15 17:22:36.659925 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098]   File "<frozen importlib._bootstrap>", line 1014, in _gcd_import
+[Wed Sep 15 17:22:36.659934 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098]   File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+[Wed Sep 15 17:22:36.659943 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098]   File "<frozen importlib._bootstrap>", line 975, in _find_and_load_unlocked
+[Wed Sep 15 17:22:36.659952 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098]   File "<frozen importlib._bootstrap>", line 671, in _load_unlocked
+[Wed Sep 15 17:22:36.659960 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098]   File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+[Wed Sep 15 17:22:36.659969 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098]   File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+[Wed Sep 15 17:22:36.659990 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098]   File "/opt/bitnami/projects/core/app/models.py", line 2, in <module>
+[Wed Sep 15 17:22:36.659996 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098]     from s3direct.fields import S3DirectField
+[Wed Sep 15 17:22:36.660014 2021] [wsgi:error] [pid 23471:tid 139923834971904] [remote 24.234.96.215:62098] ModuleNotFoundError: No module named 's3direct'
+[Wed Sep 15 17:24:45.133527 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669] mod_wsgi (pid=23472): Failed to exec Python script file '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:24:45.134537 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669] mod_wsgi (pid=23472): Exception occurred processing WSGI script '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:24:45.135432 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669] Traceback (most recent call last):
+[Wed Sep 15 17:24:45.135492 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669]   File "/opt/bitnami/projects/core/core/wsgi.py", line 16, in <module>
+[Wed Sep 15 17:24:45.135501 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669]     application = get_wsgi_application()
+[Wed Sep 15 17:24:45.135512 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+[Wed Sep 15 17:24:45.135518 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669]     django.setup(set_prefix=False)
+[Wed Sep 15 17:24:45.135527 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/__init__.py", line 24, in setup
+[Wed Sep 15 17:24:45.135533 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669]     apps.populate(settings.INSTALLED_APPS)
+[Wed Sep 15 17:24:45.135547 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/registry.py", line 114, in populate
+[Wed Sep 15 17:24:45.135553 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669]     app_config.import_models()
+[Wed Sep 15 17:24:45.135563 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/config.py", line 301, in import_models
+[Wed Sep 15 17:24:45.135569 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669]     self.models_module = import_module(models_module_name)
+[Wed Sep 15 17:24:45.135578 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669]   File "/opt/bitnami/python/lib/python3.8/importlib/__init__.py", line 127, in import_module
+[Wed Sep 15 17:24:45.135584 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669]     return _bootstrap._gcd_import(name[level:], package, level)
+[Wed Sep 15 17:24:45.135592 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669]   File "<frozen importlib._bootstrap>", line 1014, in _gcd_import
+[Wed Sep 15 17:24:45.135602 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669]   File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+[Wed Sep 15 17:24:45.135611 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669]   File "<frozen importlib._bootstrap>", line 975, in _find_and_load_unlocked
+[Wed Sep 15 17:24:45.135620 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669]   File "<frozen importlib._bootstrap>", line 671, in _load_unlocked
+[Wed Sep 15 17:24:45.135629 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669]   File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+[Wed Sep 15 17:24:45.135649 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669]   File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+[Wed Sep 15 17:24:45.135658 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669]   File "/opt/bitnami/projects/core/app/models.py", line 2, in <module>
+[Wed Sep 15 17:24:45.135663 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669]     from s3direct.fields import S3DirectField
+[Wed Sep 15 17:24:45.135682 2021] [wsgi:error] [pid 23472:tid 139923834971904] [remote 20.102.123.158:60669] ModuleNotFoundError: No module named 's3direct'
+[Wed Sep 15 17:24:45.491228 2021] [wsgi:error] [pid 23471:tid 139923717474048] [remote 20.102.123.158:61641] mod_wsgi (pid=23471): Failed to exec Python script file '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:24:45.491288 2021] [wsgi:error] [pid 23471:tid 139923717474048] [remote 20.102.123.158:61641] mod_wsgi (pid=23471): Exception occurred processing WSGI script '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:24:45.491406 2021] [wsgi:error] [pid 23471:tid 139923717474048] [remote 20.102.123.158:61641] Traceback (most recent call last):
+[Wed Sep 15 17:24:45.491449 2021] [wsgi:error] [pid 23471:tid 139923717474048] [remote 20.102.123.158:61641]   File "/opt/bitnami/projects/core/core/wsgi.py", line 16, in <module>
+[Wed Sep 15 17:24:45.491456 2021] [wsgi:error] [pid 23471:tid 139923717474048] [remote 20.102.123.158:61641]     application = get_wsgi_application()
+[Wed Sep 15 17:24:45.491466 2021] [wsgi:error] [pid 23471:tid 139923717474048] [remote 20.102.123.158:61641]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+[Wed Sep 15 17:24:45.491472 2021] [wsgi:error] [pid 23471:tid 139923717474048] [remote 20.102.123.158:61641]     django.setup(set_prefix=False)
+[Wed Sep 15 17:24:45.491481 2021] [wsgi:error] [pid 23471:tid 139923717474048] [remote 20.102.123.158:61641]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/__init__.py", line 24, in setup
+[Wed Sep 15 17:24:45.491486 2021] [wsgi:error] [pid 23471:tid 139923717474048] [remote 20.102.123.158:61641]     apps.populate(settings.INSTALLED_APPS)
+[Wed Sep 15 17:24:45.491495 2021] [wsgi:error] [pid 23471:tid 139923717474048] [remote 20.102.123.158:61641]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/registry.py", line 83, in populate
+[Wed Sep 15 17:24:45.491501 2021] [wsgi:error] [pid 23471:tid 139923717474048] [remote 20.102.123.158:61641]     raise RuntimeError("populate() isn't reentrant")
+[Wed Sep 15 17:24:45.491525 2021] [wsgi:error] [pid 23471:tid 139923717474048] [remote 20.102.123.158:61641] RuntimeError: populate() isn't reentrant
+[Wed Sep 15 17:24:51.373123 2021] [wsgi:error] [pid 23472:tid 139923717474048] [remote 24.234.96.215:60481] mod_wsgi (pid=23472): Failed to exec Python script file '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:24:51.373202 2021] [wsgi:error] [pid 23472:tid 139923717474048] [remote 24.234.96.215:60481] mod_wsgi (pid=23472): Exception occurred processing WSGI script '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:24:51.373315 2021] [wsgi:error] [pid 23472:tid 139923717474048] [remote 24.234.96.215:60481] Traceback (most recent call last):
+[Wed Sep 15 17:24:51.373355 2021] [wsgi:error] [pid 23472:tid 139923717474048] [remote 24.234.96.215:60481]   File "/opt/bitnami/projects/core/core/wsgi.py", line 16, in <module>
+[Wed Sep 15 17:24:51.373362 2021] [wsgi:error] [pid 23472:tid 139923717474048] [remote 24.234.96.215:60481]     application = get_wsgi_application()
+[Wed Sep 15 17:24:51.373383 2021] [wsgi:error] [pid 23472:tid 139923717474048] [remote 24.234.96.215:60481]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+[Wed Sep 15 17:24:51.373389 2021] [wsgi:error] [pid 23472:tid 139923717474048] [remote 24.234.96.215:60481]     django.setup(set_prefix=False)
+[Wed Sep 15 17:24:51.373417 2021] [wsgi:error] [pid 23472:tid 139923717474048] [remote 24.234.96.215:60481]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/__init__.py", line 24, in setup
+[Wed Sep 15 17:24:51.373423 2021] [wsgi:error] [pid 23472:tid 139923717474048] [remote 24.234.96.215:60481]     apps.populate(settings.INSTALLED_APPS)
+[Wed Sep 15 17:24:51.373432 2021] [wsgi:error] [pid 23472:tid 139923717474048] [remote 24.234.96.215:60481]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/registry.py", line 83, in populate
+[Wed Sep 15 17:24:51.373437 2021] [wsgi:error] [pid 23472:tid 139923717474048] [remote 24.234.96.215:60481]     raise RuntimeError("populate() isn't reentrant")
+[Wed Sep 15 17:24:51.373457 2021] [wsgi:error] [pid 23472:tid 139923717474048] [remote 24.234.96.215:60481] RuntimeError: populate() isn't reentrant
+[Wed Sep 15 17:24:54.816677 2021] [mpm_event:notice] [pid 23468:tid 139923872045952] AH00491: caught SIGTERM, shutting down
+[Wed Sep 15 17:24:55.247686 2021] [ssl:warn] [pid 24104:tid 139907059530624] AH01909: www.example.com:443:0 server certificate does NOT include an ID which matches the server name
+[Wed Sep 15 17:24:55.248071 2021] [ssl:warn] [pid 24104:tid 139907059530624] AH01909: www.example.com:443:0 server certificate does NOT include an ID which matches the server name
+[Wed Sep 15 17:24:55.258357 2021] [ssl:warn] [pid 24105:tid 139907059530624] AH01909: www.example.com:443:0 server certificate does NOT include an ID which matches the server name
+[Wed Sep 15 17:24:55.258693 2021] [ssl:warn] [pid 24105:tid 139907059530624] AH01909: www.example.com:443:0 server certificate does NOT include an ID which matches the server name
+[Wed Sep 15 17:24:55.259945 2021] [mpm_event:notice] [pid 24105:tid 139907059530624] AH00489: Apache/2.4.48 (Unix) OpenSSL/1.1.1d mod_wsgi/4.7.1 Python/3.8 configured -- resuming normal operations
+[Wed Sep 15 17:24:55.259968 2021] [core:notice] [pid 24105:tid 139907059530624] AH00094: Command line: '/opt/bitnami/apache/bin/httpd -f /opt/bitnami/apache/conf/httpd.conf'
+[Wed Sep 15 17:25:00.605546 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082] mod_wsgi (pid=24109): Failed to exec Python script file '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:25:00.605613 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082] mod_wsgi (pid=24109): Exception occurred processing WSGI script '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:25:00.606384 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082] Traceback (most recent call last):
+[Wed Sep 15 17:25:00.606444 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082]   File "/opt/bitnami/projects/core/core/wsgi.py", line 16, in <module>
+[Wed Sep 15 17:25:00.606452 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082]     application = get_wsgi_application()
+[Wed Sep 15 17:25:00.606463 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+[Wed Sep 15 17:25:00.606468 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082]     django.setup(set_prefix=False)
+[Wed Sep 15 17:25:00.606477 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/__init__.py", line 24, in setup
+[Wed Sep 15 17:25:00.606483 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082]     apps.populate(settings.INSTALLED_APPS)
+[Wed Sep 15 17:25:00.606491 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/registry.py", line 114, in populate
+[Wed Sep 15 17:25:00.606496 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082]     app_config.import_models()
+[Wed Sep 15 17:25:00.606515 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/config.py", line 301, in import_models
+[Wed Sep 15 17:25:00.606521 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082]     self.models_module = import_module(models_module_name)
+[Wed Sep 15 17:25:00.606529 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082]   File "/opt/bitnami/python/lib/python3.8/importlib/__init__.py", line 127, in import_module
+[Wed Sep 15 17:25:00.606534 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082]     return _bootstrap._gcd_import(name[level:], package, level)
+[Wed Sep 15 17:25:00.606543 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082]   File "<frozen importlib._bootstrap>", line 1014, in _gcd_import
+[Wed Sep 15 17:25:00.606551 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082]   File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+[Wed Sep 15 17:25:00.606560 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082]   File "<frozen importlib._bootstrap>", line 975, in _find_and_load_unlocked
+[Wed Sep 15 17:25:00.606569 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082]   File "<frozen importlib._bootstrap>", line 671, in _load_unlocked
+[Wed Sep 15 17:25:00.606577 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082]   File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+[Wed Sep 15 17:25:00.606586 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082]   File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+[Wed Sep 15 17:25:00.606594 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082]   File "/opt/bitnami/projects/core/app/models.py", line 3, in <module>
+[Wed Sep 15 17:25:00.606600 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082]     from graphene_file_upload.scalars import Upload
+[Wed Sep 15 17:25:00.606618 2021] [wsgi:error] [pid 24109:tid 139907022456576] [remote 24.234.96.215:52082] ModuleNotFoundError: No module named 'graphene_file_upload'
+[Wed Sep 15 17:26:17.638513 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979] mod_wsgi (pid=24108): Failed to exec Python script file '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:26:17.638597 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979] mod_wsgi (pid=24108): Exception occurred processing WSGI script '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:26:17.639382 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979] Traceback (most recent call last):
+[Wed Sep 15 17:26:17.639443 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979]   File "/opt/bitnami/projects/core/core/wsgi.py", line 16, in <module>
+[Wed Sep 15 17:26:17.639452 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979]     application = get_wsgi_application()
+[Wed Sep 15 17:26:17.639462 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+[Wed Sep 15 17:26:17.639468 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979]     django.setup(set_prefix=False)
+[Wed Sep 15 17:26:17.639477 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/__init__.py", line 24, in setup
+[Wed Sep 15 17:26:17.639483 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979]     apps.populate(settings.INSTALLED_APPS)
+[Wed Sep 15 17:26:17.639492 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/registry.py", line 114, in populate
+[Wed Sep 15 17:26:17.639507 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979]     app_config.import_models()
+[Wed Sep 15 17:26:17.639516 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/config.py", line 301, in import_models
+[Wed Sep 15 17:26:17.639522 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979]     self.models_module = import_module(models_module_name)
+[Wed Sep 15 17:26:17.639530 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979]   File "/opt/bitnami/python/lib/python3.8/importlib/__init__.py", line 127, in import_module
+[Wed Sep 15 17:26:17.639535 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979]     return _bootstrap._gcd_import(name[level:], package, level)
+[Wed Sep 15 17:26:17.639543 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979]   File "<frozen importlib._bootstrap>", line 1014, in _gcd_import
+[Wed Sep 15 17:26:17.639552 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979]   File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+[Wed Sep 15 17:26:17.639561 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979]   File "<frozen importlib._bootstrap>", line 975, in _find_and_load_unlocked
+[Wed Sep 15 17:26:17.639569 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979]   File "<frozen importlib._bootstrap>", line 671, in _load_unlocked
+[Wed Sep 15 17:26:17.639578 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979]   File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+[Wed Sep 15 17:26:17.639586 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979]   File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+[Wed Sep 15 17:26:17.639595 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979]   File "/opt/bitnami/projects/core/app/models.py", line 3, in <module>
+[Wed Sep 15 17:26:17.639600 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979]     from graphene_file_upload.scalars import Upload
+[Wed Sep 15 17:26:17.639618 2021] [wsgi:error] [pid 24108:tid 139907022456576] [remote 181.225.149.201:51979] ModuleNotFoundError: No module named 'graphene_file_upload'
+[Wed Sep 15 17:29:29.872519 2021] [mpm_event:notice] [pid 24105:tid 139907059530624] AH00491: caught SIGTERM, shutting down
+[Wed Sep 15 17:29:30.301805 2021] [ssl:warn] [pid 24760:tid 140524902480768] AH01909: www.example.com:443:0 server certificate does NOT include an ID which matches the server name
+[Wed Sep 15 17:29:30.302176 2021] [ssl:warn] [pid 24760:tid 140524902480768] AH01909: www.example.com:443:0 server certificate does NOT include an ID which matches the server name
+[Wed Sep 15 17:29:30.311599 2021] [ssl:warn] [pid 24761:tid 140524902480768] AH01909: www.example.com:443:0 server certificate does NOT include an ID which matches the server name
+[Wed Sep 15 17:29:30.311934 2021] [ssl:warn] [pid 24761:tid 140524902480768] AH01909: www.example.com:443:0 server certificate does NOT include an ID which matches the server name
+[Wed Sep 15 17:29:30.313792 2021] [mpm_event:notice] [pid 24761:tid 140524902480768] AH00489: Apache/2.4.48 (Unix) OpenSSL/1.1.1d mod_wsgi/4.7.1 Python/3.8 configured -- resuming normal operations
+[Wed Sep 15 17:29:30.313822 2021] [core:notice] [pid 24761:tid 140524902480768] AH00094: Command line: '/opt/bitnami/apache/bin/httpd -f /opt/bitnami/apache/conf/httpd.conf'
+[Wed Sep 15 17:29:33.762768 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167] mod_wsgi (pid=24765): Failed to exec Python script file '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:29:33.762840 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167] mod_wsgi (pid=24765): Exception occurred processing WSGI script '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:29:33.763602 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167] Traceback (most recent call last):
+[Wed Sep 15 17:29:33.763660 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167]   File "/opt/bitnami/projects/core/core/wsgi.py", line 16, in <module>
+[Wed Sep 15 17:29:33.763668 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167]     application = get_wsgi_application()
+[Wed Sep 15 17:29:33.763677 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+[Wed Sep 15 17:29:33.763683 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167]     django.setup(set_prefix=False)
+[Wed Sep 15 17:29:33.763691 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/__init__.py", line 24, in setup
+[Wed Sep 15 17:29:33.763696 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167]     apps.populate(settings.INSTALLED_APPS)
+[Wed Sep 15 17:29:33.763704 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/registry.py", line 114, in populate
+[Wed Sep 15 17:29:33.763709 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167]     app_config.import_models()
+[Wed Sep 15 17:29:33.763717 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/config.py", line 301, in import_models
+[Wed Sep 15 17:29:33.763722 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167]     self.models_module = import_module(models_module_name)
+[Wed Sep 15 17:29:33.763730 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167]   File "/opt/bitnami/python/lib/python3.8/importlib/__init__.py", line 127, in import_module
+[Wed Sep 15 17:29:33.763735 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167]     return _bootstrap._gcd_import(name[level:], package, level)
+[Wed Sep 15 17:29:33.763743 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167]   File "<frozen importlib._bootstrap>", line 1014, in _gcd_import
+[Wed Sep 15 17:29:33.763751 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167]   File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+[Wed Sep 15 17:29:33.763760 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167]   File "<frozen importlib._bootstrap>", line 975, in _find_and_load_unlocked
+[Wed Sep 15 17:29:33.763768 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167]   File "<frozen importlib._bootstrap>", line 671, in _load_unlocked
+[Wed Sep 15 17:29:33.763776 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167]   File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+[Wed Sep 15 17:29:33.763784 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167]   File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+[Wed Sep 15 17:29:33.763793 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167]   File "/opt/bitnami/projects/core/app/models.py", line 3, in <module>
+[Wed Sep 15 17:29:33.763798 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167]     from graphene_file_upload.scalars import Upload
+[Wed Sep 15 17:29:33.763815 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:53167] ModuleNotFoundError: No module named 'graphene_file_upload'
+[Wed Sep 15 17:29:36.386282 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433] mod_wsgi (pid=24764): Failed to exec Python script file '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:29:36.386359 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433] mod_wsgi (pid=24764): Exception occurred processing WSGI script '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:29:36.387115 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433] Traceback (most recent call last):
+[Wed Sep 15 17:29:36.387173 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433]   File "/opt/bitnami/projects/core/core/wsgi.py", line 16, in <module>
+[Wed Sep 15 17:29:36.387181 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433]     application = get_wsgi_application()
+[Wed Sep 15 17:29:36.387191 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+[Wed Sep 15 17:29:36.387196 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433]     django.setup(set_prefix=False)
+[Wed Sep 15 17:29:36.387204 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/__init__.py", line 24, in setup
+[Wed Sep 15 17:29:36.387209 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433]     apps.populate(settings.INSTALLED_APPS)
+[Wed Sep 15 17:29:36.387217 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/registry.py", line 114, in populate
+[Wed Sep 15 17:29:36.387222 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433]     app_config.import_models()
+[Wed Sep 15 17:29:36.387230 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/config.py", line 301, in import_models
+[Wed Sep 15 17:29:36.387235 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433]     self.models_module = import_module(models_module_name)
+[Wed Sep 15 17:29:36.387243 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433]   File "/opt/bitnami/python/lib/python3.8/importlib/__init__.py", line 127, in import_module
+[Wed Sep 15 17:29:36.387248 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433]     return _bootstrap._gcd_import(name[level:], package, level)
+[Wed Sep 15 17:29:36.387256 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433]   File "<frozen importlib._bootstrap>", line 1014, in _gcd_import
+[Wed Sep 15 17:29:36.387264 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433]   File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+[Wed Sep 15 17:29:36.387273 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433]   File "<frozen importlib._bootstrap>", line 975, in _find_and_load_unlocked
+[Wed Sep 15 17:29:36.387281 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433]   File "<frozen importlib._bootstrap>", line 671, in _load_unlocked
+[Wed Sep 15 17:29:36.387289 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433]   File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+[Wed Sep 15 17:29:36.387297 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433]   File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+[Wed Sep 15 17:29:36.387306 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433]   File "/opt/bitnami/projects/core/app/models.py", line 3, in <module>
+[Wed Sep 15 17:29:36.387311 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433]     from graphene_file_upload.scalars import Upload
+[Wed Sep 15 17:29:36.387328 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:54433] ModuleNotFoundError: No module named 'graphene_file_upload'
+[Wed Sep 15 17:30:00.429220 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:55846] mod_wsgi (pid=24765): Failed to exec Python script file '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:30:00.429285 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:55846] mod_wsgi (pid=24765): Exception occurred processing WSGI script '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:30:00.429406 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:55846] Traceback (most recent call last):
+[Wed Sep 15 17:30:00.429448 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:55846]   File "/opt/bitnami/projects/core/core/wsgi.py", line 16, in <module>
+[Wed Sep 15 17:30:00.429455 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:55846]     application = get_wsgi_application()
+[Wed Sep 15 17:30:00.429465 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:55846]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+[Wed Sep 15 17:30:00.429471 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:55846]     django.setup(set_prefix=False)
+[Wed Sep 15 17:30:00.429479 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:55846]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/__init__.py", line 24, in setup
+[Wed Sep 15 17:30:00.429484 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:55846]     apps.populate(settings.INSTALLED_APPS)
+[Wed Sep 15 17:30:00.429492 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:55846]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/registry.py", line 83, in populate
+[Wed Sep 15 17:30:00.429498 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:55846]     raise RuntimeError("populate() isn't reentrant")
+[Wed Sep 15 17:30:00.429516 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:55846] RuntimeError: populate() isn't reentrant
+[Wed Sep 15 17:30:01.128136 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 24.234.96.215:61186] mod_wsgi (pid=24764): Failed to exec Python script file '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:30:01.128221 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 24.234.96.215:61186] mod_wsgi (pid=24764): Exception occurred processing WSGI script '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:30:01.128348 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 24.234.96.215:61186] Traceback (most recent call last):
+[Wed Sep 15 17:30:01.128391 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 24.234.96.215:61186]   File "/opt/bitnami/projects/core/core/wsgi.py", line 16, in <module>
+[Wed Sep 15 17:30:01.128399 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 24.234.96.215:61186]     application = get_wsgi_application()
+[Wed Sep 15 17:30:01.128408 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 24.234.96.215:61186]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+[Wed Sep 15 17:30:01.128414 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 24.234.96.215:61186]     django.setup(set_prefix=False)
+[Wed Sep 15 17:30:01.128422 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 24.234.96.215:61186]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/__init__.py", line 24, in setup
+[Wed Sep 15 17:30:01.128428 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 24.234.96.215:61186]     apps.populate(settings.INSTALLED_APPS)
+[Wed Sep 15 17:30:01.128436 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 24.234.96.215:61186]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/registry.py", line 83, in populate
+[Wed Sep 15 17:30:01.128452 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 24.234.96.215:61186]     raise RuntimeError("populate() isn't reentrant")
+[Wed Sep 15 17:30:01.128472 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 24.234.96.215:61186] RuntimeError: populate() isn't reentrant
+[Wed Sep 15 17:30:01.325038 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:50074] mod_wsgi (pid=24765): Failed to exec Python script file '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:30:01.325096 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:50074] mod_wsgi (pid=24765): Exception occurred processing WSGI script '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:30:01.325211 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:50074] Traceback (most recent call last):
+[Wed Sep 15 17:30:01.325251 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:50074]   File "/opt/bitnami/projects/core/core/wsgi.py", line 16, in <module>
+[Wed Sep 15 17:30:01.325258 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:50074]     application = get_wsgi_application()
+[Wed Sep 15 17:30:01.325268 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:50074]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+[Wed Sep 15 17:30:01.325274 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:50074]     django.setup(set_prefix=False)
+[Wed Sep 15 17:30:01.325282 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:50074]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/__init__.py", line 24, in setup
+[Wed Sep 15 17:30:01.325288 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:50074]     apps.populate(settings.INSTALLED_APPS)
+[Wed Sep 15 17:30:01.325296 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:50074]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/registry.py", line 83, in populate
+[Wed Sep 15 17:30:01.325302 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:50074]     raise RuntimeError("populate() isn't reentrant")
+[Wed Sep 15 17:30:01.325319 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:50074] RuntimeError: populate() isn't reentrant
+[Wed Sep 15 17:30:01.525577 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:52595] mod_wsgi (pid=24765): Failed to exec Python script file '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:30:01.525629 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:52595] mod_wsgi (pid=24765): Exception occurred processing WSGI script '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:30:01.525746 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:52595] Traceback (most recent call last):
+[Wed Sep 15 17:30:01.525785 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:52595]   File "/opt/bitnami/projects/core/core/wsgi.py", line 16, in <module>
+[Wed Sep 15 17:30:01.525792 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:52595]     application = get_wsgi_application()
+[Wed Sep 15 17:30:01.525803 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:52595]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+[Wed Sep 15 17:30:01.525808 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:52595]     django.setup(set_prefix=False)
+[Wed Sep 15 17:30:01.525817 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:52595]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/__init__.py", line 24, in setup
+[Wed Sep 15 17:30:01.525822 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:52595]     apps.populate(settings.INSTALLED_APPS)
+[Wed Sep 15 17:30:01.525830 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:52595]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/registry.py", line 83, in populate
+[Wed Sep 15 17:30:01.525847 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:52595]     raise RuntimeError("populate() isn't reentrant")
+[Wed Sep 15 17:30:01.525868 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 24.234.96.215:52595] RuntimeError: populate() isn't reentrant
+[Wed Sep 15 17:30:01.723048 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:65490] mod_wsgi (pid=24764): Failed to exec Python script file '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:30:01.723106 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:65490] mod_wsgi (pid=24764): Exception occurred processing WSGI script '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:30:01.723291 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:65490] Traceback (most recent call last):
+[Wed Sep 15 17:30:01.723331 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:65490]   File "/opt/bitnami/projects/core/core/wsgi.py", line 16, in <module>
+[Wed Sep 15 17:30:01.723339 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:65490]     application = get_wsgi_application()
+[Wed Sep 15 17:30:01.723349 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:65490]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+[Wed Sep 15 17:30:01.723355 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:65490]     django.setup(set_prefix=False)
+[Wed Sep 15 17:30:01.723363 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:65490]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/__init__.py", line 24, in setup
+[Wed Sep 15 17:30:01.723369 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:65490]     apps.populate(settings.INSTALLED_APPS)
+[Wed Sep 15 17:30:01.723377 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:65490]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/registry.py", line 83, in populate
+[Wed Sep 15 17:30:01.723382 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:65490]     raise RuntimeError("populate() isn't reentrant")
+[Wed Sep 15 17:30:01.723399 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 24.234.96.215:65490] RuntimeError: populate() isn't reentrant
+[Wed Sep 15 17:30:02.259795 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:55700] mod_wsgi (pid=24765): Failed to exec Python script file '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:30:02.259850 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:55700] mod_wsgi (pid=24765): Exception occurred processing WSGI script '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:30:02.259964 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:55700] Traceback (most recent call last):
+[Wed Sep 15 17:30:02.260006 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:55700]   File "/opt/bitnami/projects/core/core/wsgi.py", line 16, in <module>
+[Wed Sep 15 17:30:02.260014 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:55700]     application = get_wsgi_application()
+[Wed Sep 15 17:30:02.260027 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:55700]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+[Wed Sep 15 17:30:02.260033 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:55700]     django.setup(set_prefix=False)
+[Wed Sep 15 17:30:02.260042 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:55700]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/__init__.py", line 24, in setup
+[Wed Sep 15 17:30:02.260048 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:55700]     apps.populate(settings.INSTALLED_APPS)
+[Wed Sep 15 17:30:02.260064 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:55700]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/registry.py", line 83, in populate
+[Wed Sep 15 17:30:02.260070 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:55700]     raise RuntimeError("populate() isn't reentrant")
+[Wed Sep 15 17:30:02.260088 2021] [wsgi:error] [pid 24765:tid 140524857014016] [remote 24.234.96.215:55700] RuntimeError: populate() isn't reentrant
+[Wed Sep 15 17:31:31.496660 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 181.225.149.120:52616] mod_wsgi (pid=24764): Failed to exec Python script file '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:31:31.496725 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 181.225.149.120:52616] mod_wsgi (pid=24764): Exception occurred processing WSGI script '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:31:31.496838 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 181.225.149.120:52616] Traceback (most recent call last):
+[Wed Sep 15 17:31:31.496876 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 181.225.149.120:52616]   File "/opt/bitnami/projects/core/core/wsgi.py", line 16, in <module>
+[Wed Sep 15 17:31:31.496883 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 181.225.149.120:52616]     application = get_wsgi_application()
+[Wed Sep 15 17:31:31.496893 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 181.225.149.120:52616]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+[Wed Sep 15 17:31:31.496898 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 181.225.149.120:52616]     django.setup(set_prefix=False)
+[Wed Sep 15 17:31:31.496907 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 181.225.149.120:52616]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/__init__.py", line 24, in setup
+[Wed Sep 15 17:31:31.496913 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 181.225.149.120:52616]     apps.populate(settings.INSTALLED_APPS)
+[Wed Sep 15 17:31:31.496921 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 181.225.149.120:52616]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/registry.py", line 83, in populate
+[Wed Sep 15 17:31:31.496927 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 181.225.149.120:52616]     raise RuntimeError("populate() isn't reentrant")
+[Wed Sep 15 17:31:31.496944 2021] [wsgi:error] [pid 24764:tid 140524781479680] [remote 181.225.149.120:52616] RuntimeError: populate() isn't reentrant
+[Wed Sep 15 17:36:37.791787 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 135.125.246.110:54416] mod_wsgi (pid=24765): Failed to exec Python script file '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:36:37.791847 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 135.125.246.110:54416] mod_wsgi (pid=24765): Exception occurred processing WSGI script '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:36:37.791954 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 135.125.246.110:54416] Traceback (most recent call last):
+[Wed Sep 15 17:36:37.791989 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 135.125.246.110:54416]   File "/opt/bitnami/projects/core/core/wsgi.py", line 16, in <module>
+[Wed Sep 15 17:36:37.791996 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 135.125.246.110:54416]     application = get_wsgi_application()
+[Wed Sep 15 17:36:37.792004 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 135.125.246.110:54416]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+[Wed Sep 15 17:36:37.792010 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 135.125.246.110:54416]     django.setup(set_prefix=False)
+[Wed Sep 15 17:36:37.792018 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 135.125.246.110:54416]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/__init__.py", line 24, in setup
+[Wed Sep 15 17:36:37.792033 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 135.125.246.110:54416]     apps.populate(settings.INSTALLED_APPS)
+[Wed Sep 15 17:36:37.792042 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 135.125.246.110:54416]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/registry.py", line 83, in populate
+[Wed Sep 15 17:36:37.792047 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 135.125.246.110:54416]     raise RuntimeError("populate() isn't reentrant")
+[Wed Sep 15 17:36:37.792063 2021] [wsgi:error] [pid 24765:tid 140524865406720] [remote 135.125.246.110:54416] RuntimeError: populate() isn't reentrant
+[Wed Sep 15 17:36:38.099969 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 135.125.246.110:54596] mod_wsgi (pid=24764): Failed to exec Python script file '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:36:38.100027 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 135.125.246.110:54596] mod_wsgi (pid=24764): Exception occurred processing WSGI script '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:36:38.100142 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 135.125.246.110:54596] Traceback (most recent call last):
+[Wed Sep 15 17:36:38.100283 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 135.125.246.110:54596]   File "/opt/bitnami/projects/core/core/wsgi.py", line 16, in <module>
+[Wed Sep 15 17:36:38.100296 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 135.125.246.110:54596]     application = get_wsgi_application()
+[Wed Sep 15 17:36:38.100307 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 135.125.246.110:54596]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+[Wed Sep 15 17:36:38.100313 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 135.125.246.110:54596]     django.setup(set_prefix=False)
+[Wed Sep 15 17:36:38.100322 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 135.125.246.110:54596]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/__init__.py", line 24, in setup
+[Wed Sep 15 17:36:38.100327 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 135.125.246.110:54596]     apps.populate(settings.INSTALLED_APPS)
+[Wed Sep 15 17:36:38.100335 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 135.125.246.110:54596]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/registry.py", line 83, in populate
+[Wed Sep 15 17:36:38.100341 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 135.125.246.110:54596]     raise RuntimeError("populate() isn't reentrant")
+[Wed Sep 15 17:36:38.100360 2021] [wsgi:error] [pid 24764:tid 140524789872384] [remote 135.125.246.110:54596] RuntimeError: populate() isn't reentrant
+[Wed Sep 15 17:40:09.756385 2021] [mpm_event:notice] [pid 24761:tid 140524902480768] AH00491: caught SIGTERM, shutting down
+[Wed Sep 15 17:40:10.187004 2021] [ssl:warn] [pid 25444:tid 140174624414592] AH01909: www.example.com:443:0 server certificate does NOT include an ID which matches the server name
+[Wed Sep 15 17:40:10.187379 2021] [ssl:warn] [pid 25444:tid 140174624414592] AH01909: www.example.com:443:0 server certificate does NOT include an ID which matches the server name
+[Wed Sep 15 17:40:10.197653 2021] [ssl:warn] [pid 25445:tid 140174624414592] AH01909: www.example.com:443:0 server certificate does NOT include an ID which matches the server name
+[Wed Sep 15 17:40:10.197992 2021] [ssl:warn] [pid 25445:tid 140174624414592] AH01909: www.example.com:443:0 server certificate does NOT include an ID which matches the server name
+[Wed Sep 15 17:40:10.199220 2021] [mpm_event:notice] [pid 25445:tid 140174624414592] AH00489: Apache/2.4.48 (Unix) OpenSSL/1.1.1d mod_wsgi/4.7.1 Python/3.8 configured -- resuming normal operations
+[Wed Sep 15 17:40:10.199248 2021] [core:notice] [pid 25445:tid 140174624414592] AH00094: Command line: '/opt/bitnami/apache/bin/httpd -f /opt/bitnami/apache/conf/httpd.conf'
+[Wed Sep 15 17:40:13.487529 2021] [wsgi:error] [pid 25449:tid 140174578947840] [remote 24.234.96.215:55154] mod_wsgi (pid=25449): Failed to exec Python script file '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:40:13.487596 2021] [wsgi:error] [pid 25449:tid 140174578947840] [remote 24.234.96.215:55154] mod_wsgi (pid=25449): Exception occurred processing WSGI script '/opt/bitnami/projects/core/core/wsgi.py'.
+[Wed Sep 15 17:40:13.488348 2021] [wsgi:error] [pid 25449:tid 140174578947840] [remote 24.234.96.215:55154] Traceback (most recent call last):
+[Wed Sep 15 17:40:13.488400 2021] [wsgi:error] [pid 25449:tid 140174578947840] [remote 24.234.96.215:55154]   File "/opt/bitnami/projects/core/core/wsgi.py", line 16, in <module>
+[Wed Sep 15 17:40:13.488408 2021] [wsgi:error] [pid 25449:tid 140174578947840] [remote 24.234.96.215:55154]     application = get_wsgi_application()
+[Wed Sep 15 17:40:13.488417 2021] [wsgi:error] [pid 25449:tid 140174578947840] [remote 24.234.96.215:55154]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/core/wsgi.py", line 12, in get_wsgi_application
+[Wed Sep 15 17:40:13.488423 2021] [wsgi:error] [pid 25449:tid 140174578947840] [remote 24.234.96.215:55154]     django.setup(set_prefix=False)
+[Wed Sep 15 17:40:13.488431 2021] [wsgi:error] [pid 25449:tid 140174578947840] [remote 24.234.96.215:55154]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/__init__.py", line 24, in setup
+[Wed Sep 15 17:40:13.488436 2021] [wsgi:error] [pid 25449:tid 140174578947840] [remote 24.234.96.215:55154]     apps.populate(settings.INSTALLED_APPS)
+[Wed Sep 15 17:40:13.488444 2021] [wsgi:error] [pid 25449:tid 140174578947840] [remote 24.234.96.215:55154]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/registry.py", line 91, in populate
+[Wed Sep 15 17:40:13.488449 2021] [wsgi:error] [pid 25449:tid 140174578947840] [remote 24.234.96.215:55154]     app_config = AppConfig.create(entry)
+[Wed Sep 15 17:40:13.488457 2021] [wsgi:error] [pid 25449:tid 140174578947840] [remote 24.234.96.215:55154]   File "/opt/bitnami/python/lib/python3.8/site-packages/django/apps/config.py", line 224, in create
+[Wed Sep 15 17:40:13.488462 2021] [wsgi:error] [pid 25449:tid 140174578947840] [remote 24.234.96.215:55154]     import_module(entry)
+[Wed Sep 15 17:40:13.488469 2021] [wsgi:error] [pid 25449:tid 140174578947840] [remote 24.234.96.215:55154]   File "/opt/bitnami/python/lib/python3.8/importlib/__init__.py", line 127, in import_module
+[Wed Sep 15 17:40:13.488474 2021] [wsgi:error] [pid 25449:tid 140174578947840] [remote 24.234.96.215:55154]     return _bootstrap._gcd_import(name[level:], package, level)
+[Wed Sep 15 17:40:13.488482 2021] [wsgi:error] [pid 25449:tid 140174578947840] [remote 24.234.96.215:55154]   File "<frozen importlib._bootstrap>", line 1014, in _gcd_import
+[Wed Sep 15 17:40:13.488496 2021] [wsgi:error] [pid 25449:tid 140174578947840] [remote 24.234.96.215:55154]   File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+[Wed Sep 15 17:40:13.488504 2021] [wsgi:error] [pid 25449:tid 140174578947840] [remote 24.234.96.215:55154]   File "<frozen importlib._bootstrap>", line 973, in _find_and_load_unlocked
+[Wed Sep 15 17:40:13.488523 2021] [wsgi:error] [pid 25449:tid 140174578947840] [remote 24.234.96.215:55154] ModuleNotFoundError: No module named 'storages'

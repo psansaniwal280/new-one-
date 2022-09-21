@@ -1,0 +1,8 @@
+<html>
+    <body>
+        <p>Successfully sent an email to acitvate the account.</p>
+        <a class="text-center" href="{{ domain }}{% url 'resend' token=token %}">
+            <p>Resend Confirmation Link.</p>
+        </a>
+    </body>
+</html>
