@@ -32,7 +32,7 @@ on:
 
 env:
   AWS_REGION: us-east-1                   # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: public.ecr.aws/s2u5k2q9/lexbackend           # set this to your Amazon ECR repository name
+  ECR_REPOSITORY: lexbackend           # set this to your Amazon ECR repository name
   ECS_SERVICE: MY_ECS_SERVICE                 # set this to your Amazon ECS service name
   ECS_CLUSTER: lexbackend                 # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: /lexbackend-revision1.json # set this to the path to your Amazon ECS task definition
