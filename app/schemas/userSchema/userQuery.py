@@ -1,10 +1,11 @@
 import graphene
 from .userType import *
+import pandas as pd
 from app.schemas.commonObjects.objectTypes import aggregateObjectType
 from app.utilities.errors import *
 import math
 from django.db.models import Q
-
+import mcdm
 from ...utilities import Verification, CommonOperations
 from ...utilities.pagination import pagination
 
@@ -32,14 +33,14 @@ class Query(graphene.ObjectType):
     userFollowersResults = graphene.Field(userPageObjectType, userId=graphene.Int(), searchContent = graphene.String(), page=graphene.Int(), limit=graphene.Int())
 
     #Get Blocked User List by User Id
-    blockedUsers = graphene.List(BlockedUsersListType, userId = graphene.Int())
+    blockedUsers = graphene.List(BlockedUsersListType, userId=graphene.Int(), page=graphene.Int(), limit=graphene.Int())
 
     #For user follow recommendations
     userFollowRecommendations = graphene.Field(UserRecommendedPageListType, userId = graphene.Int(), page=graphene.Int(), limit=graphene.Int())
-
+    
     #For user recommendations
     userRecommendations = graphene.Field(UserRecommendedPageListType, userId = graphene.Int(), page=graphene.Int(), limit=graphene.Int())
-    
+    userRecommendationsConcat = graphene.List(UserRecommendedListType,userId = graphene.Int(), page=graphene.Int(), limit=graphene.Int())
     #Get All User Tags
     def resolve_allUserTags(parent, info):
         return UserProfileTag.objects.all().order_by('user_profile_tag_name')
@@ -99,7 +100,7 @@ class Query(graphene.ObjectType):
                 user = User.objects.using('default').get(user_id=userId)
                 if user.is_active:
                     try:
-                        userProfile = UserProfile.objects.using('default').get(user_id=userId)
+                        userProfile = UserProfile.objects.using('default').get(user_id = userId)
                         gender = Gender.objects.using('default').get(gender_id=userProfile.gender_id)
                     except UserProfile.DoesNotExist:
                         gender = None
@@ -333,10 +334,13 @@ class Query(graphene.ObjectType):
     # -----Get Blocked User List by User Id
     def resolve_blockedUsers(self, info, **kwargs):
         userId = kwargs.get('userId')
+        page = kwargs.get('page')
+        limit = kwargs.get('limit')
         Verification.user_verify(userId)
         blockedList = UserBlocked.objects.using('default').filter(user_id=userId).values_list('block_user_id', flat=True)
         if len(blockedList) > 0:
-            return [{'user_id': each} for each in blockedList]
+            flag, blockedList = pagination(blockedList, page, limit)
+            return [{'user_id': each} for each in blockedList['result']]
         else:
             return []
 
@@ -499,14 +503,14 @@ class Query(graphene.ObjectType):
 
         following =[]
         following += UserFollowing.objects.using('default').filter(user_id = authUserId).values_list('following_user',flat=True)
+
+        df_follower = pd.DataFrame(list(UserFollowing.objects.using('default').filter(following_user__in = following).values('user_id','following_user')))
+        if df_follower.empty:
+            df_follower = pd.DataFrame(columns=['user_id','following_user'])
+        mutual_follower_series = df_follower['user_id'].value_counts()
+        mutual = list(mutual_follower_series.index)
         
         # Find the users with mutual following 
-        mutual =[]
-        for each in following:
-            follower =[]
-            follower += UserFollowing.objects.using('default').filter(user_id = each).values_list('following_user',flat=True)
-            mutual += follower
-        mutual = list(set(mutual))
         if authUserId in mutual:
             mutual.remove(authUserId)
         
@@ -562,53 +566,98 @@ class Query(graphene.ObjectType):
         
         
         #check for the user_tag
-        total_tags = {}
         tag_uid = []
         tag_uid += UserTag.objects.filter(user_id = authUserId).values_list('user_profile_tag',flat=True)
-        same_tag_users = []
-        for each in tag_uid:
-            same_tag_users += UserTag.objects.filter(user_profile_tag = each).values_list('user_id',flat=True)
-        same_tag_users1 = list(set(same_tag_users))
-        if authUserId in same_tag_users1:
-            same_tag_users1.remove(authUserId)
-        for each in same_tag_users1:
-            total_tags[each] = same_tag_users.count(each)
+        
+        df_same_tag_users = pd.DataFrame(list(UserTag.objects.filter(user_profile_tag__in = tag_uid).values('user_id')))
+        if df_same_tag_users.empty:
+            df_same_tag_users = pd.DataFrame(columns=['user_id'])
+        same_tag_users_series = df_same_tag_users['user_id'].value_counts()
+        same_tag_users_list = list(same_tag_users_series.index)
+        if authUserId in same_tag_users_list:
+            same_tag_users_list.remove(authUserId)
         
         
         # create the list of users for recommendation
         recommended_users = []
-        recommended_users += following + mutual +  msg_recipient1 + post_comment1 + post_saved1 + post_liked1 + same_city_users + same_tag_users1
-        recommended_users1 = list(set(recommended_users))
+        recommended_users += following + mutual +  msg_recipient1 + post_comment1 + post_saved1 + post_liked1 + same_city_users + same_tag_users_list
+        recommended_users_list = list(set(recommended_users))
         
-        
-        # calculate the relevancy score for each user
-        rel_score = {}
-        for each in recommended_users1:
-            rel_score[each] = 0
+        # Creating the feature matrix for MCDM
+        BIAS = 1
+        user_feature_list = []
+        for each in recommended_users_list:
+            temp_feature_list = []
             if each in following:
-                rel_score[each] += 15
+                temp_feature_list.append(10)
+            else:
+                temp_feature_list.append(1)
+
             if each in mutual:
-                rel_score[each] += 7
+                temp_feature_list.append(10)
+            else:
+                temp_feature_list.append(1)
+
             if each in msg_recipient1:
-                rel_score[each] += total_msgs[each]
+                temp_feature_list.append(total_msgs[each]+BIAS)
+            else:
+                temp_feature_list.append(BIAS)
+
             if each in post_comment1:
-                rel_score[each] += total_comments[each]
+                temp_feature_list.append(total_comments[each] + BIAS)
+            else:
+                temp_feature_list.append(BIAS)
+
             if each in post_saved1:
-                rel_score[each] += total_saved[each]
+                temp_feature_list.append(total_saved[each] + BIAS)
+            else:
+                temp_feature_list.append(BIAS)
+
             if each in post_liked1:
-                rel_score[each] += total_liked[each]
+                temp_feature_list.append(total_liked[each] + BIAS)
+            else:
+                temp_feature_list.append(BIAS)
+
             if each in same_city_users:
-                rel_score[each] += 4
-            if each in same_tag_users1:
-                rel_score[each] += total_tags[each]
-                
+                temp_feature_list.append(10)
+            else:
+                temp_feature_list.append(1)
+
+            if each in same_tag_users_list:
+                temp_feature_list.append(same_tag_users_series[each] + BIAS)
+            else:
+                temp_feature_list.append(BIAS)
+            user_feature_list.append(temp_feature_list)
         
-        sorted_rel = sorted(rel_score, key=rel_score.get)
-        sorted_rel.reverse()
+        # Creating weight vector to reflect the importance of any feature of the user (The sum of weights must be equal to one)
+        FOLLOWING = 0.15
+        MUTUAL = 0.15
+        MSG_RECIPIENT = 0.15
+        NO_OF_COMMENTS = 0.1
+        NO_OF_POST_SAVED = 0.1
+        NO_OF_LIKES = 0.1
+        SAME_CITY_USERS = 0.15
+        SAME_TAG_USERS = 0.1
         
-        result =[]
-        for each in sorted_rel:
-            result.append({"user_id": each, "relevancy_score": round(rel_score[each],2)})
+        
+        w_vector = [FOLLOWING,
+                        MUTUAL,
+                            MSG_RECIPIENT,
+                                NO_OF_COMMENTS,
+                                    NO_OF_POST_SAVED,
+                                        NO_OF_LIKES,
+                                            SAME_CITY_USERS,
+                                                SAME_TAG_USERS]
+
+        # Calculating the relevancy score of each hashtag using multiplicative exponential weighting (MEW) method of Multi Criteria Decision Making (MCDM)
+        if(len(user_feature_list) > 0):
+            user_rank = mcdm.rank(user_feature_list, alt_names=recommended_users_list, n_method="Linear1", w_vector=w_vector, s_method="MEW")  
+        else:
+            user_rank = []
+
+        result = []
+        for each in user_rank:
+            result.append(UserRecommendedListType(each[0],round(each[1],2)))
         
         if len(result)>0:
             if page and limit:
@@ -629,3 +678,197 @@ class Query(graphene.ObjectType):
             
         else:
             return UserRecommendedPageListType(users=[], page_info=PageInfoObject(nextPage= None, limit=None))    
+        
+    def resolve_userRecommendationsConcat(parent,info,**kwargs):
+        authUserId = kwargs.get('userId')
+        page = kwargs.get('page')
+        limit = kwargs.get('limit')
+        if authUserId is not None:
+            try:
+                user = User.objects.using('default').get(user_id=authUserId)
+                if not user.is_active:
+                    raise BadRequestException("invalid request; userId provided is inactive", 400)
+            except User.DoesNotExist:
+                raise NotFoundException("authUserId provided not found", 404)
+        else:
+            raise BadRequestException("invalid request; authUserId provided is invalid", 400)
+        
+        # Find the users that authUserId follows
+
+        following =[]
+        following += UserFollowing.objects.using('default').filter(user_id = authUserId).values_list('following_user',flat=True)
+
+        df_follower = pd.DataFrame(list(UserFollowing.objects.using('default').filter(following_user__in = following).values('user_id','following_user')))
+        if df_follower.empty:
+            df_follower = pd.DataFrame(columns=['user_id','following_user'])
+        mutual_follower_series = df_follower['user_id'].value_counts()
+        mutual = list(mutual_follower_series.index)
+        
+        # Find the users with mutual following 
+        if authUserId in mutual:
+            mutual.remove(authUserId)
+        
+        
+        # Check if Search_user messeged by Current_user    
+        msg_recipient = []
+        msg_recipient += ChatMessage.objects.using('default').filter(sender = authUserId).values_list('chatmessagerecipient__user_id',flat = True)
+        msg_recipient1 = list(set(msg_recipient))
+        total_msgs = {}
+        for each in msg_recipient1:
+            total_msgs[each] = msg_recipient.count(each)
+        
+        
+        # find the all user on whose post user commented
+        post_comment = []
+        post_comment += PostComment.objects.filter(user_id=authUserId).values_list('post__user_id',flat=True)
+        post_comment1 = list(set(post_comment))
+        if authUserId in post_comment1:
+            post_comment1.remove(authUserId)
+        total_comments = {}
+        for each in post_comment1:
+            total_comments[each] = post_comment.count(each)
+        
+        # find the all user whose post user saved
+        post_saved = []
+        post_saved += PostSaved.objects.filter(user_id=authUserId).values_list('post__user_id',flat=True)
+        post_saved1 = list(set(post_saved))
+        if authUserId in post_saved1:
+            post_saved1.remove(authUserId)
+        total_saved = {}
+        for each in post_saved1:
+            total_saved[each] = post_saved.count(each)
+        
+        # find the all user whose post user liked
+        post_liked = []
+        post_liked += PostLike.objects.filter(user_id=authUserId).values_list('post__user_id',flat=True)
+        post_liked1 = list(set(post_liked))
+        if authUserId in post_liked1:
+            post_liked1.remove(authUserId)
+        total_liked = {}
+        for each in post_liked1:
+            total_liked[each] = post_liked.count(each)
+        
+        # Find all the users that live in the same city as authUserId
+        city_uid = UserProfile.objects.filter(user_id = authUserId).values('city_id')
+        try:
+            same_city_users =[]
+            same_city_users += UserProfile.objects.filter(city_id = city_uid[0]['city_id']).values_list('user_id', flat=True)
+            if authUserId in same_city_users:
+                same_city_users.remove(authUserId)
+        except:
+            pass
+        
+        
+        # check for the user_tag
+        tag_uid = []
+        tag_uid += UserTag.objects.filter(user_id = authUserId).values_list('user_profile_tag',flat=True)
+        
+        df_same_tag_users = pd.DataFrame(list(UserTag.objects.filter(user_profile_tag__in = tag_uid).values('user_id')))
+        if df_same_tag_users.empty:
+            df_same_tag_users = pd.DataFrame(columns=['user_id'])
+        same_tag_users_series = df_same_tag_users['user_id'].value_counts()
+        same_tag_users_list = list(same_tag_users_series.index)
+        if authUserId in same_tag_users_list:
+            same_tag_users_list.remove(authUserId)
+        
+        
+        # create the list of users for recommendation
+        recommended_users = []
+        recommended_users += following + mutual +  msg_recipient1 + post_comment1 + post_saved1 + post_liked1 + same_city_users + same_tag_users_list
+        recommended_users_list = list(set(recommended_users))
+        
+        # creating the feature matrix
+        BIAS = 1
+        user_feature_list = []
+        for each in recommended_users_list:
+            temp_feature_list = []
+            if each in following:
+                temp_feature_list.append(10)
+            else:
+                temp_feature_list.append(1)
+
+            if each in mutual:
+                temp_feature_list.append(10)
+            else:
+                temp_feature_list.append(1)
+
+            if each in msg_recipient1:
+                temp_feature_list.append(total_msgs[each]+BIAS)
+            else:
+                temp_feature_list.append(BIAS)
+
+            if each in post_comment1:
+                temp_feature_list.append(total_comments[each] + BIAS)
+            else:
+                temp_feature_list.append(BIAS)
+
+            if each in post_saved1:
+                temp_feature_list.append(total_saved[each] + BIAS)
+            else:
+                temp_feature_list.append(BIAS)
+
+            if each in post_liked1:
+                temp_feature_list.append(total_liked[each] + BIAS)
+            else:
+                temp_feature_list.append(BIAS)
+
+            if each in same_city_users:
+                temp_feature_list.append(10)
+            else:
+                temp_feature_list.append(1)
+
+            if each in same_tag_users_list:
+                temp_feature_list.append(same_tag_users_series[each] + BIAS)
+            else:
+                temp_feature_list.append(BIAS)
+            user_feature_list.append(temp_feature_list)
+        
+        # Creating weight vector to reflect the importance of any feature of the user( Total weight must be equal to one)
+        FOLLOWING = 0.15
+        MUTUAL = 0.15
+        MSG_RECIPIENT = 0.15
+        NO_OF_COMMENTS = 0.1
+        NO_OF_POST_SAVED = 0.1
+        NO_OF_LIKES = 0.1
+        SAME_CITY_USERS = 0.15
+        SAME_TAG_USERS = 0.1
+        
+        # creating the weight vector
+        w_vector = [FOLLOWING,
+                        MUTUAL,
+                            MSG_RECIPIENT,
+                                NO_OF_COMMENTS,
+                                    NO_OF_POST_SAVED,
+                                        NO_OF_LIKES,
+                                            SAME_CITY_USERS,
+                                                SAME_TAG_USERS]
+
+        # Calculating the relevancy score of each hashtag using multiplicative exponential weighting (MEW) method of Multi Criteria Decision Making (MCDM)
+        if(len(user_feature_list) > 0):
+            user_rank = mcdm.rank(user_feature_list, alt_names=recommended_users_list, n_method="Linear1", w_vector=w_vector, s_method="MEW")  
+        else:
+            user_rank = []
+        # print(user_rank)
+        result = []
+        for each in user_rank:
+            result.append(UserRecommendedListType(each[0],round(each[1],2)))
+        # print(result)
+        if len(result)>0:
+            if page and limit:
+                totalPages = math.ceil(len(result)/limit)
+                if page <= totalPages:
+                    start = limit*(page-1)
+                    result = result[start:start+limit]
+
+                    return result
+                else:
+                    raise BadRequestException("invalid request; page provided exceeded total")
+            elif page == limit == None:
+                return result
+            elif page is None:
+                raise BadRequestException("invalid request; limit cannot be provided without page")
+            elif limit is None:
+                raise BadRequestException("invalid request; page cannot be provided without limit")
+            
+        else:
+            return []

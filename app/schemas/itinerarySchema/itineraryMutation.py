@@ -140,12 +140,10 @@ class CreateItineraryMutation(graphene.Mutation):
         for username in mentioned_list:
             print(username)
             try:
-                userObjList = User.objects.using('default').values('user_id', 'username')
-                for go in userObjList:
-                    if go['username'] == username:
-                        UserSharedItineraryMention.objects.using('default').create(user_shared_itinerary_id=userSharedItineraryId, user_id=go['user_id'])
+                user = User.objects.using('default').get(username=username)    
+                UserSharedItineraryMention.objects.using('default').create(user_shared_itinerary_id=userSharedItineraryId, user_id=user.user_id)
             except User.DoesNotExist:
-                pass
+                pass 
         #Separate Tags fields
         if tagObjs != []:
             for eachTagObj in tagObjs:

@@ -32,7 +32,7 @@ class userType(graphene.InputObjectType):
 class LoginUserMutation(graphene.Mutation):
     user = graphene.Field(UserType)
     message = graphene.String()
-    #token = graphene.String()
+    # token = graphene.String()
     # user = userType()
     # verification_prompt = graphene.String()
 
@@ -68,9 +68,9 @@ class LoginUserMutation(graphene.Mutation):
                     user_id=user.user_id,
                     created_on = datetime.datetime.now(),
                     modified_on = datetime.datetime.now(),
-                    created_by = user.user_id
-                    
+                    created_by = user.user_id                   
                     )
+
             user.last_login = datetime.datetime.now()
             user.save()
             userTokenPayload = {
@@ -165,11 +165,11 @@ class CreateUserMutation(graphene.Mutation):
         if email is not None:
             if email and email.strip():
                 isValid = validate_email(email)
-                isExists = validate_email(email, verify=True)
+                # isExists = validate_email(email, verify=True)
                 if not isValid:
                     raise BadRequestException("invalid request; email provided is invalid", 400)
-                elif not isExists:
-                    raise BadRequestException("invalid request; email provided is does not exist", 400)
+                # elif not isExists:
+                #     raise BadRequestException("invalid request; email provided is does not exist", 400)
             else:
                 raise BadRequestException("invalid request; email provided is empty", 400)
         else:
@@ -200,24 +200,25 @@ class CreateUserMutation(graphene.Mutation):
             raise BadRequestException("invalid request; name provided is invalid", 400)
 
         try:
-            usermails = User.objects.using('default').values_list('email', flat=True)
-            if email in usermails:
+            usermail = User.objects.using('default').get(email=email)   
+            if usermail:
                 raise BadRequestException("conflict in request; email provided is already in use", 409)
         except User.DoesNotExist:
             pass
         try:
-            usernames = User.objects.using('default').values_list('username', flat=True)
-            if username in usernames:
+            usernames = User.objects.using('default').get(username=username)    
+            if usernames :
                 raise BadRequestException("conflict in request; username provided is already in use", 409)
         except User.DoesNotExist:
             pass
-        # last_user_id = PostLike.objects.using('default').all().aggregate(Max('user_id'))
+           
+        # # last_user_id = PostLike.objects.using('default').all().aggregate(Max('user_id'))
         # lastUserId = last_user_id['user_id__max']+1 if last_user_id['user_id__max'] else 1
         user = models.User.objects.create(
             # user_id = lastUserId,
             email = email,
             password = encrypt_password(password),
-            username = username,
+            username = username,       
             is_active = False,
             created_on = datetime.datetime.now(timezone.utc),
             modified_on = datetime.datetime.now(timezone.utc),

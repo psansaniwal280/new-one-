@@ -1,6 +1,6 @@
 import math
 from django.db.models import Q
-from math import radians, cos, sin, asin, sqrt
+import jwt
 import cryptocode
 
 #This Functions is used to hash password when creating a new user.
@@ -38,17 +38,19 @@ def standardize_roundOf(value):
 
 def encrypt_email(email):
     """encrypting password for storing."""
-    return cryptocode.encrypt(str(email), "myemail")
+    return jwt.encode({'email':email}, "myemail" ,algorithm='HS256').decode('utf-8')
 
 def decrypt_email(email):
     """decrypting password for storing."""
-    return cryptocode.decrypt(str(email), "myemail")
+    return jwt.decode(email, "myemail", algorithm=['HS256'])['email']
+    # return cryptocode.decrypt(email, "myemail")
 
 def encrypt_username(username):
     """encrypting password for storing."""
-    return cryptocode.encrypt(str(username), "myusername")
+    return jwt.encode({'username':username}, "myusername" ,algorithm='HS256').decode('utf-8')
 
 def decrypt_username(username):
     """decrypting password for storing."""
-    return cryptocode.decrypt(str(username), "myusername")   
+    return jwt.decode(username, "myusername" ,algorithm=['HS256'])['username'] 
+    # return cryptocode.decrypt(username,"myusername")
 

@@ -39,6 +39,6 @@ urlpatterns = [
     path('activate/<token>', activate_account, name='activate'),
     path('resend/<token>', resend_email, name='resend'),
     path("webhook/", webhook, name="webhook"),
-    # path('accounts/', include('allauth.urls')),
+    path('accounts/', include('allauth.urls')),
     # path('chat/', include(django_private_chat2_urls))
 ]   

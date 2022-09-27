@@ -17,10 +17,10 @@ def authenticateLogin(email, password):
 
     try:
         user={}
-        userAll = User.objects.using('default').values('user_id','username','email')
-        for userobj in userAll:
-            if userobj['email'] == email or userobj['username'] == email:
-                user = User.objects.using('default').get(user_id = userobj['user_id'])
+        user = User.objects.using('default').get(Q(email=email) or Q(username = email))
+        # for userobj in userAll:
+        #     if userobj['email'] == email or userobj['username'] == email:
+        #         user = User.objects.using('default').get(user_id = userobj['user_id'])
         if user and decrypt_password(user.password)==password:
             # if request.session['username']== user.username:
             #     raise AuthorizationException("already logged in")

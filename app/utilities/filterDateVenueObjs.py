@@ -250,10 +250,17 @@ def calculateExpVenueAvailabilityPattern(ExpAvailabilitiesPattern_month, availab
 
 
 def bookingStatusCheck(bookingPurchases, availability_data):
-    cancel_status = BookingStatus.objects.using("default").get(booking_status_name="Cancelled")
+    try:
+        cancel_status = BookingStatus.objects.using("default").get(booking_status_name="Cancelled")
+    except BookingStatus.DoesNotExist:
+        cancel_status = None
+    
     for booking_purchase in bookingPurchases:
         l3 = []
-        status_list = BookingCurrentStatus.objects.using("default").filter(booking_purchase_id=booking_purchase.booking_purchase_id, booking_status_id=cancel_status.booking_status_id).values_list('booking_status_id__booking_status_name')
+        if cancel_status is not None:
+            status_list = BookingCurrentStatus.objects.using("default").filter(booking_purchase_id=booking_purchase.booking_purchase_id, booking_status_id=cancel_status.booking_status_id).values_list('booking_status_id__booking_status_name')
+        else:
+            status_list = BookingCurrentStatus.objects.using("default").filter(booking_purchase_id=booking_purchase.booking_purchase_id).values_list('booking_status_id__booking_status_name')
         if booking_purchase.start_date is not None and booking_purchase.end_date is not None:
             l3 = dates_between(str(booking_purchase.start_date.strftime("%Y-%m-%d")), str(booking_purchase.end_date.strftime("%Y-%m-%d")))
         elif booking_purchase.start_date is not None and booking_purchase.end_date is None:

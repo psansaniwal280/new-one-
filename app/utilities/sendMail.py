@@ -145,3 +145,37 @@ def sendUserReportMailToUser(username, email, reason):
         return response
     else:
         return None
+
+
+def sendInvoiceMailToUser(name,email,content):
+    # token = jwt.encode({'user': username}, "1232141" ,algorithm='HS256').decode('utf-8')
+    print(socket.gethostbyname(socket.gethostname()))
+    context = {
+        'small_text_detail': 'Hello!, your booking invoice',
+        'email': email,
+        'reason': content,
+        'username': name,
+    }
+    sg = sendgrid.SendGridAPIClient(api_key=config('SENDGRID_API_KEY'))
+    from_email = Email(config('EMAIL_HOST'))  # Change to your verified sender
+    to_email = To(email)  # Change to your recipient
+    subject = "Booking Invoice"
+    mail = Mail(from_email, to_email, subject, html_content=content)
+
+    # Get a JSON-ready representation of the Mail object
+    mail_json = mail.get()
+
+    # Send an HTTP POST request to /mail/send
+    response = sg.client.mail.send.post(request_body=mail_json)
+    print(response.status_code)
+    print(response.headers)
+
+    # html = render_to_string('activationSuccess.html', context)
+
+    if response.status_code == 202:
+        response = {
+            'message': "successfully sent an email of invoice" + name,
+        }
+        return response
+    else:
+        return None

@@ -196,15 +196,14 @@ class CreatePostMutation(graphene.Mutation):
         # #adding the mentions username into the respective tables in DB.
         for username in mentioned_list:
             try:
-                userObjList = User.objects.using('default').values('user_id', 'username')
-                for usr in userObjList:
-                    if usr['username'] == username:
-                        PostMention.objects.create(
-                            post_id=post_id,
-                            user_id=usr['user_id'],
-                            created_on = datetime.datetime.now(),
-                            modified_on = datetime.datetime.now(),
-                            created_by = userId )
+                user= User.objects.using('default').get(username=username)
+          
+                PostMention.objects.create(
+                    post_id=post_id,
+                    user_id=user.user_id,
+                    created_on = datetime.datetime.now(),
+                    modified_on = datetime.datetime.now(),
+                    created_by = userId )
             except User.DoesNotExist:
                 pass
 
@@ -282,19 +281,17 @@ class EditPostMutation(graphene.Mutation):
 
             for word in mention_words:
                 try:
-                    userObjList = User.objects.using('default').values('user_id', 'username')
-                    for go in userObjList:
-                        if go['username'] == word:
-                            try:
-                                mention_obj = PostMention.objects.using('default').get(user_id=go['user_id'], post_id=postId)
-                            except PostMention.DoesNotExist:
-                                mention_obj = PostMention.objects.create(
-                                    user_id=userId,
-                                    post_id=postId,
-                                    created_on=datetime.datetime.now(),
-                                    modified_on=datetime.datetime.now(),
-                                    created_by=userId)
-                                mention_obj.save()
+                    user=User.objects.using('default').get(username=word)
+                    try:
+                        mention_obj = PostMention.objects.using('default').get(user_id=user.user_id, post_id=postId)
+                    except PostMention.DoesNotExist:
+                        mention_obj = PostMention.objects.create(
+                            user_id=userId,
+                            post_id=postId,
+                            created_on=datetime.datetime.now(),
+                            modified_on=datetime.datetime.now(),
+                            created_by=userId)
+                        mention_obj.save()
                 except User.DoesNotExist:
                     pass
         else:
@@ -698,14 +695,12 @@ class PostCommentMutation(graphene.Mutation):
         # adding the mentions username into the respective tables in DB.
         for username in mentioned_list:
             try:
-                userObjList = User.objects.using('default').values('user_id', 'username')
-                for go_user in userObjList:
-                    if go_user['username'] == username: 
-                        try:
-                            PostCommentMention.objects.using('default').get(post_comment_id=comment.post_comment_id, user_id=go_user['user_id'])
-                        except PostCommentMention.DoesNotExist:
-                            PostCommentMention.objects.using('default').create(post_comment_id=comment.post_comment_id, user_id=go_user['user_id'])
-                return_mentions.append(mentionSection(go_user['username'], go_user['user_id']))
+                user = User.objects.using('default').get(username=username)
+                try:
+                    PostCommentMention.objects.using('default').get(post_comment_id=comment.post_comment_id, user_id=user.user_id)
+                except PostCommentMention.DoesNotExist:
+                    PostCommentMention.objects.using('default').create(post_comment_id=comment.post_comment_id, user_id=user.user_id)
+                return_mentions.append(mentionSection(user.username, user.user_id))
         
             except User.DoesNotExist:
                 pass
@@ -796,19 +791,18 @@ class UpdatePostCommentMutation(graphene.Mutation):
             # adding the mentions username into the respective tables in DB.
             for username in mentioned_list:
                 try:
-                    userObjList = User.objects.using('default').values('user_id', 'username')
-                    for go in userObjList:
-                        if go['username'] == username:
-                            try:
-                                PostCommentMention.objects.using('default').get(post_comment_id=comment_obj.post_comment_id, user_id=go['user_id'])
-                            except PostCommentMention.DoesNotExist:
-                                PostCommentMention.objects.create(
-                                    post_comment_id=comment_obj.post_comment_id, 
-                                    user_id=go['user_id'],
-                                    created_on = datetime.datetime.now(),
-                                    modified_on = datetime.datetime.now(),
-                                    created_by = go['user_id'],
-                                    )
+                    user = User.objects.using('default').get(username=username)
+            
+                    try:
+                        PostCommentMention.objects.using('default').get(post_comment_id=comment_obj.post_comment_id, user_id=user.user_id)
+                    except PostCommentMention.DoesNotExist:
+                        PostCommentMention.objects.create(
+                            post_comment_id=comment_obj.post_comment_id, 
+                            user_id=user.user_id,
+                            created_on = datetime.datetime.now(),
+                            modified_on = datetime.datetime.now(),
+                            created_by = user.user_id,
+                            )
                 except User.DoesNotExist:
                     pass
             updated_comment = comment

@@ -3,8 +3,7 @@ from django.db import models
 from s3direct.fields import S3DirectField
 from graphene_file_upload.scalars import Upload
 from django.contrib.postgres.fields import ArrayField
-from django.contrib.auth.models import UserManager
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, AbstractBaseUser
 from .utilities.standardizemethods import *
 
 
@@ -68,11 +67,11 @@ class EncryptEmailField(models.CharField):
         return name, path, args, kwargs
 
     def get_prep_value(self, value):
-        print(value)
         return encrypt_email(value)
 
     def from_db_value(self, value, expression, connection):
-        if not decrypt_email(value):
+        key ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9"
+        if key not in value:
             return value
         else:
             return decrypt_email(value)
@@ -107,7 +106,8 @@ class EncryptUsernameField(models.CharField):
         return encrypt_username(value)
 
     def from_db_value(self, value, expression, connection):
-        if not decrypt_username(value):
+        key ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9"
+        if key not in value:
             return value
         else:
             return decrypt_username(value)
@@ -396,7 +396,7 @@ class UserStatus(models.Model):
     app_label = 'default'
 
 
-class User(models.Model):
+class User(AbstractUser):
     user_id = models.BigAutoField(primary_key=True)
     email = EncryptEmailField()
     password = models.CharField(max_length=255, null=False)
@@ -417,8 +417,12 @@ class User(models.Model):
     lockout_enabled = models.BooleanField(default=False)
     access_failed_count = models.IntegerField(default=0)
 
+    REQUIRED_FIELDS=('user_id',)
+
+    USERNAME_FIELD = 'username'
+
     class Meta:
-        # managed = False
+        # managed= True
         db_table = 'user'
 
     app_label = 'default'
@@ -2793,12 +2797,19 @@ class BookingPurchasePromo(models.Model):
 
 class BillingAddress(models.Model):
     billing_address_id = models.BigAutoField(primary_key=True)
+    user_id = models.BigIntegerField(null=False)
     billing_name = models.CharField(max_length=255, null=False)
     email = models.CharField(max_length=255, blank=True, null=True)
     address = models.CharField(max_length=255, null=False)
     city = models.CharField(max_length=255, null=False)
     state = models.CharField(max_length=255, null=False)
-    zip = models.BigIntegerField(null=False)
+    state_code = models.CharField(max_length=255, null=False)
+    zip = models.CharField(max_length=255, null=False)
+    country_name = models.CharField(max_length=255, null=False)
+    country_code_two_char = models.CharField(max_length=3, null=False)
+    default_source = models.BooleanField()
+    mobile_phone = models.CharField(max_length= 50, null=False)
+
 
     class Meta:
         managed = False
@@ -2851,7 +2862,7 @@ class Transaction(models.Model):
     transaction_id = models.BigAutoField(primary_key=True)
     user_payment_type = models.ForeignKey(PaymentOption, models.DO_NOTHING, null=False)
     date_created = models.DateTimeField(null=False)
-    booking_id = models.BigIntegerField(null=False)
+    booking_purchase_id = models.BigIntegerField(null=False)
 
     class Meta:
         managed = False

@@ -149,10 +149,8 @@ class PostType(graphene.ObjectType):
             return []
         for one_mention in mentions_word:
             try:
-                userObjList = User.objects.using('default').values('user_id', 'username')
-                for user_obj in userObjList:
-                    if user_obj['username'] == one_mention: 
-                        mentions.append(mentionSection(user_obj['username'], user_obj['user_id']))
+                user = User.objects.using('default').get(username=one_mention) 
+                mentions.append(mentionSection(user.username, user.user_id))
             except User.DoesNotExist:
                 mentions.append(mentionSection(one_mention, None))
         return mentions

@@ -41,11 +41,13 @@ class PaymentPageObject(graphene.ObjectType):
     ephemeralKey_id = graphene.String()
 
 
-class PaymentStatusResultObject(graphene.ObjectType):
-    success = graphene.Boolean()
+class BillingAddressResultObject(graphene.ObjectType):
+    message = graphene.Boolean()
+    billingAddressId = graphene.Int()
 
 
 class PaymentPayloadObject(graphene.InputObjectType):
+    billingAddressId= graphene.Int()
     userId = graphene.Int()
     bookingOptionId = graphene.Int()
     bookingOptionPrice = graphene.Int()
@@ -64,3 +66,24 @@ class PaymentPayloadObject(graphene.InputObjectType):
     startDate = graphene.String()
     endDate = graphene.String()
     venueId = graphene.Int()
+
+
+class BillingAddressesObject(graphene.ObjectType):
+    billing_address_id = graphene.Int()
+    default_source = graphene.Boolean()
+
+
+class BillingAddressDetailsObject(graphene.ObjectType):
+    billing_address_id = graphene.Int()
+    billing_name = graphene.String()
+    userId = graphene.Int()
+    email = graphene.String()
+    mobile_phone = graphene.String()
+    country_name = graphene.String()
+    country_code_two_char = graphene.String()
+    city = graphene.String()
+    state = graphene.String()
+    state_code = graphene.String()
+    zip = graphene.Int()
+    address = graphene.String()
+    default_source = graphene.Boolean()

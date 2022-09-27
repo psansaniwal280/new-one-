@@ -1,5 +1,6 @@
 from logging import raiseExceptions
 from os import stat
+import pandas as pd
 import graphene
 from app.utilities.errors import *
 from app.models import *
@@ -33,6 +34,7 @@ class Query(graphene.ObjectType):
     allPosts = graphene.List(PostType)
     post = graphene.Field(PostType, postId=graphene.Int(), userId=graphene.Int())
     savedPosts = graphene.Field(PostPageListType, userId=graphene.Int(), page=graphene.Int(), limit=graphene.Int())
+    savedPostsConcat = graphene.List(PostListType, userId=graphene.Int(), page=graphene.Int(), limit=graphene.Int())
 
     # Comments Queries
     postComments = graphene.List(PostCommentListType, postId=graphene.Int())
@@ -261,10 +263,8 @@ class Query(graphene.ObjectType):
                             pass
                     for one_mention in mentions_word:
                         try:
-                            userObjList = User.objects.using('default').values('user_id', 'username')
-                            for user_obj in userObjList:
-                                if user_obj['username'] == one_mention:                   
-                                    mentions.append(mentionSection(user_obj['username'], user_obj['user_id']))
+                            user = User.objects.using('default').get(username=one_mention)                  
+                            mentions.append(mentionSection(user.username, user.user_id))
                         except User.DoesNotExist:
                             pass
                             # mentions.append(mentionSection(one_mention, None))
@@ -314,6 +314,50 @@ class Query(graphene.ObjectType):
 
                     else:
                         return PostPageListType(posts=[], page_info=PageInfoObject(nextPage=None, limit=None))
+                    # else:
+                    #     raise NotFoundException("post does not exist", 204) 
+            except (User.DoesNotExist):
+                raise NotFoundException("userId provided not found", 404)
+        else:
+            raise BadRequestException("invalid request; userId provided is invalid", 400)
+        return None
+    
+    # Get Saved Posts Concat
+    def resolve_savedPostsConcat(parent, info, **kwagrs):
+        id = kwagrs.get('userId')
+        page = kwagrs.get('page')
+        limit = kwagrs.get('limit')
+        if id is not None:
+            result = []
+            post_ids = []
+            try:
+                if User.objects.using('default').get(user_id=id):
+                    post_ids += PostSaved.objects.using('default').filter(user_id=id).values_list('post_id')
+                    post_ids = [i[0] for i in post_ids]
+                    for i in Post.objects.using('default').filter(post_id__in=post_ids).order_by('-created_on'):
+                        result.append(PostListType(i.post_id))
+                        # result.append(i)
+                    result.sort(key=lambda x: x.post_id, reverse=True)
+                    # return result
+                    if len(result) > 0:
+                        if page and limit:
+                            totalPages = math.ceil(len(result) / limit)
+                            if page <= totalPages:
+                                start = limit * (page - 1)
+                                result = result[start:start + limit]
+
+                                return result
+                            else:
+                                raise BadRequestException("invalid request; page provided exceeded total")
+                        elif page == limit == None:
+                            return result
+                        elif page is None:
+                            raise BadRequestException("invalid request; limit cannot be provided without page")
+                        elif limit is None:
+                            raise BadRequestException("invalid request; page cannot be provided without limit")
+
+                    else:
+                        return []
                     # else:
                     #     raise NotFoundException("post does not exist", 204) 
             except (User.DoesNotExist):
@@ -383,97 +427,134 @@ class Query(graphene.ObjectType):
 
         # Extracting post_ids for the given venue 
         posts += Post.objects.using('default').filter(venue_id =venueId).values_list('post_id',flat = True)
+        
         if len(posts) > 0:
 
             end = datetime.datetime.now()
             start = end -timedelta(days=10)
 
-            bookingPurchaseCountLifetime ={}
-            BOOKING_PURCHASE_COUNT_LIFETIME_WEIGHT = 0.1
-            
-            bookingPurchaseCountTrending = {}
-            BOOKING_PURCHASE_COUNT_TRENDING_WEIGHT = 0.1
-            
-            postViewCountLifetime = {} 
-            POST_VIEW_COUNT_LIFETIME_WEIGHT = 0.1
-            
-            postViewCountTrending = {}
-            POST_VIEW_COUNT_TRENDING_WEIGHT =0.1
-            
-            postLikeCountLifetime = {}
-            POST_LIKE_COUNT_LIFETIME_WEIGHT = 0.05
-            
-            postLikeCountTrending = {}
-            POST_LIKE_COUNT_TRENDING_WEIGHT = 0.05
-            
-            postCommentCountLifetime = {}
-            POST_COMMENT_COUNT_LIFETIME_WEIGHT = 0.05
-            
-            postSavedCountLifetime = {}
-            POST_SAVED_COUNT_LIFETIME_WEIGHT = 0.05
-            
-            postVenueClickCountLifetime = {}
-            POST_VENUE_CLICK_COUNT_LIFETIME_WEIGHT = 0.1
-            
-            clickThoughViewsRatio = {}
-            CLICK_THROUGH_VIEWS_RATIO_WEIGHT = 0.1
-            
-            postSharedCountLifetime = {}
-            POST_SHARED_COUNT_LIFETIME_WEIGHT =0.05
-            
-            likeViewRatio = {}
-            LIKE_VIEW_RATIO_WEIGHT = 0.05
-            
+        
             totalRewatch = {}
-            TOTAL_REWATCH_WEIGHT = 0.05
-            
             perTotalWatchComplete = {}
-            PER_TOTAL_WATCH_COMPLETE_WEIGHT = 0.05
 
+        
+
+            # Total number of bookings using post - Lifetime and Trending
+            dfBookingPurchaseLifetime = pd.DataFrame(list(UserTrip.objects.using('default').filter(referred_post__in = posts).values('referred_post','created_on')))
+            if dfBookingPurchaseLifetime.empty:
+                dfBookingPurchaseLifetime = pd.DataFrame(columns=['referred_post','created_on'])
+            bookingPurchaseCountLifetimeSeries = dfBookingPurchaseLifetime['referred_post'].value_counts()
+            dfBookingPurchaseLifetime['created_on'] = pd.to_datetime(dfBookingPurchaseLifetime.created_on).dt.tz_localize(None)
+            dfBookingPurchaseTrending = dfBookingPurchaseLifetime[(start <= dfBookingPurchaseLifetime['created_on'])]
+            bookingPurchaseCountTrendingSeries = dfBookingPurchaseTrending['referred_post'].value_counts()
+
+            # Total number of post_view count - Lifetime and Trending
+            dfPostViewLifetime = pd.DataFrame(list(PostView.objects.using('default').filter(post_id__in = posts).values('post_id','created_on')))
+            if dfPostViewLifetime.empty:
+                dfPostViewLifetime = pd.DataFrame(columns=['post_id','created_on'])
+            postViewCountLifetimeSeries = dfPostViewLifetime['post_id'].value_counts()
+            dfPostViewLifetime['created_on'] = pd.to_datetime(dfPostViewLifetime.created_on).dt.tz_localize(None)
+            dfPostViewTrending = dfPostViewLifetime[(start <= dfPostViewLifetime['created_on'])]
+            postViewCountTrendingSeries = dfPostViewTrending['post_id'].value_counts()
+
+            # Total number of post_like count - Lifetime    and Trending
+            dfPostLikeLifetime = pd.DataFrame(list(PostLike.objects.using('default').filter(post_id__in = posts).values('post_id','created_on')))
+            if dfPostLikeLifetime.empty:
+                dfPostLikeLifetime = pd.DataFrame(columns=['post_id','created_on'])
+            postLikeCountLifetimeSeries = dfPostLikeLifetime['post_id'].value_counts()
+            dfPostLikeLifetime['created_on'] = pd.to_datetime(dfPostLikeLifetime.created_on).dt.tz_localize(None)
+            dfPostLikeTrending = dfPostLikeLifetime[(start <= dfPostLikeLifetime['created_on'])]
+            postLikeCountTrendingSeries = dfPostLikeTrending['post_id'].value_counts()
+
+            # Total number of post_comment count - Lifetime
+            dfPostCommentLifetime = pd.DataFrame(list(PostComment.objects.using('default').filter(post_id__in = posts).values('post_id','created_on')))
+            if dfPostCommentLifetime.empty:
+                dfPostCommentLifetime = pd.DataFrame(columns=['post_id','created_on'])
+            postCommentCountLifetimeSeries = dfPostCommentLifetime['post_id'].value_counts()
+
+            # Total number of post_Saved count - Lifetime
+            dfPostSavedLifetime = pd.DataFrame(list(PostSaved.objects.using('default').filter(post_id__in = posts).values('post_id','created_on')))
+            if dfPostSavedLifetime.empty:
+                dfPostSavedLifetime = pd.DataFrame(columns=['post_id','created_on'])
+            postSavedCountLifetimeSeries = dfPostSavedLifetime['post_id'].value_counts()
+
+            # Total number of post shared count - Lifetime
+            dfPostSharedLifetime = pd.DataFrame(list(Shared.objects.using('default').filter(post_id__in = posts).values('post_id','created_on')))
+            if dfPostSharedLifetime.empty:
+                dfPostSharedLifetime = pd.DataFrame(columns=['post_id','created_on'])
+            postSharedCountLifetimeSeries = dfPostSharedLifetime['post_id'].value_counts()
+
+            # Total number of post click through count - Lifetime
+            dfPostVenueClickLifetime = pd.DataFrame(list(PostVenueClick.objects.using('default').filter(post_id__in = posts).values('post_id','created_on')))
+            if dfPostVenueClickLifetime.empty:
+                dfPostVenueClickLifetime = pd.DataFrame(columns=['post_id','created_on'])
+            postVenueClickCountLifetimeSeries = dfPostVenueClickLifetime['post_id'].value_counts()
+        
             postFeatureList = []
-            
+            BIAS = 1
             for each in posts:
-                
                 tempFeatureList = []
-                # Total number of bookings using post - Lifetime
-                bookingPurchaseCountLifetime[each] = UserTrip.objects.using('default').filter(referred_post = each).count()
-                tempFeatureList.append(bookingPurchaseCountLifetime[each]+1)
-                # Total number of bookings using post - Trending
-                bookingPurchaseCountTrending[each] = UserTrip.objects.using('default').filter(referred_post = each, created_on__range = (start,end)).count()
-                tempFeatureList.append(bookingPurchaseCountTrending[each]+1)
-                # Total number of post_view count - Lifetime
-                postViewCountLifetime[each] = PostView.objects.using('default').filter(post_id = each).count()
-                tempFeatureList.append(postViewCountLifetime[each]+1)
-                # Total number of post_view count - Trending    
-                postViewCountTrending[each] = PostView.objects.using('default').filter(post_id = each,created_on__range = (start,end) ).count()
-                tempFeatureList.append(postViewCountTrending[each]+1)
-                # Total number of post_like count - Lifetime    
-                postLikeCountLifetime[each] = PostLike.objects.using('default').filter(post_id = each).count()
-                tempFeatureList.append(postLikeCountLifetime[each]+1)
-                # Total number of post_like count - Trending     
-                postLikeCountTrending[each] = PostLike.objects.using('default').filter(post_id = each,created_on__range = (start,end)).count()
-                tempFeatureList.append(postLikeCountTrending[each]+1) 
-                # Total number of post_comment count - Lifetime
-                postCommentCountLifetime[each] = PostComment.objects.using('default').filter(post_id = each).count()
-                tempFeatureList.append(postCommentCountLifetime[each]+1)
-                # Total number of post_saved count - Lifetime
-                postSavedCountLifetime[each] = PostSaved.objects.using('default').filter(post_id = each).count()
-                tempFeatureList.append(postSavedCountLifetime[each]+1)
-                # Total number of post shared count - Lifetime
-                postSharedCountLifetime[each] = Shared.objects.using('default').filter(post_id = each).count()
-                tempFeatureList.append(postSharedCountLifetime[each]+1)
-                # Total number of click through count - Lifetime
-                postVenueClickCountLifetime[each] = PostVenueClick.objects.using('default').filter(post_id = each).count()
-                tempFeatureList.append(postVenueClickCountLifetime[each]+1)
-                # Click-through/view ratio and like/view ratio
-                if(postViewCountLifetime[each] >0):
-                    clickThoughViewsRatio[each] = postVenueClickCountLifetime[each]/postViewCountLifetime[each]
-                    likeViewRatio[each] = postLikeCountLifetime[each]/postViewCountLifetime[each]
+                
+                if each in bookingPurchaseCountLifetimeSeries.index:
+                    tempFeatureList.append(bookingPurchaseCountLifetimeSeries[each]+BIAS)
                 else:
-                    clickThoughViewsRatio[each] =0
-                    likeViewRatio[each] = 0
-                tempFeatureList.append(clickThoughViewsRatio[each]+1)
-                tempFeatureList.append(likeViewRatio[each]+1)
+                    tempFeatureList.append(BIAS)
+
+                if each in bookingPurchaseCountTrendingSeries.index:
+                    tempFeatureList.append(bookingPurchaseCountTrendingSeries[each]+BIAS)
+                else:
+                    tempFeatureList.append(BIAS)
+
+                if each in postViewCountLifetimeSeries.index:
+                    tempFeatureList.append(postViewCountLifetimeSeries[each]+BIAS)
+                else:
+                    tempFeatureList.append(BIAS)
+                
+                if each in postViewCountTrendingSeries.index:
+                    tempFeatureList.append(postViewCountTrendingSeries[each]+BIAS)
+                else:
+                    tempFeatureList.append(BIAS)
+
+                if each in postLikeCountLifetimeSeries.index:
+                    tempFeatureList.append(postLikeCountLifetimeSeries[each]+BIAS)
+                else:
+                    tempFeatureList.append(BIAS)
+
+                if each in postLikeCountTrendingSeries.index:
+                    tempFeatureList.append(postLikeCountTrendingSeries[each]+BIAS)
+                else:
+                    tempFeatureList.append(BIAS)
+
+                if each in postCommentCountLifetimeSeries.index:
+                    tempFeatureList.append(postCommentCountLifetimeSeries[each]+BIAS)
+                else:
+                    tempFeatureList.append(BIAS)
+
+                if each in postSavedCountLifetimeSeries.index:
+                    tempFeatureList.append(postSavedCountLifetimeSeries[each]+BIAS)
+                else:
+                    tempFeatureList.append(BIAS)
+
+                if each in postSharedCountLifetimeSeries.index:
+                    tempFeatureList.append(postSharedCountLifetimeSeries[each]+BIAS)
+                else:
+                    tempFeatureList.append(BIAS)
+
+                if each in postVenueClickCountLifetimeSeries.index:
+                    tempFeatureList.append(postVenueClickCountLifetimeSeries[each]+BIAS)
+                else:
+                    tempFeatureList.append(BIAS)
+
+                if (each in postVenueClickCountLifetimeSeries.index) and (each in postViewCountLifetimeSeries.index):
+                    tempFeatureList.append(postVenueClickCountLifetimeSeries[each]/postViewCountLifetimeSeries[each]) # Click count and view count ratio
+                else:
+                    tempFeatureList.append(BIAS)
+
+                if (each in postLikeCountLifetimeSeries.index) and (each in postViewCountLifetimeSeries.index):
+                    tempFeatureList.append(postLikeCountLifetimeSeries[each]/postViewCountLifetimeSeries[each]) # Like count and view count ratio
+                else:
+                    tempFeatureList.append(BIAS)
+
                 # total rewatch and percentage of watch complete
                 watchObj = postVideoAnalytics.videoAnalytics(each)
                 totalRewatch[each] = watchObj.views
@@ -481,8 +562,23 @@ class Query(graphene.ObjectType):
                 
                 tempFeatureList.append(totalRewatch[each])
                 tempFeatureList.append(perTotalWatchComplete[each]+1)
-                
+
                 postFeatureList.append(tempFeatureList)
+                
+            BOOKING_PURCHASE_COUNT_LIFETIME_WEIGHT = 0.1
+            BOOKING_PURCHASE_COUNT_TRENDING_WEIGHT = 0.1
+            POST_VIEW_COUNT_LIFETIME_WEIGHT = 0.1
+            POST_VIEW_COUNT_TRENDING_WEIGHT =0.1
+            POST_LIKE_COUNT_LIFETIME_WEIGHT = 0.05
+            POST_LIKE_COUNT_TRENDING_WEIGHT = 0.05
+            POST_COMMENT_COUNT_LIFETIME_WEIGHT = 0.05
+            POST_SAVED_COUNT_LIFETIME_WEIGHT = 0.05
+            POST_VENUE_CLICK_COUNT_LIFETIME_WEIGHT = 0.1
+            CLICK_THROUGH_VIEWS_RATIO_WEIGHT = 0.1
+            POST_SHARED_COUNT_LIFETIME_WEIGHT =0.05
+            LIKE_VIEW_RATIO_WEIGHT = 0.05
+            TOTAL_REWATCH_WEIGHT = 0.05
+            PER_TOTAL_WATCH_COMPLETE_WEIGHT = 0.05
             # Creating weight vector
             w_vector = [BOOKING_PURCHASE_COUNT_LIFETIME_WEIGHT,
                             BOOKING_PURCHASE_COUNT_TRENDING_WEIGHT,
@@ -492,9 +588,9 @@ class Query(graphene.ObjectType):
                                             POST_LIKE_COUNT_TRENDING_WEIGHT,
                                                 POST_COMMENT_COUNT_LIFETIME_WEIGHT,
                                                     POST_SAVED_COUNT_LIFETIME_WEIGHT,
-                                                        POST_VENUE_CLICK_COUNT_LIFETIME_WEIGHT,
-                                                            CLICK_THROUGH_VIEWS_RATIO_WEIGHT,
-                                                                POST_SHARED_COUNT_LIFETIME_WEIGHT,
+                                                           POST_SHARED_COUNT_LIFETIME_WEIGHT,
+                                                              POST_VENUE_CLICK_COUNT_LIFETIME_WEIGHT,
+                                                                  CLICK_THROUGH_VIEWS_RATIO_WEIGHT,
                                                                     LIKE_VIEW_RATIO_WEIGHT,
                                                                         TOTAL_REWATCH_WEIGHT,
                                                                             PER_TOTAL_WATCH_COMPLETE_WEIGHT]
@@ -504,12 +600,14 @@ class Query(graphene.ObjectType):
                 postRank = mcdm.rank(postFeatureList, alt_names=posts, n_method="Linear1", w_vector=w_vector, s_method="MEW")
             else:
                 postRank = []
+            
             # adding results
             result =[]
             for each in postRank:
                 result.append(PostListType(each[0],round(each[1],2)))
         else:
             result = []
+        # result = []
         flag, page_data = pagination(result, page, limit)
         if flag:
             return SearchPlacesValuePostListType(venue=place_obj, posts=page_data["result"], page_info=PageInfoObject(
@@ -580,97 +678,134 @@ class Query(graphene.ObjectType):
 
         # Extracting post_ids for the given venue 
         posts += Post.objects.using('default').filter(venue_id =venueId).values_list('post_id',flat = True)
+        
         if len(posts) > 0:
 
             end = datetime.datetime.now()
             start = end -timedelta(days=10)
 
-            bookingPurchaseCountLifetime ={}
-            BOOKING_PURCHASE_COUNT_LIFETIME_WEIGHT = 0.1
-            
-            bookingPurchaseCountTrending = {}
-            BOOKING_PURCHASE_COUNT_TRENDING_WEIGHT = 0.1
-            
-            postViewCountLifetime = {} 
-            POST_VIEW_COUNT_LIFETIME_WEIGHT = 0.1
-            
-            postViewCountTrending = {}
-            POST_VIEW_COUNT_TRENDING_WEIGHT =0.1
-            
-            postLikeCountLifetime = {}
-            POST_LIKE_COUNT_LIFETIME_WEIGHT = 0.05
-            
-            postLikeCountTrending = {}
-            POST_LIKE_COUNT_TRENDING_WEIGHT = 0.05
-            
-            postCommentCountLifetime = {}
-            POST_COMMENT_COUNT_LIFETIME_WEIGHT = 0.05
-            
-            postSavedCountLifetime = {}
-            POST_SAVED_COUNT_LIFETIME_WEIGHT = 0.05
-            
-            postVenueClickCountLifetime = {}
-            POST_VENUE_CLICK_COUNT_LIFETIME_WEIGHT = 0.1
-            
-            clickThoughViewsRatio = {}
-            CLICK_THROUGH_VIEWS_RATIO_WEIGHT = 0.1
-            
-            postSharedCountLifetime = {}
-            POST_SHARED_COUNT_LIFETIME_WEIGHT =0.05
-            
-            likeViewRatio = {}
-            LIKE_VIEW_RATIO_WEIGHT = 0.05
-            
+        
             totalRewatch = {}
-            TOTAL_REWATCH_WEIGHT = 0.05
-            
             perTotalWatchComplete = {}
-            PER_TOTAL_WATCH_COMPLETE_WEIGHT = 0.05
 
+        
+
+            # Total number of bookings using post - Lifetime and Trending
+            dfBookingPurchaseLifetime = pd.DataFrame(list(UserTrip.objects.using('default').filter(referred_post__in = posts).values('referred_post','created_on')))
+            if dfBookingPurchaseLifetime.empty:
+                dfBookingPurchaseLifetime = pd.DataFrame(columns=['referred_post','created_on'])
+            bookingPurchaseCountLifetimeSeries = dfBookingPurchaseLifetime['referred_post'].value_counts()
+            dfBookingPurchaseLifetime['created_on'] = pd.to_datetime(dfBookingPurchaseLifetime.created_on).dt.tz_localize(None)
+            dfBookingPurchaseTrending = dfBookingPurchaseLifetime[(start <= dfBookingPurchaseLifetime['created_on'])]
+            bookingPurchaseCountTrendingSeries = dfBookingPurchaseTrending['referred_post'].value_counts()
+
+            # Total number of post_view count - Lifetime and Trending
+            dfPostViewLifetime = pd.DataFrame(list(PostView.objects.using('default').filter(post_id__in = posts).values('post_id','created_on')))
+            if dfPostViewLifetime.empty:
+                dfPostViewLifetime = pd.DataFrame(columns=['post_id','created_on'])
+            postViewCountLifetimeSeries = dfPostViewLifetime['post_id'].value_counts()
+            dfPostViewLifetime['created_on'] = pd.to_datetime(dfPostViewLifetime.created_on).dt.tz_localize(None)
+            dfPostViewTrending = dfPostViewLifetime[(start <= dfPostViewLifetime['created_on'])]
+            postViewCountTrendingSeries = dfPostViewTrending['post_id'].value_counts()
+
+            # Total number of post_like count - Lifetime    and Trending
+            dfPostLikeLifetime = pd.DataFrame(list(PostLike.objects.using('default').filter(post_id__in = posts).values('post_id','created_on')))
+            if dfPostLikeLifetime.empty:
+                dfPostLikeLifetime = pd.DataFrame(columns=['post_id','created_on'])
+            postLikeCountLifetimeSeries = dfPostLikeLifetime['post_id'].value_counts()
+            dfPostLikeLifetime['created_on'] = pd.to_datetime(dfPostLikeLifetime.created_on).dt.tz_localize(None)
+            dfPostLikeTrending = dfPostLikeLifetime[(start <= dfPostLikeLifetime['created_on'])]
+            postLikeCountTrendingSeries = dfPostLikeTrending['post_id'].value_counts()
+
+            # Total number of post_comment count - Lifetime
+            dfPostCommentLifetime = pd.DataFrame(list(PostComment.objects.using('default').filter(post_id__in = posts).values('post_id','created_on')))
+            if dfPostCommentLifetime.empty:
+                dfPostCommentLifetime = pd.DataFrame(columns=['post_id','created_on'])
+            postCommentCountLifetimeSeries = dfPostCommentLifetime['post_id'].value_counts()
+
+            # Total number of post_Saved count - Lifetime
+            dfPostSavedLifetime = pd.DataFrame(list(PostSaved.objects.using('default').filter(post_id__in = posts).values('post_id','created_on')))
+            if dfPostSavedLifetime.empty:
+                dfPostSavedLifetime = pd.DataFrame(columns=['post_id','created_on'])
+            postSavedCountLifetimeSeries = dfPostSavedLifetime['post_id'].value_counts()
+
+            # Total number of post shared count - Lifetime
+            dfPostSharedLifetime = pd.DataFrame(list(Shared.objects.using('default').filter(post_id__in = posts).values('post_id','created_on')))
+            if dfPostSharedLifetime.empty:
+                dfPostSharedLifetime = pd.DataFrame(columns=['post_id','created_on'])
+            postSharedCountLifetimeSeries = dfPostSharedLifetime['post_id'].value_counts()
+
+            # Total number of post click through count - Lifetime
+            dfPostVenueClickLifetime = pd.DataFrame(list(PostVenueClick.objects.using('default').filter(post_id__in = posts).values('post_id','created_on')))
+            if dfPostVenueClickLifetime.empty:
+                dfPostVenueClickLifetime = pd.DataFrame(columns=['post_id','created_on'])
+            postVenueClickCountLifetimeSeries = dfPostVenueClickLifetime['post_id'].value_counts()
+        
             postFeatureList = []
-            
+            BIAS = 1
             for each in posts:
-                
                 tempFeatureList = []
-                # Total number of bookings using post - Lifetime
-                bookingPurchaseCountLifetime[each] = UserTrip.objects.using('default').filter(referred_post = each).count()
-                tempFeatureList.append(bookingPurchaseCountLifetime[each]+1)
-                # Total number of bookings using post - Trending
-                bookingPurchaseCountTrending[each] = UserTrip.objects.using('default').filter(referred_post = each, created_on__range = (start,end)).count()
-                tempFeatureList.append(bookingPurchaseCountTrending[each]+1)
-                # Total number of post_view count - Lifetime
-                postViewCountLifetime[each] = PostView.objects.using('default').filter(post_id = each).count()
-                tempFeatureList.append(postViewCountLifetime[each]+1)
-                # Total number of post_view count - Trending    
-                postViewCountTrending[each] = PostView.objects.using('default').filter(post_id = each,created_on__range = (start,end) ).count()
-                tempFeatureList.append(postViewCountTrending[each]+1)
-                # Total number of post_like count - Lifetime    
-                postLikeCountLifetime[each] = PostLike.objects.using('default').filter(post_id = each).count()
-                tempFeatureList.append(postLikeCountLifetime[each]+1)
-                # Total number of post_like count - Trending     
-                postLikeCountTrending[each] = PostLike.objects.using('default').filter(post_id = each,created_on__range = (start,end)).count()
-                tempFeatureList.append(postLikeCountTrending[each]+1) 
-                # Total number of post_comment count - Lifetime
-                postCommentCountLifetime[each] = PostComment.objects.using('default').filter(post_id = each).count()
-                tempFeatureList.append(postCommentCountLifetime[each]+1)
-                # Total number of post_saved count - Lifetime
-                postSavedCountLifetime[each] = PostSaved.objects.using('default').filter(post_id = each).count()
-                tempFeatureList.append(postSavedCountLifetime[each]+1)
-                # Total number of post shared count - Lifetime
-                postSharedCountLifetime[each] = Shared.objects.using('default').filter(post_id = each).count()
-                tempFeatureList.append(postSharedCountLifetime[each]+1)
-                # Total number of click through count - Lifetime
-                postVenueClickCountLifetime[each] = PostVenueClick.objects.using('default').filter(post_id = each).count()
-                tempFeatureList.append(postVenueClickCountLifetime[each]+1)
-                # Click-through/view ratio and like/view ratio
-                if(postViewCountLifetime[each] >0):
-                    clickThoughViewsRatio[each] = postVenueClickCountLifetime[each]/postViewCountLifetime[each]
-                    likeViewRatio[each] = postLikeCountLifetime[each]/postViewCountLifetime[each]
+                
+                if each in bookingPurchaseCountLifetimeSeries.index:
+                    tempFeatureList.append(bookingPurchaseCountLifetimeSeries[each]+BIAS)
                 else:
-                    clickThoughViewsRatio[each] =0
-                    likeViewRatio[each] = 0
-                tempFeatureList.append(clickThoughViewsRatio[each]+1)
-                tempFeatureList.append(likeViewRatio[each]+1)
+                    tempFeatureList.append(BIAS)
+
+                if each in bookingPurchaseCountTrendingSeries.index:
+                    tempFeatureList.append(bookingPurchaseCountTrendingSeries[each]+BIAS)
+                else:
+                    tempFeatureList.append(BIAS)
+
+                if each in postViewCountLifetimeSeries.index:
+                    tempFeatureList.append(postViewCountLifetimeSeries[each]+BIAS)
+                else:
+                    tempFeatureList.append(BIAS)
+                
+                if each in postViewCountTrendingSeries.index:
+                    tempFeatureList.append(postViewCountTrendingSeries[each]+BIAS)
+                else:
+                    tempFeatureList.append(BIAS)
+
+                if each in postLikeCountLifetimeSeries.index:
+                    tempFeatureList.append(postLikeCountLifetimeSeries[each]+BIAS)
+                else:
+                    tempFeatureList.append(BIAS)
+
+                if each in postLikeCountTrendingSeries.index:
+                    tempFeatureList.append(postLikeCountTrendingSeries[each]+BIAS)
+                else:
+                    tempFeatureList.append(BIAS)
+
+                if each in postCommentCountLifetimeSeries.index:
+                    tempFeatureList.append(postCommentCountLifetimeSeries[each]+BIAS)
+                else:
+                    tempFeatureList.append(BIAS)
+
+                if each in postSavedCountLifetimeSeries.index:
+                    tempFeatureList.append(postSavedCountLifetimeSeries[each]+BIAS)
+                else:
+                    tempFeatureList.append(BIAS)
+
+                if each in postSharedCountLifetimeSeries.index:
+                    tempFeatureList.append(postSharedCountLifetimeSeries[each]+BIAS)
+                else:
+                    tempFeatureList.append(BIAS)
+
+                if each in postVenueClickCountLifetimeSeries.index:
+                    tempFeatureList.append(postVenueClickCountLifetimeSeries[each]+BIAS)
+                else:
+                    tempFeatureList.append(BIAS)
+
+                if (each in postVenueClickCountLifetimeSeries.index) and (each in postViewCountLifetimeSeries.index):
+                    tempFeatureList.append(postVenueClickCountLifetimeSeries[each]/postViewCountLifetimeSeries[each]) # Click count and view count ratio
+                else:
+                    tempFeatureList.append(BIAS)
+
+                if (each in postLikeCountLifetimeSeries.index) and (each in postViewCountLifetimeSeries.index):
+                    tempFeatureList.append(postLikeCountLifetimeSeries[each]/postViewCountLifetimeSeries[each]) # Like count and view count ratio
+                else:
+                    tempFeatureList.append(BIAS)
+
                 # total rewatch and percentage of watch complete
                 watchObj = postVideoAnalytics.videoAnalytics(each)
                 totalRewatch[each] = watchObj.views
@@ -678,8 +813,23 @@ class Query(graphene.ObjectType):
                 
                 tempFeatureList.append(totalRewatch[each])
                 tempFeatureList.append(perTotalWatchComplete[each]+1)
-                
+
                 postFeatureList.append(tempFeatureList)
+                
+            BOOKING_PURCHASE_COUNT_LIFETIME_WEIGHT = 0.1
+            BOOKING_PURCHASE_COUNT_TRENDING_WEIGHT = 0.1
+            POST_VIEW_COUNT_LIFETIME_WEIGHT = 0.1
+            POST_VIEW_COUNT_TRENDING_WEIGHT =0.1
+            POST_LIKE_COUNT_LIFETIME_WEIGHT = 0.05
+            POST_LIKE_COUNT_TRENDING_WEIGHT = 0.05
+            POST_COMMENT_COUNT_LIFETIME_WEIGHT = 0.05
+            POST_SAVED_COUNT_LIFETIME_WEIGHT = 0.05
+            POST_VENUE_CLICK_COUNT_LIFETIME_WEIGHT = 0.1
+            CLICK_THROUGH_VIEWS_RATIO_WEIGHT = 0.1
+            POST_SHARED_COUNT_LIFETIME_WEIGHT =0.05
+            LIKE_VIEW_RATIO_WEIGHT = 0.05
+            TOTAL_REWATCH_WEIGHT = 0.05
+            PER_TOTAL_WATCH_COMPLETE_WEIGHT = 0.05
             # Creating weight vector
             w_vector = [BOOKING_PURCHASE_COUNT_LIFETIME_WEIGHT,
                             BOOKING_PURCHASE_COUNT_TRENDING_WEIGHT,
@@ -689,9 +839,9 @@ class Query(graphene.ObjectType):
                                             POST_LIKE_COUNT_TRENDING_WEIGHT,
                                                 POST_COMMENT_COUNT_LIFETIME_WEIGHT,
                                                     POST_SAVED_COUNT_LIFETIME_WEIGHT,
-                                                        POST_VENUE_CLICK_COUNT_LIFETIME_WEIGHT,
-                                                            CLICK_THROUGH_VIEWS_RATIO_WEIGHT,
-                                                                POST_SHARED_COUNT_LIFETIME_WEIGHT,
+                                                           POST_SHARED_COUNT_LIFETIME_WEIGHT,
+                                                              POST_VENUE_CLICK_COUNT_LIFETIME_WEIGHT,
+                                                                  CLICK_THROUGH_VIEWS_RATIO_WEIGHT,
                                                                     LIKE_VIEW_RATIO_WEIGHT,
                                                                         TOTAL_REWATCH_WEIGHT,
                                                                             PER_TOTAL_WATCH_COMPLETE_WEIGHT]
@@ -701,12 +851,20 @@ class Query(graphene.ObjectType):
                 postRank = mcdm.rank(postFeatureList, alt_names=posts, n_method="Linear1", w_vector=w_vector, s_method="MEW")
             else:
                 postRank = []
+            
             # adding results
             result =[]
             for each in postRank:
                 result.append(PostListType(each[0],round(each[1],2)))
         else:
             result = []
+        # result = []
+        # flag, page_data = pagination(result, page, limit)
+        # if flag:
+        #     return SearchPlacesValuePostListType(venue=place_obj, posts=page_data["result"], page_info=PageInfoObject(
+        #         nextPage=page_data["page"], limit=page_data["limit"]))
+        # else:
+        #     raise BadRequestException(page_data)
 
         flag, page_data = pagination(result, page, limit)
         if flag:
@@ -859,17 +1017,20 @@ class Query(graphene.ObjectType):
         Verification.user_verify(userId)
         try:
             if itineraryId is not None:
-                UserSharedItinerary.objects.using('default').get(user_shared_itinerary_id=itineraryId)
+                itinerary = UserSharedItinerary.objects.using('default').get(user_shared_itinerary_id=itineraryId)
             else:
                 raise BadRequestException("itineraryId provided is invalid", 400)
         except UserSharedItinerary.NotFoundException:
             raise NotFoundException("itineraryId provided not found", 404)
 
-        result = []
-        result += UserSharedItineraryPost.objects.using('default').filter(user_shared_itinerary_id=itineraryId)
-        flag, page_data = pagination(result, page, limit)
+        postIds = UserSharedItineraryPost.objects.using('default').filter(user_shared_itinerary_id=itinerary.user_shared_itinerary_id).values_list('post_id', flat=True)
+        posts = []
+        posts = Post.objects.using('default').filter(post_id__in=postIds).order_by('-created_on').values_list('post_id')
+        
+        posts = [PostListType(post_id=x[0]) for x in posts]
+        flag, page_data = pagination(posts, page, limit)
 
         if flag:
-            return page_data['result']
+            return posts
         else:
             raise BadRequestException(page_data)

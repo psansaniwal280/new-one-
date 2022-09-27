@@ -126,11 +126,15 @@ class SearchStaysFilterValueType(graphene.ObjectType):
     name = graphene.String()
     user = graphene.Field(SearchFilterUserType)
 
+class TagPostListType(graphene.ObjectType):
+    post_id = graphene.Int()
 
 class SearchTagsValueType(graphene.ObjectType):
     tagId = graphene.Int()
-    hashtag = graphene.String()
-    posts = graphene.List(PostListType)
+    tagName = graphene.String()
+    postView = graphene.Int()
+    posts = graphene.List(TagPostListType)
+    
 
 
 class SearchTagsValueListType(graphene.ObjectType):

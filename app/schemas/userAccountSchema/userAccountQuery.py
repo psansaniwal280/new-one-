@@ -34,10 +34,10 @@ class Query(graphene.ObjectType):
                 # username = jwt.decode(email, "1232141",algorithms=['HS256'])['user']
                 # user = User.objects.using('default').get(email=email)
 
-                userObjList = User.objects.using('default').values('user_id','email','is_active')
-                for user_obj in userObjList:
-                    if user_obj['email'] == email:
-                        user = User.objects.get(user_id=user_obj['user_id'])
+                user = User.objects.using('default').get(email=email)
+                # for user_obj in userObjList:
+                #     if user_obj['email'] == email:
+                #         user = User.objects.get(user_id=user_obj['user_id'])
 
                 profile = UserProfile.objects.using('default').get(user_id=user.user_id)
                 name = profile.user_profile_name
@@ -98,12 +98,10 @@ class Query(graphene.ObjectType):
             userId = 0
             if useremail and useremail.strip():
                 try:
-                    user_list = User.objects.using('default').all()
-                    for usr in user_list:
-                        if usr.email == useremail or usr.username == useremail:
-                            username = usr.username
-                            email = usr.email
-                            userId = usr.user_id
+                    usr= User.objects.using('default').get(Q(email=useremail) or Q(username=useremail))
+                    username = usr.username
+                    email = usr.email
+                    userId = usr.user_id
                 except User.DoesNotExist:
                     raise NotFoundException("username/email provided not found", 404)
                 response = sendPasswordResetCodeMailToUser(email, username, userId)

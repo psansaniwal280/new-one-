@@ -14,6 +14,7 @@ from email.policy import default
 from pathlib import Path
 from os import path
 from decouple import config
+from datetime import datetime, timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -48,12 +49,12 @@ INSTALLED_APPS = [
     'graphql_jwt',
     'graphql_auth',
     'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
-    # 'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
-
-    # 'allauth.socialaccount.providers.google',
-    # 'allauth.socialaccount.providers.auth0',
+    'django_filters',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.auth0',
 
 ]
 
@@ -88,7 +89,12 @@ ROOT_URLCONF = 'core.urls'
 
 GRAPHQL_JWT = {
     "JWT_VERIFY_EXPIRATION": True,
+
+    # optional
     "JWT_LONG_RUNNING_REFRESH_TOKEN": True,
+    "JWT_ALLOW_ANY_CLASSES": [
+        "graphql_auth.mutations.Register",
+    ],
 }
 
 TEMPLATES = [
@@ -108,30 +114,17 @@ TEMPLATES = [
 ]
 
 
-# AUTHENTICATION_BACKENDS = [
-#     # Needed to login by username in Django admin, regardless of `allauth`
-#     'django.contrib.auth.backends.ModelBackend',
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+     'graphql_jwt.backends.JSONWebTokenBackend',
+    'django.contrib.auth.backends.AllowAllUsersModelBackend',
+    'graphql_auth.backends.GraphQLAuthBackend'
 
-#     # `allauth` specific authentication methods, such as login by e-mail
-#     'allauth.account.auth_backends.AuthenticationBackend',
-# ]
+]
 
 
-SITE_ID = 1
-
-# Provider specific settings
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        # For each OAuth based provider, either add a ``SocialApp``
-        # (``socialaccount`` app) containing the required client
-        # credentials, or list them here:
-        'APP': {
-            'client_id': '123',
-            'secret': '456',
-            'key': ''
-        }
-    }
-}
+# Google Client ID :  835106107509-8maiscaaje7l2u1s4oq32je45f4lnnrd.apps.googleusercontent.com
+# Client Secret key : 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
 
 WSGI_APPLICATION = 'core.wsgi.application'
 ASGI_APPLICATION = 'core.router.application'
@@ -222,6 +215,19 @@ S3DIRECT_DESTINATIONS = {
     },
 }
 
+PASSWORD_HASHERS = [
+  'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+  'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+  'django.contrib.auth.hashers.Argon2PasswordHasher',
+  'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+  'django.contrib.auth.hashers.BCryptPasswordHasher',
+  'django.contrib.auth.hashers.SHA1PasswordHasher',
+  'django.contrib.auth.hashers.MD5PasswordHasher',
+  'django.contrib.auth.hashers.UnsaltedSHA1PasswordHasher',
+  'django.contrib.auth.hashers.UnsaltedMD5PasswordHasher',
+  'django.contrib.auth.hashers.CryptPasswordHasher',
+]
+
 # Sendgrid Settings.
 SENDGRID_API_KEY = config('SENDGRID_API_KEY')
 EMAIL_HOST = config('EMAIL_HOST')
@@ -230,7 +236,7 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 # EMAIL_USE_TLS = os.getenv('25, 587')
 # DOMAIN = os.getenv("DOMAIN")
 
-#all-auth registraion settings
+# all-auth registraion settings
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS =1
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
@@ -248,17 +254,22 @@ ACCOUNT_USERNAME_VALIDATORS = None
 ACCOUNT_ADAPTER = "allauth.account.adapter.DefaultAccountAdapter"
 
 
-# ACCOUNT_FORMS = {
-#     'login': 'allauth.account.forms.LoginForm',
-#     'signup': 'allauth.account.forms.SignupForm',
-#     'add_email': 'allauth.account.forms.AddEmailForm',
-#     'change_password': 'allauth.account.forms.ChangePasswordForm',
-#     'set_password': 'allauth.account.forms.SetPasswordForm',
-#     'reset_password': 'allauth.account.forms.ResetPasswordForm',
-#     'reset_password_from_key': 'allauth.account.forms.ResetPasswordKeyForm',
-#     'disconnect': 'allauth.socialaccount.forms.DisconnectForm',
-# }
+ACCOUNT_FORMS = {
+    'login': 'allauth.account.forms.LoginForm',
+    'signup': 'allauth.account.forms.SignupForm',
+    'add_email': 'allauth.account.forms.AddEmailForm',
+    'change_password': 'allauth.account.forms.ChangePasswordForm',
+    'set_password': 'allauth.account.forms.SetPasswordForm',
+    'reset_password': 'allauth.account.forms.ResetPasswordForm',
+    'reset_password_from_key': 'allauth.account.forms.ResetPasswordKeyForm',
+    'disconnect': 'allauth.socialaccount.forms.DisconnectForm',
+}
 STRIPE_PUB_KEY = config('STRIPE_PUB_KEY')
 STRIPE_SEC_KEY = config('STRIPE_SEC_KEY')
 
+SITE_ID = 2
+LOGIN_REDIRECT_URL = '/'
 
+
+AUTH_USER_MODEL = 'app.User'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

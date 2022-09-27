@@ -2,6 +2,7 @@ from email.policy import default
 import graphene
 from pyparsing import empty
 import mcdm
+import pandas as pd
 from .searchType import *
 from app.schemas.userAccountSchema.userAccountType import stringType
 from app.schemas.commonObjects.objectTypes import APIPlacesListType
@@ -21,7 +22,7 @@ from app.utilities.filterDateVenueObjs import *
 from app.schemas.postSchema.postType import PostListType
 import requests
 from app.utilities.locationPagination import locationPagination
-
+import pandas as pd
 from ..commonObjects.objectTypes import PageInfoObject
 from ...utilities import Verification
 from ...utilities.Verification import exp_availability_timeslot_checker
@@ -30,7 +31,12 @@ from ...utilities.Verification import exp_availability_timeslot_checker
 class Query(graphene.ObjectType):
     # Search Queries
     """getRecentSearch = graphene.List(RecentSearchType, user_id=graphene.Int())"""
-    searchAllSuggestions = graphene.Field(AllSearchSuggestionsType, user_id=graphene.Int(), search_content=graphene.String(), latitude=graphene.Float(), longitude=graphene.Float(), page=graphene.Int(), limit=graphene.Int())
+    searchAllSuggestions = graphene.Field(AllSearchSuggestionsType, user_id=graphene.Int(), 
+                                            search_content=graphene.String(), latitude=graphene.Float(), 
+                                                longitude=graphene.Float(), page=graphene.Int(), limit=graphene.Int())
+    searchAllSuggestionsConcat = graphene.List(SearchSuggestionsType, user_id=graphene.Int(), 
+                                            search_content=graphene.String(), latitude=graphene.Float(), 
+                                                longitude=graphene.Float(), page=graphene.Int(), limit=graphene.Int())                                            
     searchAll = graphene.Field(AllSearchType, userId=graphene.Int(), searchContent=graphene.String(),
                                checkInDate=graphene.String(), checkOutDate=graphene.String(), location=locationObject())
     userResults = graphene.Field(SearchUserPageListType, userId=graphene.Int(), searchContent=graphene.String(),
@@ -54,13 +60,13 @@ class Query(graphene.ObjectType):
                                        startDate=graphene.String(), endDate=graphene.String(),
                                        page=graphene.Int(), limit=graphene.Int())
     searchTags = graphene.Field(SearchTagsValueListType, userId=graphene.Int(), searchContent=graphene.String(),
-                                page=graphene.Int(), limit=graphene.Int())
+                                page=graphene.Int(), limit=graphene.Int(),postCount=graphene.Int())
     searchTagsConcat = graphene.List(SearchTagsValueType, userId=graphene.Int(), searchContent=graphene.String(),
-                                page=graphene.Int(), limit=graphene.Int())
+                                page=graphene.Int(), limit=graphene.Int(),postCount=graphene.Int())
     searchVenues = graphene.Field(SearchPlacesValueListType, userId=graphene.Int(), searchContent=graphene.String(),
-                                  page=graphene.Int(), limit=graphene.Int())
+                                  page=graphene.Int(), limit=graphene.Int(), postCount=graphene.Int())
     searchVenuesConcat = graphene.List(SearchPlacesValueType, userId=graphene.Int(), searchContent=graphene.String(),
-                                  page=graphene.Int(), limit=graphene.Int())
+                                  page=graphene.Int(), limit=graphene.Int(), postCount=graphene.Int())
     searchHistory = graphene.List(SearchHistoryType, userId=graphene.Int())
     searchRecommendations = graphene.Field(AllSearchSuggestionsType, userId=graphene.Int(),
                                            searchContent=graphene.String())
@@ -128,101 +134,148 @@ class Query(graphene.ObjectType):
 
         if authUserId in username_objs:
             username_objs.remove(authUserId)
-        
+        # print("Total users extracted:",len(username_objs))
 
         if not username_objs:
             raise NotFoundException("No user found with given search string", 400)
 
-        # set the intial value of relevancy score for each Search_User object
-        rel_score = {}
-        for each in username_objs:
-            rel_score[each] = 0
-
+        
+        BIAS = 1
         # search for follower in the list
         follower_list = []
         follower_list += UserFollowing.objects.using('default').filter(user_id=authUserId).values_list('following_user',
-                                                                                                       flat=True)
+                                                                                                        flat=True)
         following = {}
         for each in username_objs:
             if each in follower_list:
                 following[each] = 1
-                rel_score[each] += 10  # update the relevancy score if followed by Current_user
             else:
                 following[each] = 0
-       
 
         # Check if Search_user messeged by Current_user
-        is_recipient = {}
-        for each in username_objs:
-            is_recipient[each] = ChatMessage.objects.using('default').filter(sender=authUserId,
-                                                                             chatmessagerecipient__user_id=each).count()
-            if is_recipient[each] is not None:
-                rel_score[each] = rel_score[each] + is_recipient[each] * 0.1
-       
-        # Find the mutual following and update the rel_score
-
-        for each in username_objs:
-            following_by = []
-            mutual = 0
-            following_by += UserFollowing.objects.using('default').filter(user_id=each).values_list('following_user',
-                                                                                                    flat=True)
-            mutual = len(list(set.intersection(set(follower_list), set(following_by))))
-            if mutual > 0:
-                rel_score[each] = rel_score[each] + mutual * .8
-
-        # Check if user commented on the post of search_user and update the rel_score
-        no_of_comments = {}
-        for each in username_objs:
-            post_comment_list = Post.objects.filter(user_id=each, postcomment__user_id=authUserId).count()
-            total_comments = post_comment_list
-            no_of_comments[each] = total_comments
-            rel_score[each] += total_comments * .4
         
-
-        # Check if user liked the post of search_user and update the rel_score
-        no_of_likes = {}
+        df_recipient = pd.DataFrame(list(ChatMessage.objects.using('default').filter(sender=authUserId,
+                                                                            chatmessagerecipient__user_id__in= username_objs).values('chatmessagerecipient__user_id')))
+        if df_recipient.empty:
+            df_recipient = pd.DataFrame(columns=['chatmessagerecipient__user_id'])
+        is_recipient_series = df_recipient['chatmessagerecipient__user_id'].value_counts()
+        
+        # Calculate the mutual follow between auth user and user
+        mutual = {}
+        df_following_by = pd.DataFrame(list(UserFollowing.objects.using('default').filter(user_id__in=username_objs).values('user_id','following_user')))
+        if df_following_by.empty:
+            df_following_by = pd.DataFrame(columns=['user_id','following_user'])
         for each in username_objs:
-            post_likes_list = Post.objects.filter(user_id=each, postlike__user_id=authUserId).count()
-            total_likes = post_likes_list
-            no_of_likes[each] = total_likes
-            rel_score[each] += total_likes * .4
+            following_by = list(df_following_by.loc[df_following_by['user_id'] == each, 'following_user'])
+            mutual[each] = 0
+            mutual[each] = len(list(set.intersection(set(follower_list), set(following_by))))
 
-        # check if user saved the post of search_user and update the rel_score
-        no_of_saved = {}
+        #Calculate the number of comments made by authuser on user's post
+        df_post_comment = pd.DataFrame(list(Post.objects.filter(user_id__in = username_objs, postcomment__user_id=authUserId).values('post_id','user_id','postcomment__user_id')))
+        if df_post_comment.empty:
+            df_post_comment = pd.DataFrame(columns=['post_id','user_id','postcomment__user_id'])
+        no_of_comments_series = df_post_comment['user_id'].value_counts()
+
+        # Calculate the number of likes made by authuser on user's post   
+        df_post_like = pd.DataFrame(list(Post.objects.filter(user_id__in = username_objs, postlike__user_id=authUserId).values('post_id','user_id','postlike__user_id')))
+        if df_post_like.empty:
+            df_post_like = pd.DataFrame(columns=['post_id','user_id','postcomment__user_id'])
+        no_of_likes_series = df_post_like['user_id'].value_counts()
+
+        # Calculates the number of posts saved by authuser on user's post   
+        df_post_saved = pd.DataFrame(list(Post.objects.filter(user_id__in = username_objs, postsaved__user_id=authUserId).values('post_id','user_id','postsaved__user_id')))
+        if df_post_saved.empty:
+            df_post_saved = pd.DataFrame(columns=['post_id','user_id','postsaved__user_id'])
+        no_of_saved_series = df_post_saved['user_id'].value_counts()# print('no_of_saved_series',no_of_saved_series)
+
+                
+        # check if user have the same city in location as of search_user 
+        city_uid = UserProfile.objects.filter(user_id=authUserId).values('city_id') 
+        same_location_user = {}
+        df_city_user = pd.DataFrame(list(UserProfile.objects.filter(user_id__in=username_objs).values('user_id','city_id')))
+        if df_city_user.empty:
+            df_city_user = pd.DataFrame(columns=['user_id','city_id'])
         for each in username_objs:
-            post_saved_list = Post.objects.filter(user_id=each, postsaved__user_id=authUserId).count()
-            total_saved = post_saved_list
-            no_of_saved[each] = total_saved
-            rel_score[each] += total_saved * .4
-
-        # check if user have the same city in location as of search_user and update the rel_score
-        city_uid = UserProfile.objects.filter(user_id=authUserId).values('city_id')
-        location_user = {}
-        for each in username_objs:
-            loc = UserProfile.objects.filter(user_id=each).values('city_id')
-            if loc:
-                location_user[each] = loc[0]
-                if city_uid[0] == location_user[each]:
-                    rel_score[each] = rel_score[each] + 1
-
-
+            city_user = list(df_city_user.loc[df_city_user['user_id']==each, 'city_id'])
+            same_location_user[each] = 1
+            if len(city_user)>0 and len(city_uid)>0:
+                if city_uid[0] == city_user[0]:
+                    same_location_user[each]=10
+        
         # check for the user_tag
         tag_uid = []
         common_tag = {}
         tag_uid += UserTag.objects.filter(user_id=authUserId).values_list('user_profile_tag', flat=True)
+        df_tags = pd.DataFrame(list(UserTag.objects.filter(user_id__in=username_objs).values('user_id','user_profile_tag')))
+        if df_tags.empty:
+            df_tags = pd.DataFrame(columns=['user_id','user_profile_tag'])
         for each in username_objs:
-            tags = []
-            tags += UserTag.objects.filter(user_id=each).values_list('user_profile_tag', flat=True)
-
+            tags = list(df_tags.loc[df_tags['user_id']==each,'user_profile_tag'])
             common_tag[each] = len(list(set.intersection(set(tags), set(tag_uid))))
-            rel_score[each] = rel_score[each] + common_tag[each] * 0.6
-
-        sorted_rel = sorted(rel_score, key=rel_score.get)
-        sorted_rel.reverse()
         
+        
+        #add the features to the list to create matrix for user
+        user_feature_list = []
+        for each in username_objs:
+            temp_feature_list = []
+            temp_feature_list.append(following[each]+1)
+            # temp_feature_list.append(is_recipient[each]+1)
+
+            if each in is_recipient_series.index:
+                temp_feature_list.append(is_recipient_series[each]+BIAS)
+            else:
+                temp_feature_list.append(BIAS)
+
+            temp_feature_list.append(mutual[each]+1)
+
+            if each in no_of_comments_series.index:
+                temp_feature_list.append(no_of_comments_series[each]+BIAS)
+            else:
+                temp_feature_list.append(BIAS)
+
+            if each in no_of_likes_series.index:
+                temp_feature_list.append(no_of_likes_series[each]+BIAS)
+            else:
+                temp_feature_list.append(BIAS)
+                
+            if each in no_of_saved_series.index:
+                temp_feature_list.append(no_of_saved_series[each]+BIAS)
+            else:
+                temp_feature_list.append(BIAS)
+
+            temp_feature_list.append(same_location_user[each])
+            temp_feature_list.append(common_tag[each]+1)
+            
+            user_feature_list.append(temp_feature_list)
+        
+        
+        # Creating weight vector to reflect the importance of any feature of the user
+        following_weight = 0.2
+        msg_recipient_weight = 0.1
+        mutual_follow_weight = 0.2
+        no_of_comments_weight = 0.1
+        no_of_likes_weight = 0.1
+        no_of_saved_weight = 0.1
+        location_weight =0.1
+        common_tag_weight = 0.1
+        w_vector = [following_weight,
+                            msg_recipient_weight,
+                                mutual_follow_weight,
+                                    no_of_comments_weight,
+                                        no_of_likes_weight,
+                                            no_of_saved_weight,
+                                                location_weight,
+                                                    common_tag_weight]
+            
+        # Calculating the relevancy score of each hashtag using multiplicative exponential weighting (MEW) method of Multi Criteria Decision Making (MCDM)
+        if(len(user_feature_list) > 0):
+            user_rank = mcdm.rank(user_feature_list, alt_names=username_objs, n_method="Linear1", w_vector=w_vector, s_method="MEW")  
+        else:
+            user_rank = []
         result = []
-        for each in sorted_rel:
-            result.append({"user_id": each, "relevancy_score": round(rel_score[each], 2)})
+        for each in user_rank:
+            result.append(SearchUserListType(each[0],round(each[1],2)))
+            
 
         if len(result) > 0:
             if page and limit:
@@ -282,120 +335,147 @@ class Query(graphene.ObjectType):
 
         if authUserId in username_objs:
             username_objs.remove(authUserId)
-        # print("Search_user:",username_objs)
-        # username_objs += [20210008]
+        # print("Total users extracted:",len(username_objs))
 
         if not username_objs:
             raise NotFoundException("No user found with given search string", 400)
 
-        # set the intial value of relevancy score for each Search_User object
-        rel_score = {}
-        for each in username_objs:
-            rel_score[each] = 0
-
+        
+        BIAS = 1
         # search for follower in the list
         follower_list = []
         follower_list += UserFollowing.objects.using('default').filter(user_id=authUserId).values_list('following_user',
-                                                                                                       flat=True)
+                                                                                                        flat=True)
         following = {}
         for each in username_objs:
             if each in follower_list:
                 following[each] = 1
-                rel_score[each] += 10  # update the relevancy score if followed by Current_user
             else:
                 following[each] = 0
-        # print("following: ",following)
-        # print("\nafter user you follow rel_score:", rel_score)
 
         # Check if Search_user messeged by Current_user
-        is_recipient = {}
+        
+        df_recipient = pd.DataFrame(list(ChatMessage.objects.using('default').filter(sender=authUserId,
+                                                                            chatmessagerecipient__user_id__in= username_objs).values('chatmessagerecipient__user_id')))
+        if df_recipient.empty:
+            df_recipient = pd.DataFrame(columns=['chatmessagerecipient__user_id'])
+        is_recipient_series = df_recipient['chatmessagerecipient__user_id'].value_counts()
+        
+        # Calculate the mutual follow between auth user and user
+        mutual = {}
+        df_following_by = pd.DataFrame(list(UserFollowing.objects.using('default').filter(user_id__in=username_objs).values('user_id','following_user')))
+        if df_following_by.empty:
+            df_following_by = pd.DataFrame(columns=['user_id','following_user'])
         for each in username_objs:
-            is_recipient[each] = ChatMessage.objects.using('default').filter(sender=authUserId,
-                                                                             chatmessagerecipient__user_id=each).count()
-            if is_recipient[each] is not None:
-                rel_score[each] = rel_score[each] + is_recipient[each] * 0.1
-        # print("msg count: ", is_recipient)        
+            following_by = list(df_following_by.loc[df_following_by['user_id'] == each, 'following_user'])
+            mutual[each] = 0
+            mutual[each] = len(list(set.intersection(set(follower_list), set(following_by))))
 
-        # print("After you messeged users rel_score:", rel_score)
+        #Calculate the number of comments made by authuser on user's post
+        df_post_comment = pd.DataFrame(list(Post.objects.filter(user_id__in = username_objs, postcomment__user_id=authUserId).values('post_id','user_id','postcomment__user_id')))
+        if df_post_comment.empty:
+            df_post_comment = pd.DataFrame(columns=['post_id','user_id','postcomment__user_id'])
+        no_of_comments_series = df_post_comment['user_id'].value_counts()
 
-        # Find the mutual following and update the rel_score
+        # Calculate the number of likes made by authuser on user's post   
+        df_post_like = pd.DataFrame(list(Post.objects.filter(user_id__in = username_objs, postlike__user_id=authUserId).values('post_id','user_id','postlike__user_id')))
+        if df_post_like.empty:
+            df_post_like = pd.DataFrame(columns=['post_id','user_id','postcomment__user_id'])
+        no_of_likes_series = df_post_like['user_id'].value_counts()
 
-        for each in username_objs:
-            following_by = []
-            mutual = 0
-            following_by += UserFollowing.objects.using('default').filter(user_id=each).values_list('following_user',
-                                                                                                    flat=True)
-            mutual = len(list(set.intersection(set(follower_list), set(following_by))))
-            # print(each, ": ", mutual)
-            if mutual > 0:
-                rel_score[each] = rel_score[each] + mutual * .8
-        # print("\n after mutual follow: rel_score:", rel_score)
+        # Calculates the number of posts saved by authuser on user's post   
+        df_post_saved = pd.DataFrame(list(Post.objects.filter(user_id__in = username_objs, postsaved__user_id=authUserId).values('post_id','user_id','postsaved__user_id')))
+        if df_post_saved.empty:
+            df_post_saved = pd.DataFrame(columns=['post_id','user_id','postsaved__user_id'])
+        no_of_saved_series = df_post_saved['user_id'].value_counts()# print('no_of_saved_series',no_of_saved_series)
 
-        # Check if user commented on the post of search_user and update the rel_score
-        no_of_comments = {}
-        for each in username_objs:
-            post_comment_list = Post.objects.filter(user_id=each, postcomment__user_id=authUserId).count()
-            total_comments = post_comment_list
-            no_of_comments[each] = total_comments
-            rel_score[each] += total_comments * .4
-        # print("\n no of comments:", no_of_comments)    
-        # print("after comment check: rel_score:", rel_score)
-
-        # Check if user liked the post of search_user and update the rel_score
-        no_of_likes = {}
-        for each in username_objs:
-            post_likes_list = Post.objects.filter(user_id=each, postlike__user_id=authUserId).count()
-            total_likes = post_likes_list
-            no_of_likes[each] = total_likes
-            rel_score[each] += total_likes * .4
-        # print("\n no of likes:", no_of_likes)    
-        # print("after likes check: rel_score:", rel_score)
-
-        # check if user saved the post of search_user and update the rel_score
-        no_of_saved = {}
-        for each in username_objs:
-            post_saved_list = Post.objects.filter(user_id=each, postsaved__user_id=authUserId).count()
-            total_saved = post_saved_list
-            no_of_saved[each] = total_saved
-            rel_score[each] += total_saved * .4
-        # print("\n no of Saved post:", no_of_saved)    
-        # print("after saved post: rel_score:", rel_score)
-
+                
         # check if user have the same city in location as of search_user and update the rel_score
-        city_uid = UserProfile.objects.filter(user_id=authUserId).values('city_id')
-        # print(city_uid[0])
-        location_user = {}
+        city_uid = UserProfile.objects.filter(user_id=authUserId).values('city_id') 
+        same_location_user = {}
+        df_city_user = pd.DataFrame(list(UserProfile.objects.filter(user_id__in=username_objs).values('user_id','city_id')))
+        if df_city_user.empty:
+            df_city_user = pd.DataFrame(columns=['user_id','city_id'])
         for each in username_objs:
-            loc = UserProfile.objects.filter(user_id=each).values('city_id')
-            # print("loc",loc)
-            if loc:
-                location_user[each] = loc[0]
-                if city_uid[0] == location_user[each]:
-                    rel_score[each] = rel_score[each] + 1
-
-        # print("\n location of each user: ",location_user)
-        # print("after city check rel_score:", rel_score)
-
+            city_user = list(df_city_user.loc[df_city_user['user_id']==each, 'city_id'])
+            same_location_user[each] = 1
+            if len(city_user)>0 and len(city_uid)>0:
+                if city_uid[0] == city_user[0]:
+                    same_location_user[each]=10
+        
         # check for the user_tag
         tag_uid = []
         common_tag = {}
         tag_uid += UserTag.objects.filter(user_id=authUserId).values_list('user_profile_tag', flat=True)
+        df_tags = pd.DataFrame(list(UserTag.objects.filter(user_id__in=username_objs).values('user_id','user_profile_tag')))
+        if df_tags.empty:
+            df_tags = pd.DataFrame(columns=['user_id','user_profile_tag'])
         for each in username_objs:
-            tags = []
-            tags += UserTag.objects.filter(user_id=each).values_list('user_profile_tag', flat=True)
-
+            tags = list(df_tags.loc[df_tags['user_id']==each,'user_profile_tag'])
             common_tag[each] = len(list(set.intersection(set(tags), set(tag_uid))))
-            rel_score[each] = rel_score[each] + common_tag[each] * 0.6
+        
+        
+        #add the features to the list to create matrix for user
+        user_feature_list = []
+        for each in username_objs:
+            temp_feature_list = []
+            temp_feature_list.append(following[each]+1)
+            # temp_feature_list.append(is_recipient[each]+1)
 
-        # print("\n common_tag:",common_tag)
-        # print("rel_score after common_tag:", rel_score)
-        sorted_rel = sorted(rel_score, key=rel_score.get)
-        sorted_rel.reverse()
-        # print("sorted keys:", sorted_rel)
+            if each in is_recipient_series.index:
+                temp_feature_list.append(is_recipient_series[each]+BIAS)
+            else:
+                temp_feature_list.append(BIAS)
+
+            temp_feature_list.append(mutual[each]+1)
+
+            if each in no_of_comments_series.index:
+                temp_feature_list.append(no_of_comments_series[each]+BIAS)
+            else:
+                temp_feature_list.append(BIAS)
+
+            if each in no_of_likes_series.index:
+                temp_feature_list.append(no_of_likes_series[each]+BIAS)
+            else:
+                temp_feature_list.append(BIAS)
+                
+            if each in no_of_saved_series.index:
+                temp_feature_list.append(no_of_saved_series[each]+BIAS)
+            else:
+                temp_feature_list.append(BIAS)
+
+            temp_feature_list.append(same_location_user[each])
+            temp_feature_list.append(common_tag[each]+1)
+            
+            user_feature_list.append(temp_feature_list)
+        # Creating weight vector to reflect the importance of any feature of the user
+        following_weight = 0.2
+        msg_recipient_weight = 0.1
+        mutual_follow_weight = 0.2
+        no_of_comments_weight = 0.1
+        no_of_likes_weight = 0.1
+        no_of_saved_weight = 0.1
+        location_weight =0.1
+        common_tag_weight = 0.1
+        w_vector = [following_weight,
+                            msg_recipient_weight,
+                                mutual_follow_weight,
+                                    no_of_comments_weight,
+                                        no_of_likes_weight,
+                                            no_of_saved_weight,
+                                                location_weight,
+                                                    common_tag_weight]
+            
+        # Calculating the relevancy score of each hashtag using multiplicative exponential weighting (MEW) method of Multi Criteria Decision Making (MCDM)
+        if(len(user_feature_list) > 0):
+            user_rank = mcdm.rank(user_feature_list, alt_names=username_objs, n_method="Linear1", w_vector=w_vector, s_method="MEW")  
+        else:
+            user_rank = []
+        
         result = []
-        for each in sorted_rel:
-            result.append({"user_id": each, "relevancy_score": round(rel_score[each], 2)})
-
+        for each in user_rank:
+            result.append(SearchUserListType(each[0],round(each[1],2)))
+            
         if len(result) > 0:
             if page and limit:
                 totalPages = math.ceil(len(result) / limit)
@@ -403,8 +483,7 @@ class Query(graphene.ObjectType):
                     start = limit * (page - 1)
                     result = result[start:start + limit]
 
-                    return SearchUserPageListType(users=result, page_info=PageInfoObject(
-                        nextPage=page + 1 if page + 1 <= totalPages else None, limit=limit))
+                    return result
                 else:
                     raise BadRequestException("invalid request; page provided exceeded total")
             elif page == limit == None:
@@ -435,13 +514,11 @@ class Query(graphene.ObjectType):
         if authUserId is not None:
             try:
                 user= User.objects.using('default').filter(user_id=authUserId)
-                #userProfile = UserProfile.objects.using('default').filter(user_id=authUserId)
                 authUser_city += UserProfile.objects.using('default').filter(user_id = authUserId).values_list('city_id',flat = True)
                 
             except User.DoesNotExist:
                 raise NotFoundException("userId provided is not found")
-            #except UserProfile.DoesNotExist:
-                #raise NotFoundException("userId provided has not created a profile")
+            
         else:
             raise BadRequestException("invalid request; userId provided is invalid")
         
@@ -455,62 +532,113 @@ class Query(graphene.ObjectType):
         if search_content is not None: 
             # Get the venues matching the search content      
             venues_obj = VenueInternal.objects.using('default').filter(venue_internal_name__icontains = search_content).values('venue_id','venue_internal_name')
-            # print(venues_obj)
             for each in venues_obj:
                 venues_dict[each['venue_id']] = each['venue_internal_name']
                 venues.append(each['venue_id'])
-            post_venue_count_lifetime={}
-            post_view_count_lifetime ={}
-            post_like_count_lifetime = {}
-            booking_purchase_count_lifetime= {}
-            post_venue_count_trending = {}
-            post_view_count_trending = {}
-            venue_lat = {}
-            venue_long = {}
-            post_like_count_trending = {}
-            booking_purchase_count_trending= {}
-            venue_cord = {}
+            
             distance = {}
             for each in venues:
                 distance[each] = -1
+            
             end = datetime.datetime.now()   #start date and end date for trending
             start = end -timedelta(days=10)
-            venue_feature_list =[]     # Feature matrix for calculating the MCDM
+            
+            venue_feature_list =[]     # Feature matrix for calculating the MCDM            
+            
+            # for number of post count
+            df_post_lifetime = pd.DataFrame(list(Post.objects.using('default').filter(venue_id__in= venues).values('post_id','venue_id','created_on')))
+            if df_post_lifetime.empty:
+                df_post_lifetime = pd.DataFrame(columns=['post_id','venue_id','created_on'])
+            post_venue_count_lifetime_Series = df_post_lifetime['venue_id'].value_counts()
+            df_post_lifetime['created_on'] = pd.to_datetime(df_post_lifetime.created_on).dt.tz_localize(None)
+            df_post_trending = df_post_lifetime[(start <= df_post_lifetime['created_on'])]
+            post_venue_count_trending_Series = df_post_trending['venue_id'].value_counts()
+            
+            # for number of post views
+            df_post_view_lifetime = pd.DataFrame(list(PostView.objects.using('default').filter(post__venue_id__in = venues).values('post_id','post__venue_id','created_on')))
+            if df_post_view_lifetime.empty:
+                df_post_view_lifetime = pd.DataFrame(columns=['post_id','post__venue_id','created_on'])
+            post_view_count_lifetime_Series = df_post_view_lifetime['post__venue_id'].value_counts()
+            df_post_view_lifetime['created_on'] = pd.to_datetime(df_post_view_lifetime.created_on).dt.tz_localize(None)
+            df_post_view_trending = df_post_view_lifetime[(start <= df_post_view_lifetime['created_on'])]
+            post_view_count_trending_Series = df_post_view_trending['post__venue_id'].value_counts()
+            
+            # for number of post likes
+            df_post_like_lifetime = pd.DataFrame(list(PostLike.objects.using('default').filter(post__venue_id__in = venues).values('post_id','post__venue_id','created_on')))
+            if df_post_like_lifetime.empty:
+                df_post_like_lifetime = pd.DataFrame(columns=['post_id','post__venue_id','created_on'])
+            post_like_count_lifetime_Series = df_post_like_lifetime['post__venue_id'].value_counts()
+            df_post_like_lifetime['created_on'] = pd.to_datetime(df_post_like_lifetime.created_on).dt.tz_localize(None)
+            df_post_like_trending = df_post_like_lifetime[(start <= df_post_like_lifetime['created_on'])]
+            post_like_count_trending_Series = df_post_like_trending['post__venue_id'].value_counts()
+            
+            # for the number of booking purchase
+            df_booking_purchase_lifetime = pd.DataFrame(list(BookingPurchase.objects.using('default').filter(venue_id__in =venues).values('venue_id','created_on')))
+            if df_booking_purchase_lifetime.empty:
+                df_booking_purchase_lifetime = pd.DataFrame(columns=['venue_id','created_on'])
+            booking_purchase_count_lifetime_series = df_booking_purchase_lifetime['venue_id'].value_counts()
+            df_booking_purchase_lifetime['created_on'] = pd.to_datetime(df_booking_purchase_lifetime.created_on).dt.tz_localize(None)
+            df_booking_purchase_trending = df_booking_purchase_lifetime[(start <= df_booking_purchase_lifetime['created_on'])]
+            booking_purchase_count_trending_series = df_booking_purchase_trending['venue_id'].value_counts()
+            
+            # latitude and longitude of the venue to calculate the distance from the user
+            if auth_lat is not None and auth_long is not None:
+                df_location = pd.DataFrame(list(VenueInternal.objects.using('default').filter(venue_id__in= venues).values('venue_id','address__city__latitude','address__city__longitude')))
+                if df_location.empty:
+                    df_location = pd.DataFrame(columns=['venue_id','address__city__latitude','address__city__longitude'])
+                venue_cord_dict = {}
+                distance = {}
+                for x in range(len(df_location)):
+                    venue_cord_dict[df_location['venue_id'][x]] = (df_location['address__city__latitude'][x], df_location['address__city__longitude'][x])
+                    distance[df_location['venue_id'][x]] = geopy.distance.distance(auth_cord, venue_cord_dict[df_location['venue_id'][x]]).miles
+            
+            
+            venue_feature_list = []
+            BIAS = 1
             
             for each in venues:
                 temp_feature_list = []
-                # total count of post for the venue
-                post_venue_count_lifetime[each] = Post.objects.using('default').filter(venue_id = each).count()
-                temp_feature_list.append(post_venue_count_lifetime[each]+1)
-                # count of post in trending time
-                post_venue_count_trending[each] = Post.objects.using('default').filter(venue_id = each, created_on__range = (start,end)).count()
-                temp_feature_list.append(post_venue_count_trending[each]+1)
-                # total post_view for the venue
-                post_view_count_lifetime[each] = PostView.objects.using('default').filter(post__venue_id = each).count()
-                temp_feature_list.append(post_view_count_lifetime[each]+1)
-                # total post_view for the venue in trending time
-                post_view_count_trending[each] = PostView.objects.using('default').filter(post__venue_id = each,created_on__range = (start,end) ).count()
-                temp_feature_list.append(post_view_count_trending[each]+1)
-                # total post_like for the venue
-                post_like_count_lifetime[each] = PostLike.objects.using('default').filter(post__venue_id = each).count()
-                temp_feature_list.append(post_like_count_lifetime[each]+1)
-                # total post_like for the venue in trending time
-                post_like_count_trending[each] = PostLike.objects.using('default').filter(post__venue_id = each,created_on__range = (start,end)).count()
-                temp_feature_list.append(post_like_count_trending[each]+1) 
-                # total bookings for the venue
-                booking_purchase_count_lifetime[each] = BookingPurchase.objects.using('default').filter(venue_id = each).count()
-                temp_feature_list.append(booking_purchase_count_lifetime[each]+1)
-                # total booking for the venue in trending time
-                booking_purchase_count_trending[each] = BookingPurchase.objects.using('default').filter(venue_id = each, created_on__range = (start,end)).count()
-                temp_feature_list.append(booking_purchase_count_trending[each]+1)
-                #latitude and longitude of the venue to calculate the distance from the user
-                venue_lat[each] = VenueInternal.objects.using('default').filter(venue_id = each).values_list('address__city__latitude',flat=True)
-                venue_long[each] = VenueInternal.objects.using('default').filter(venue_id = each).values_list('address__city__longitude',flat=True)
                 
-                #calculating distance of venue from the auth user's location
-                venue_cord[each] = (venue_lat[each][0], venue_long[each][0])
-                if auth_lat is not None and auth_long is not None:
-                    distance[each] = geopy.distance.distance(auth_cord, venue_cord[each]).miles
+                if each in post_venue_count_lifetime_Series.index:
+                    temp_feature_list.append(post_venue_count_lifetime_Series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+                
+                if each in post_venue_count_trending_Series.index:
+                    temp_feature_list.append(post_venue_count_trending_Series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+
+                if each in post_view_count_lifetime_Series.index:
+                    temp_feature_list.append(post_view_count_lifetime_Series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+
+                if each in post_view_count_trending_Series.index:
+                    temp_feature_list.append(post_view_count_trending_Series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+
+                if each in post_like_count_lifetime_Series.index:
+                    temp_feature_list.append(post_like_count_lifetime_Series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+            
+                if each in post_like_count_trending_Series.index:
+                    temp_feature_list.append(post_like_count_trending_Series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+            
+                if each in booking_purchase_count_lifetime_series.index:
+                    temp_feature_list.append(booking_purchase_count_lifetime_series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+            
+                if each in booking_purchase_count_trending_series.index:
+                    temp_feature_list.append(booking_purchase_count_trending_series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+                
                 if(distance[each] > 0):
                     dist = distance[each]   
                 elif(distance[each] == 0):
@@ -518,8 +646,9 @@ class Query(graphene.ObjectType):
                 else:
                     dist = .01
                 temp_feature_list.append(dist)
-                # adding all feature values of the venue to the list to create matrix
+                
                 venue_feature_list.append(temp_feature_list)
+            
             
             # Creating weight vector to reflect the importance of any feature of the venue
             post_venue_count_lifetime_weight = 0.1
@@ -548,44 +677,82 @@ class Query(graphene.ObjectType):
                 
             else:
                 venues_rank = []
-            
-            
+                
             # Extract the tags having the search content as substring in tag_name
             tags = []
             tags_dict = {}
             tags_obj= Tag.objects.using('default').filter(tag_name__icontains = search_content).values('tag_id','tag_name')
+            
             for each in tags_obj:
                 tags_dict[each['tag_id']] = each['tag_name']
                 tags.append(each['tag_id'])
-
-            tag_post_view_count_lifetime = {}
-            tag_post_view_count_trending = {}
-            tag_post_count_lifetime = {}
-            tag_post_count_trending = {}
-            tag_post_count_authuser = {}
         
             tag_feature_list = []
             
+            # numer of post count for tag 
+            df_tag_post_lifetime = pd.DataFrame(list(Post.objects.using('default').filter(posttag__tag_id__in = tags).values('post_id','posttag__tag_id','created_on')))
+            
+            if df_tag_post_lifetime.empty:
+                df_tag_post_lifetime = pd.DataFrame(columns=['post_id','posttag__tag_id','created_on'])
+            tag_post_count_lifetime_Series = df_tag_post_lifetime['posttag__tag_id'].value_counts()
+            df_tag_post_lifetime['created_on'] = pd.to_datetime(df_tag_post_lifetime.created_on).dt.tz_localize(None)
+            df_tag_post_trending = df_tag_post_lifetime[(start <= df_tag_post_lifetime['created_on'])]
+            tag_post_count_trending_Series = df_tag_post_trending['posttag__tag_id'].value_counts()
+            
+            # number of post view count for tag
+            df_tag_postview_lifetime = pd.DataFrame(list(PostView.objects.using('default').filter(post__posttag__tag_id__in = tags).values('post_id','post__posttag__tag_id','created_on')))
+            
+            if df_tag_postview_lifetime.empty:
+                df_tag_postview_lifetime = pd.DataFrame(columns=['post_id','post__posttag__tag_id','created_on'])
+            tag_postview_count_lifetime_Series = df_tag_postview_lifetime['post__posttag__tag_id'].value_counts()
+            df_tag_postview_lifetime['created_on'] = pd.to_datetime(df_tag_postview_lifetime.created_on).dt.tz_localize(None)
+            df_tag_postview_trending = df_tag_postview_lifetime[(start <= df_tag_postview_lifetime['created_on'])]
+            tag_postview_count_trending_Series = df_tag_postview_trending['post__posttag__tag_id'].value_counts()
+            
+            # number of post created by authuser for tag
+            df_tag_post_authuser_lifetime = pd.DataFrame(list(Post.objects.using('default').filter(posttag__tag_id__in = tags, user_id = authUserId).values('post_id','posttag__tag_id','created_on')))
+            
+            if df_tag_post_authuser_lifetime.empty:
+                df_tag_post_authuser_lifetime = pd.DataFrame(columns=['post_id','posttag__tag_id','created_on'])
+            tag_post_count_authuser_lifetime_Series = df_tag_post_authuser_lifetime['posttag__tag_id'].value_counts()
+            
+            
+            tag_feature_list = []
+            BIAS = 1
+            
             for each in tags:
                 temp_feature_list = []
-                # total count of post_view for the tag
-                tag_post_view_count_lifetime[each] = PostView.objects.using('default').filter(post__posttag__tag_id = each).count()
-                temp_feature_list.append(tag_post_view_count_lifetime[each]+1)
-                # total count of the post_view for the tag in trending time
-                tag_post_view_count_trending[each] = PostView.objects.using('default').filter(post__posttag__tag_id = each, created_on__range = (start,end)).count()
-                temp_feature_list.append(tag_post_view_count_trending[each]+1)
-                # total count of post for the tag
-                tag_post_count_lifetime[each] = Post.objects.using('default').filter(posttag__tag_id = each).count()
-                temp_feature_list.append(tag_post_count_lifetime[each]+1)
-                # total count of post for the tag in trending time
-                tag_post_count_trending[each] = Post.objects.using('default').filter(posttag__tag_id = each, created_on__range = (start,end)).count()
-                temp_feature_list.append(tag_post_count_trending[each]+1)
-                # total count of the post created by authuser with the tag
-                tag_post_count_authuser[each] = Post.objects.using('default').filter(posttag__tag_id = each, user_id = authUserId).count()
-                temp_feature_list.append(tag_post_count_authuser[each]+1)
                 
-                #add the features to the list to create matrix
+                if each in tag_post_count_lifetime_Series.index:
+                    temp_feature_list.append(tag_post_count_lifetime_Series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+
+                if each in tag_post_count_trending_Series.index:
+                    temp_feature_list.append(tag_post_count_trending_Series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+                
+                if each in tag_postview_count_lifetime_Series.index:
+                    temp_feature_list.append(tag_postview_count_lifetime_Series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+
+                if each in tag_postview_count_trending_Series.index:
+                    temp_feature_list.append(tag_postview_count_trending_Series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+
+                if each in tag_post_count_authuser_lifetime_Series.index:
+                    temp_feature_list.append(tag_post_count_authuser_lifetime_Series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+                
                 tag_feature_list.append(temp_feature_list)
+            
+            
+            
+            
             # Creating weight vector to reflect the importance of any feature of the tag    
             tag_post_view_count_lifetime_weight = 0.1
             tag_post_view_count_trending_weight = 0.25
@@ -601,7 +768,6 @@ class Query(graphene.ObjectType):
             # Calculating the relevancy score of each hashtag using multiplicative exponential weighting (MEW) method of Multi Criteria Decision Making (MCDM)
             if(len(tag_feature_list)>0):
                 tag_rank = mcdm.rank(tag_feature_list, alt_names=tags, n_method="Linear1",w_vector= w_vector, s_method="MEW")
-                
             else:
                 tag_rank = []
             
@@ -609,18 +775,16 @@ class Query(graphene.ObjectType):
             # Extracting users whose profile_name matched with search_content
             usernames =[]
             if authUserId is not None and search_content is not None:
-                usernames += UserProfile.objects.using('default').filter(user_profile_name__icontains=search_content).values('user_id','user_profile_name')
+                usernames += User.objects.using('default').filter(Q(username__icontains=search_content) | Q(
+                                            userprofile__user_profile_name__icontains=search_content)).values('user_id','username')
             username_objs= []
             username_dict = {}
             for x in usernames:
-                username_dict[x['user_id']] = x['user_profile_name']
+                username_dict[x['user_id']] = x['username']
                 username_objs.append(x['user_id'])
 
             if authUserId in username_objs:
                 username_objs.remove(authUserId)
-
-            #if not username_objs:
-                #raise NotFoundException("No user found with given search string", 400)
 
             # search for follower in the list
             follower_list = []
@@ -632,62 +796,97 @@ class Query(graphene.ObjectType):
                     following[each] = 1
                 else:
                     following[each] = 0
-
+            
             # Check if Search_user messeged by Current_user
-            is_recipient = {}
-            for each in username_objs:
-                is_recipient[each] = ChatMessage.objects.using('default').filter(sender=authUserId,
-                                                                                chatmessagerecipient__user_id=each).count()
- 
-            # Find the mutual following 
+            df_recipient = pd.DataFrame(list(ChatMessage.objects.using('default').filter(sender=authUserId,
+                                                                            chatmessagerecipient__user_id__in= username_objs).values('chatmessagerecipient__user_id')))
+            if df_recipient.empty:
+                df_recipient = pd.DataFrame(columns=['chatmessagerecipient__user_id'])
+            is_recipient_series = df_recipient['chatmessagerecipient__user_id'].value_counts()
+            
+            # mutual follower
             mutual = {}
+            df_following_by = pd.DataFrame(list(UserFollowing.objects.using('default').filter(user_id__in=username_objs).values('user_id','following_user')))
+            if df_following_by.empty:
+                df_following_by = pd.DataFrame(columns=['user_id','following_user'])
             for each in username_objs:
-                following_by = []
+                following_by = list(df_following_by.loc[df_following_by['user_id'] == each, 'following_user'])
                 mutual[each] = 0
-                following_by += UserFollowing.objects.using('default').filter(user_id=each).values_list('following_user',
-                                                                                                        flat=True)
                 mutual[each] = len(list(set.intersection(set(follower_list), set(following_by))))
-
-            # Check if user commented on the post of search_user 
-            no_of_comments = {}
-            # check if user saved the post of search_user 
-            no_of_saved = {}
-            # Check if user liked the post of search_user 
-            no_of_likes = {}
-            for each in username_objs:
-                no_of_comments[each] = Post.objects.filter(user_id=each, postcomment__user_id=authUserId).count()
-                no_of_likes[each] = Post.objects.filter(user_id=each, postlike__user_id=authUserId).count()
-                no_of_saved[each] = Post.objects.filter(user_id=each, postsaved__user_id=authUserId).count()
+                
+            # number of post comment
+            df_post_comment = pd.DataFrame(list(Post.objects.filter(user_id__in = username_objs, postcomment__user_id=authUserId).values('post_id','user_id','postcomment__user_id')))
+            
+            if df_post_comment.empty:
+                df_post_comment = pd.DataFrame(columns=['post_id','user_id','postcomment__user_id'])
+            no_of_comments_series = df_post_comment['user_id'].value_counts()
+            
+            # number of likes count
+            df_post_like = pd.DataFrame(list(Post.objects.filter(user_id__in = username_objs, postlike__user_id=authUserId).values('post_id','user_id','postlike__user_id')))
+           
+            if df_post_like.empty:
+                df_post_like = pd.DataFrame(columns=['post_id','user_id','postcomment__user_id'])
+            no_of_likes_series = df_post_like['user_id'].value_counts()
+            
+            # number of post saved count
+            df_post_saved = pd.DataFrame(list(Post.objects.filter(user_id__in = username_objs, postsaved__user_id=authUserId).values('post_id','user_id','postsaved__user_id')))
+            
+            if df_post_saved.empty:
+                df_post_saved = pd.DataFrame(columns=['post_id','user_id','postsaved__user_id'])
+            no_of_saved_series = df_post_saved['user_id'].value_counts()
                 
             # check if user have the same city in location as of search_user and update the rel_score
             city_uid = UserProfile.objects.filter(user_id=authUserId).values('city_id')
-            
             same_location_user = {}
-            for each in username_objs:
-                loc = UserProfile.objects.filter(user_id=each).values('city_id')
-                if loc:
-                    same_location_user[each] = 1
-                    if city_uid and loc and city_uid[0] == loc[0]:
-                        same_location_user[each]=10
 
+            df_city_user = pd.DataFrame(list(UserProfile.objects.filter(user_id__in=username_objs).values('user_id','city_id')))
+            if df_city_user.empty:
+                df_city_user = pd.DataFrame(columns=['user_id','city_id'])
+            for each in username_objs:
+                city_user = list(df_city_user.loc[df_city_user['user_id']==each, 'city_id'])
+                same_location_user[each] = 1
+                if len(city_user)>0 and len(city_uid)>0:
+                    if city_uid[0] == city_user[0]:
+                        same_location_user[each]=10
+            
             # check for the user_tag
             tag_uid = []
             common_tag = {}
             tag_uid += UserTag.objects.filter(user_id=authUserId).values_list('user_profile_tag', flat=True)
+            
+            
+            df_tags = pd.DataFrame(list(UserTag.objects.filter(user_id__in=username_objs).values('user_id','user_profile_tag')))
+            if df_tags.empty:
+                df_tags = pd.DataFrame(columns=['user_id','user_profile_tag'])
             for each in username_objs:
-                tags = []
-                tags += UserTag.objects.filter(user_id=each).values_list('user_profile_tag', flat=True)
+                tags = list(df_tags.loc[df_tags['user_id']==each,'user_profile_tag'])
                 common_tag[each] = len(list(set.intersection(set(tags), set(tag_uid))))
+            
             #add the features to the list to create matrix for user
             user_feature_list = []
             for each in username_objs:
                 temp_feature_list = []
                 temp_feature_list.append(following[each]+1)
-                temp_feature_list.append(is_recipient[each]+1)
+                if each in is_recipient_series.index:
+                    temp_feature_list.append(is_recipient_series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
                 temp_feature_list.append(mutual[each]+1)
-                temp_feature_list.append(no_of_comments[each]+1)
-                temp_feature_list.append(no_of_likes[each]+1)
-                temp_feature_list.append(no_of_saved[each]+1)
+                
+                if each in no_of_comments_series.index:
+                    temp_feature_list.append(no_of_comments_series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+
+                if each in no_of_likes_series.index:
+                    temp_feature_list.append(no_of_likes_series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+                
+                if each in no_of_saved_series.index:
+                    temp_feature_list.append(no_of_saved_series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
                 temp_feature_list.append(same_location_user[each])
                 temp_feature_list.append(common_tag[each]+1)
                 user_feature_list.append(temp_feature_list)
@@ -753,6 +952,457 @@ class Query(graphene.ObjectType):
             else:
                 return AllSearchSuggestionsType(results=[], page_info=PageInfoObject(nextPage=None, limit=None))
         return None
+
+    def resolve_searchAllSuggestionsConcat(parent, info, **kwagrs):
+        authUserId = kwagrs.get('user_id')
+        search_content = kwagrs.get('search_content')
+        auth_lat = kwagrs.get('latitude')
+        auth_long = kwagrs.get('longitude')
+        page = kwagrs.get('page')
+        limit = kwagrs.get('limit')
+        
+        authUser_city =[]
+        if authUserId is not None:
+            try:
+                user= User.objects.using('default').filter(user_id=authUserId)
+                authUser_city += UserProfile.objects.using('default').filter(user_id = authUserId).values_list('city_id',flat = True)
+                
+            except User.DoesNotExist:
+                raise NotFoundException("userId provided is not found")
+            
+        else:
+            raise BadRequestException("invalid request; userId provided is invalid")
+        
+        if search_content is not None and len(search_content) == 0:
+            raise BadRequestException("invalid request; empty search string", 400)
+        
+        if auth_lat is not None and auth_long is not None:
+                    auth_cord = (auth_lat, auth_long)
+        venues =[]
+        venues_dict ={}
+        if search_content is not None: 
+            # Get the venues matching the search content      
+            venues_obj = VenueInternal.objects.using('default').filter(venue_internal_name__icontains = search_content).values('venue_id','venue_internal_name')
+            for each in venues_obj:
+                venues_dict[each['venue_id']] = each['venue_internal_name']
+                venues.append(each['venue_id'])
+            
+            distance = {}
+            for each in venues:
+                distance[each] = -1
+            
+            end = datetime.datetime.now()   #start date and end date for trending
+            start = end -timedelta(days=10)
+            
+            venue_feature_list =[]     # Feature matrix for calculating the MCDM            
+            
+            # for number of post count
+            df_post_lifetime = pd.DataFrame(list(Post.objects.using('default').filter(venue_id__in= venues).values('post_id','venue_id','created_on')))
+            if df_post_lifetime.empty:
+                df_post_lifetime = pd.DataFrame(columns=['post_id','venue_id','created_on'])
+            post_venue_count_lifetime_Series = df_post_lifetime['venue_id'].value_counts()
+            df_post_lifetime['created_on'] = pd.to_datetime(df_post_lifetime.created_on).dt.tz_localize(None)
+            df_post_trending = df_post_lifetime[(start <= df_post_lifetime['created_on'])]
+            post_venue_count_trending_Series = df_post_trending['venue_id'].value_counts()
+            
+            # for number of post views
+            df_post_view_lifetime = pd.DataFrame(list(PostView.objects.using('default').filter(post__venue_id__in = venues).values('post_id','post__venue_id','created_on')))
+            if df_post_view_lifetime.empty:
+                df_post_view_lifetime = pd.DataFrame(columns=['post_id','post__venue_id','created_on'])
+            post_view_count_lifetime_Series = df_post_view_lifetime['post__venue_id'].value_counts()
+            df_post_view_lifetime['created_on'] = pd.to_datetime(df_post_view_lifetime.created_on).dt.tz_localize(None)
+            df_post_view_trending = df_post_view_lifetime[(start <= df_post_view_lifetime['created_on'])]
+            post_view_count_trending_Series = df_post_view_trending['post__venue_id'].value_counts()
+            
+            # for number of post likes
+            df_post_like_lifetime = pd.DataFrame(list(PostLike.objects.using('default').filter(post__venue_id__in = venues).values('post_id','post__venue_id','created_on')))
+            if df_post_like_lifetime.empty:
+                df_post_like_lifetime = pd.DataFrame(columns=['post_id','post__venue_id','created_on'])
+            post_like_count_lifetime_Series = df_post_like_lifetime['post__venue_id'].value_counts()
+            df_post_like_lifetime['created_on'] = pd.to_datetime(df_post_like_lifetime.created_on).dt.tz_localize(None)
+            df_post_like_trending = df_post_like_lifetime[(start <= df_post_like_lifetime['created_on'])]
+            post_like_count_trending_Series = df_post_like_trending['post__venue_id'].value_counts()
+            
+            # for the number of booking purchase
+            df_booking_purchase_lifetime = pd.DataFrame(list(BookingPurchase.objects.using('default').filter(venue_id__in =venues).values('venue_id','created_on')))
+            if df_booking_purchase_lifetime.empty:
+                df_booking_purchase_lifetime = pd.DataFrame(columns=['venue_id','created_on'])
+            booking_purchase_count_lifetime_series = df_booking_purchase_lifetime['venue_id'].value_counts()
+            df_booking_purchase_lifetime['created_on'] = pd.to_datetime(df_booking_purchase_lifetime.created_on).dt.tz_localize(None)
+            df_booking_purchase_trending = df_booking_purchase_lifetime[(start <= df_booking_purchase_lifetime['created_on'])]
+            booking_purchase_count_trending_series = df_booking_purchase_trending['venue_id'].value_counts()
+            
+            # latitude and longitude of the venue to calculate the distance from the user
+            if auth_lat is not None and auth_long is not None:
+                df_location = pd.DataFrame(list(VenueInternal.objects.using('default').filter(venue_id__in= venues).values('venue_id','address__city__latitude','address__city__longitude')))
+                if df_location.empty:
+                    df_location = pd.DataFrame(columns=['venue_id','address__city__latitude','address__city__longitude'])
+                venue_cord_dict = {}
+                distance = {}
+                for x in range(len(df_location)):
+                    venue_cord_dict[df_location['venue_id'][x]] = (df_location['address__city__latitude'][x], df_location['address__city__longitude'][x])
+                    distance[df_location['venue_id'][x]] = geopy.distance.distance(auth_cord, venue_cord_dict[df_location['venue_id'][x]]).miles
+            
+            
+            venue_feature_list = []
+            BIAS = 1
+            
+            for each in venues:
+                temp_feature_list = []
+                
+                if each in post_venue_count_lifetime_Series.index:
+                    temp_feature_list.append(post_venue_count_lifetime_Series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+                
+                if each in post_venue_count_trending_Series.index:
+                    temp_feature_list.append(post_venue_count_trending_Series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+
+                if each in post_view_count_lifetime_Series.index:
+                    temp_feature_list.append(post_view_count_lifetime_Series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+
+                if each in post_view_count_trending_Series.index:
+                    temp_feature_list.append(post_view_count_trending_Series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+
+                if each in post_like_count_lifetime_Series.index:
+                    temp_feature_list.append(post_like_count_lifetime_Series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+            
+                if each in post_like_count_trending_Series.index:
+                    temp_feature_list.append(post_like_count_trending_Series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+            
+                if each in booking_purchase_count_lifetime_series.index:
+                    temp_feature_list.append(booking_purchase_count_lifetime_series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+            
+                if each in booking_purchase_count_trending_series.index:
+                    temp_feature_list.append(booking_purchase_count_trending_series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+                
+                if(distance[each] > 0):
+                    dist = distance[each]   
+                elif(distance[each] == 0):
+                    dist = 10
+                else:
+                    dist = .01
+                temp_feature_list.append(dist)
+                
+                venue_feature_list.append(temp_feature_list)
+            
+            
+            # Creating weight vector to reflect the importance of any feature of the venue
+            post_venue_count_lifetime_weight = 0.1
+            post_venue_count_trending_weight = 0.15 
+            post_view_count_lifetime_weight = 0.1
+            post_view_count_trending_weight = 0.15 
+            post_like_count_lifetime_weight = 0.1
+            post_like_count_trending_weight = 0.15
+            booking_purchase_count_lifetime_weight = 0.1
+            booking_purchase_count_trending_weight = 0.1
+            distance_weight =0.05
+
+            w_vector = [post_venue_count_lifetime_weight,
+                            post_venue_count_trending_weight,
+                                post_view_count_lifetime_weight,
+                                    post_view_count_trending_weight,
+                                        post_like_count_lifetime_weight,
+                                            post_like_count_trending_weight,
+                                                booking_purchase_count_lifetime_weight,
+                                                    booking_purchase_count_trending_weight,
+                                                        distance_weight]
+            
+            # Calculating the relevancy score of each venue using multiplicative exponential weighting (MEW) method of Multi Criteria Decision Making (MCDM)
+            if(len(venue_feature_list)>0):
+                venues_rank = mcdm.rank(venue_feature_list, alt_names=venues, n_method="Linear1", w_vector=w_vector, s_method="MEW")
+                
+            else:
+                venues_rank = []
+                
+            # Extract the tags having the search content as substring in tag_name
+            tags = []
+            tags_dict = {}
+            tags_obj= Tag.objects.using('default').filter(tag_name__icontains = search_content).values('tag_id','tag_name')
+            
+            for each in tags_obj:
+                tags_dict[each['tag_id']] = each['tag_name']
+                tags.append(each['tag_id'])
+        
+            tag_feature_list = []
+            
+            # numer of post count for tag 
+            df_tag_post_lifetime = pd.DataFrame(list(Post.objects.using('default').filter(posttag__tag_id__in = tags).values('post_id','posttag__tag_id','created_on')))
+            
+            if df_tag_post_lifetime.empty:
+                df_tag_post_lifetime = pd.DataFrame(columns=['post_id','posttag__tag_id','created_on'])
+            tag_post_count_lifetime_Series = df_tag_post_lifetime['posttag__tag_id'].value_counts()
+            df_tag_post_lifetime['created_on'] = pd.to_datetime(df_tag_post_lifetime.created_on).dt.tz_localize(None)
+            df_tag_post_trending = df_tag_post_lifetime[(start <= df_tag_post_lifetime['created_on'])]
+            tag_post_count_trending_Series = df_tag_post_trending['posttag__tag_id'].value_counts()
+            
+            # number of post view count for tag
+            df_tag_postview_lifetime = pd.DataFrame(list(PostView.objects.using('default').filter(post__posttag__tag_id__in = tags).values('post_id','post__posttag__tag_id','created_on')))
+            
+            if df_tag_postview_lifetime.empty:
+                df_tag_postview_lifetime = pd.DataFrame(columns=['post_id','post__posttag__tag_id','created_on'])
+            tag_postview_count_lifetime_Series = df_tag_postview_lifetime['post__posttag__tag_id'].value_counts()
+            df_tag_postview_lifetime['created_on'] = pd.to_datetime(df_tag_postview_lifetime.created_on).dt.tz_localize(None)
+            df_tag_postview_trending = df_tag_postview_lifetime[(start <= df_tag_postview_lifetime['created_on'])]
+            tag_postview_count_trending_Series = df_tag_postview_trending['post__posttag__tag_id'].value_counts()
+            
+            # number of post created by authuser for tag
+            df_tag_post_authuser_lifetime = pd.DataFrame(list(Post.objects.using('default').filter(posttag__tag_id__in = tags, user_id = authUserId).values('post_id','posttag__tag_id','created_on')))
+            
+            if df_tag_post_authuser_lifetime.empty:
+                df_tag_post_authuser_lifetime = pd.DataFrame(columns=['post_id','posttag__tag_id','created_on'])
+            tag_post_count_authuser_lifetime_Series = df_tag_post_authuser_lifetime['posttag__tag_id'].value_counts()
+            
+            
+            tag_feature_list = []
+            BIAS = 1
+            
+            for each in tags:
+                temp_feature_list = []
+                
+                if each in tag_post_count_lifetime_Series.index:
+                    temp_feature_list.append(tag_post_count_lifetime_Series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+
+                if each in tag_post_count_trending_Series.index:
+                    temp_feature_list.append(tag_post_count_trending_Series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+                
+                if each in tag_postview_count_lifetime_Series.index:
+                    temp_feature_list.append(tag_postview_count_lifetime_Series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+
+                if each in tag_postview_count_trending_Series.index:
+                    temp_feature_list.append(tag_postview_count_trending_Series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+
+                if each in tag_post_count_authuser_lifetime_Series.index:
+                    temp_feature_list.append(tag_post_count_authuser_lifetime_Series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+                
+                tag_feature_list.append(temp_feature_list)
+            
+            
+            
+            
+            # Creating weight vector to reflect the importance of any feature of the tag    
+            tag_post_view_count_lifetime_weight = 0.1
+            tag_post_view_count_trending_weight = 0.25
+            tag_post_count_lifetime_weight = 0.1
+            tag_post_count_trending_weight = 0.25
+            tag_post_count_authuser_weight = 0.3
+
+            w_vector = [tag_post_view_count_lifetime_weight,
+                            tag_post_view_count_trending_weight,
+                                tag_post_count_lifetime_weight,
+                                    tag_post_count_trending_weight,
+                                        tag_post_count_authuser_weight]
+            # Calculating the relevancy score of each hashtag using multiplicative exponential weighting (MEW) method of Multi Criteria Decision Making (MCDM)
+            if(len(tag_feature_list)>0):
+                tag_rank = mcdm.rank(tag_feature_list, alt_names=tags, n_method="Linear1",w_vector= w_vector, s_method="MEW")
+            else:
+                tag_rank = []
+            
+            
+            # Extracting users whose profile_name matched with search_content
+            usernames =[]
+            if authUserId is not None and search_content is not None:
+                usernames += User.objects.using('default').filter(Q(username__icontains=search_content) | Q(
+                                            userprofile__user_profile_name__icontains=search_content)).values('user_id','username')
+            username_objs= []
+            username_dict = {}
+            for x in usernames:
+                username_dict[x['user_id']] = x['username']
+                username_objs.append(x['user_id'])
+
+            if authUserId in username_objs:
+                username_objs.remove(authUserId)
+
+            # search for follower in the list
+            follower_list = []
+            follower_list += UserFollowing.objects.using('default').filter(user_id=authUserId).values_list('following_user',
+                                                                                                        flat=True)
+            following = {}
+            for each in username_objs:
+                if each in follower_list:
+                    following[each] = 1
+                else:
+                    following[each] = 0
+            
+            # Check if Search_user messeged by Current_user
+            df_recipient = pd.DataFrame(list(ChatMessage.objects.using('default').filter(sender=authUserId,
+                                                                            chatmessagerecipient__user_id__in= username_objs).values('chatmessagerecipient__user_id')))
+            if df_recipient.empty:
+                df_recipient = pd.DataFrame(columns=['chatmessagerecipient__user_id'])
+            is_recipient_series = df_recipient['chatmessagerecipient__user_id'].value_counts()
+            
+            # mutual follower
+            mutual = {}
+            df_following_by = pd.DataFrame(list(UserFollowing.objects.using('default').filter(user_id__in=username_objs).values('user_id','following_user')))
+            if df_following_by.empty:
+                df_following_by = pd.DataFrame(columns=['user_id','following_user'])
+            for each in username_objs:
+                following_by = list(df_following_by.loc[df_following_by['user_id'] == each, 'following_user'])
+                mutual[each] = 0
+                mutual[each] = len(list(set.intersection(set(follower_list), set(following_by))))
+                
+            # number of post comment
+            df_post_comment = pd.DataFrame(list(Post.objects.filter(user_id__in = username_objs, postcomment__user_id=authUserId).values('post_id','user_id','postcomment__user_id')))
+            
+            if df_post_comment.empty:
+                df_post_comment = pd.DataFrame(columns=['post_id','user_id','postcomment__user_id'])
+            no_of_comments_series = df_post_comment['user_id'].value_counts()
+            
+            # number of likes count
+            df_post_like = pd.DataFrame(list(Post.objects.filter(user_id__in = username_objs, postlike__user_id=authUserId).values('post_id','user_id','postlike__user_id')))
+           
+            if df_post_like.empty:
+                df_post_like = pd.DataFrame(columns=['post_id','user_id','postcomment__user_id'])
+            no_of_likes_series = df_post_like['user_id'].value_counts()
+            
+            # number of post saved count
+            df_post_saved = pd.DataFrame(list(Post.objects.filter(user_id__in = username_objs, postsaved__user_id=authUserId).values('post_id','user_id','postsaved__user_id')))
+            
+            if df_post_saved.empty:
+                df_post_saved = pd.DataFrame(columns=['post_id','user_id','postsaved__user_id'])
+            no_of_saved_series = df_post_saved['user_id'].value_counts()
+                
+            # check if user have the same city in location as of search_user and update the rel_score
+            city_uid = UserProfile.objects.filter(user_id=authUserId).values('city_id')
+            same_location_user = {}
+
+            df_city_user = pd.DataFrame(list(UserProfile.objects.filter(user_id__in=username_objs).values('user_id','city_id')))
+            if df_city_user.empty:
+                df_city_user = pd.DataFrame(columns=['user_id','city_id'])
+            for each in username_objs:
+                city_user = list(df_city_user.loc[df_city_user['user_id']==each, 'city_id'])
+                same_location_user[each] = 1
+                if len(city_user)>0 and len(city_uid)>0:
+                    if city_uid[0] == city_user[0]:
+                        same_location_user[each]=10
+            
+            # check for the user_tag
+            tag_uid = []
+            common_tag = {}
+            tag_uid += UserTag.objects.filter(user_id=authUserId).values_list('user_profile_tag', flat=True)
+            
+            
+            df_tags = pd.DataFrame(list(UserTag.objects.filter(user_id__in=username_objs).values('user_id','user_profile_tag')))
+            if df_tags.empty:
+                df_tags = pd.DataFrame(columns=['user_id','user_profile_tag'])
+            for each in username_objs:
+                tags = list(df_tags.loc[df_tags['user_id']==each,'user_profile_tag'])
+                common_tag[each] = len(list(set.intersection(set(tags), set(tag_uid))))
+            
+            #add the features to the list to create matrix for user
+            user_feature_list = []
+            for each in username_objs:
+                temp_feature_list = []
+                temp_feature_list.append(following[each]+1)
+                if each in is_recipient_series.index:
+                    temp_feature_list.append(is_recipient_series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+                temp_feature_list.append(mutual[each]+1)
+                
+                if each in no_of_comments_series.index:
+                    temp_feature_list.append(no_of_comments_series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+
+                if each in no_of_likes_series.index:
+                    temp_feature_list.append(no_of_likes_series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+                
+                if each in no_of_saved_series.index:
+                    temp_feature_list.append(no_of_saved_series[each]+BIAS)
+                else:
+                    temp_feature_list.append(BIAS)
+                temp_feature_list.append(same_location_user[each])
+                temp_feature_list.append(common_tag[each]+1)
+                user_feature_list.append(temp_feature_list)
+            # Creating weight vector to reflect the importance of any feature of the user
+            following_weight = 0.2
+            msg_recipient_weight = 0.1
+            mutual_follow_weight = 0.2
+            no_of_comments_weight = 0.1
+            no_of_likes_weight = 0.1
+            no_of_saved_weight = 0.1
+            location_weight =0.1
+            common_tag_weight = 0.1
+            w_vector = [following_weight,
+                            msg_recipient_weight,
+                                mutual_follow_weight,
+                                    no_of_comments_weight,
+                                        no_of_likes_weight,
+                                            no_of_saved_weight,
+                                                location_weight,
+                                                    common_tag_weight]
+            
+            # Calculating the relevancy score of each hashtag using multiplicative exponential weighting (MEW) method of Multi Criteria Decision Making (MCDM)
+            if(len(user_feature_list) > 0):
+                user_rank = mcdm.rank(user_feature_list, alt_names=username_objs, n_method="Linear1", w_vector=w_vector, s_method="MEW")  
+            else:
+                user_rank = []
+
+            results = []
+            # Adding users to the result
+            for each in user_rank:
+                result = SearchSuggestionsType(each[0],username_dict[each[0]],round(each[1],2),'user')
+                results.append(result)
+            # Adding venues to the result
+            for each in venues_rank:
+                result = SearchSuggestionsType(each[0],venues_dict[each[0]],round(each[1],2),'venue')
+                results.append(result)
+            # Adding hashtags to the result
+            for each in tag_rank:
+                result = SearchSuggestionsType(each[0],tags_dict[each[0]],round(each[1],2),'hashtag')
+                results.append(result)
+            
+            # sorting all results based on rel_score in descending order
+            results.sort(key = lambda x : x.rel_score, reverse= True)
+            print(len(results))
+            # Sending results with pagination
+            if len(results) > 0:
+                if page and limit:
+                    totalPages = math.ceil(len(results) / limit)
+                    if page <= totalPages:
+                        start = limit * (page - 1)
+                        results = results[start:start + limit]
+                        print(len(results))
+                        return results
+                    else:
+                        raise BadRequestException("invalid request; page provided exceeded total")
+                elif page == limit == None:
+                    return results
+                elif page is None:
+                    raise BadRequestException("invalid request; limit cannot be provided without page")
+                elif limit is None:
+                    raise BadRequestException("invalid request; page cannot be provided without limit")
+            else:
+                return []
+        return None
+
 
     # Search Recommendations
     def resolve_searchRecommendations(self, info, **kwagrs):
@@ -1901,6 +2551,7 @@ class Query(graphene.ObjectType):
         userId = kwargs.get('userId')
         page = kwargs.get('page')
         limit = kwargs.get('limit')
+        postCount = kwargs.get('postCount')
 
         if userId is not None:
             try:
@@ -1924,36 +2575,103 @@ class Query(graphene.ObjectType):
                 raise BadRequestException("invalid request; searchContent provided is empty", 400)
         else:
             raise BadRequestException("invalid request; searchContent provided is invalid", 400)
+        if postCount is None or postCount < 1:
+            raise BadRequestException("invalid request; postCount provided is invalid", 400)
 
         result = []
+        try:
+            tags = Tag.objects.using('default').filter(tag_name__icontains = search_content).values('tag_id','tag_name')
+        except Tag.DoesNotExist:
+            raise NotFoundException("None tag exist containing the search content.")
 
-        post_tag_objs = PostTag.objects.using('default').filter(tag_id__tag_name__icontains=search_content).values_list(
-            'post_tag_id', 'post_id', 'tag_id')
-        # print(post_tag_objs)
-        post_obj_dict = {}
-        for each in post_tag_objs:
-            if each[1] >= 35:
-                tag_name = Tag.objects.using('default').get(tag_id=each[2])
-                try:
-                    if tag_name in post_obj_dict.keys():
-                        if len(post_obj_dict[tag_name]) < 9:
-                            post_obj_dict[tag_name].append(Post.objects.using('default').get(post_id=each[1]))
-                            # post_obj_list.append( Post.objects.using('default').get(post_id = each[1]))
-                        else:
-                            pass
-                    else:
+        TRENDING_DAYS = 10
+        tagIds = []
+        tagNames = {}
+        for each in tags:
+            tagIds.append(each['tag_id'])
+            tagNames[each['tag_id']] = each['tag_name']
+        end = datetime.datetime.now()   #start date and end date for trending
+        start = end -timedelta(days = TRENDING_DAYS)
+        posts = {}
+        # Getting lifetime and trending post count for the tagIds 
+        dfTagPostLifetime = pd.DataFrame(list(PostTag.objects.using('default').filter(tag_id__in = tagIds).values('post_id','tag_id','created_on')))
+        if dfTagPostLifetime.empty:
+            dfTagPostLifetime = pd.DataFrame(columns=['post_id','tag_id','created_on'])
+        tagPostCountLifetimeSeries = dfTagPostLifetime['tag_id'].value_counts()
+        dfTagPostLifetime['created_on'] = pd.to_datetime(dfTagPostLifetime.created_on).dt.tz_localize(None)
+        dfTagPostTrending = dfTagPostLifetime[(start <= dfTagPostLifetime['created_on'])]
+        tagPostCountTrendingSeries = dfTagPostTrending['tag_id'].value_counts()
+        for each in tagIds:
+            posts[each] = list(dfTagPostLifetime.loc[dfTagPostLifetime['tag_id'] == each, 'post_id'].nlargest(n=postCount))
 
-                        post_obj_dict[tag_name] = [Post.objects.using('default').get(post_id=each[1])]
-                except Post.DoesNotExist:
-                    pass
+
+        # Getting lifetime and trending post view count for the tagIds
+        dfTagPostViewLifetime = pd.DataFrame(list(PostView.objects.using('default').filter(post__posttag__tag_id__in = tagIds).values('post_id','post__posttag__tag_id','created_on')))
+        if dfTagPostViewLifetime.empty:
+            dfTagPostViewLifetime = pd.DataFrame(columns=['post_id','post__posttag__tag_id','created_on'])
+        tagPostViewCountLifetimeSeries = dfTagPostViewLifetime['post__posttag__tag_id'].value_counts()
+        dfTagPostViewLifetime['created_on'] = pd.to_datetime(dfTagPostViewLifetime.created_on).dt.tz_localize(None)
+        dfTagPostViewTrending = dfTagPostViewLifetime[(start <= dfTagPostViewLifetime['created_on'])]
+        tagPostViewCountTrendingSeries = dfTagPostViewTrending['post__posttag__tag_id'].value_counts()
+        
+        # Creating feature matrix to feed into mcdm function for generating relevancy score
+        tagFeatureList = []
+        BIAS = 1
+        for each in tagIds:
+            tempFeatureList = []
+                
+            if each in tagPostCountLifetimeSeries.index:
+                tempFeatureList.append(tagPostCountLifetimeSeries[each]+BIAS)
             else:
-                pass
-        # print(post_obj_dict)
-        for each in post_obj_dict.items():
-            # print(eac)
-            # print(len(each[1]))
-            result.append(SearchTagsValueType(each[0].tag_id, each[0].tag_name, each[1]))
+                tempFeatureList.append(BIAS)
 
+            if each in tagPostCountTrendingSeries.index:
+                tempFeatureList.append(tagPostCountTrendingSeries[each]+BIAS)
+            else:
+                tempFeatureList.append(BIAS)
+                
+            if each in tagPostViewCountLifetimeSeries.index:
+                tempFeatureList.append(tagPostViewCountLifetimeSeries[each]+BIAS)
+            else:
+                tempFeatureList.append(BIAS)
+
+            if each in tagPostViewCountTrendingSeries.index:
+                tempFeatureList.append(tagPostViewCountTrendingSeries[each]+BIAS)
+            else:
+                tempFeatureList.append(BIAS)  
+            
+            tagFeatureList.append(tempFeatureList)
+        
+        # Creating weight vector to reflect the importance of any feature of the tag    
+        POST_COUNT_LIFETIME_WEIGHT = .25
+        POST_COUNT_TRENDING_WEIGHT = .25
+        POST_VIEW_COUNT_LIFETIME_WEIGHT = .25
+        POST_VIEW_COUNT_TRENDING_WEIGHT = .25
+
+        w_vector = [POST_COUNT_LIFETIME_WEIGHT,
+                        POST_COUNT_TRENDING_WEIGHT,
+                            POST_VIEW_COUNT_LIFETIME_WEIGHT,
+                                POST_VIEW_COUNT_TRENDING_WEIGHT]   
+            
+
+        
+        # Calculating the relevancy score of each hashtag using multiplicative exponential weighting (MEW) method of Multi Criteria Decision Making (MCDM)
+        if(len(tagFeatureList)>0):
+            tag_rank = mcdm.rank(tagFeatureList, alt_names=tagIds, n_method="Linear1",w_vector= w_vector, s_method="MEW")
+        else:
+            tag_rank = []
+        
+        post = []
+        for each in tag_rank:
+            tagPost = []
+            for post in posts[each[0]]:
+                tagPost.append(TagPostListType(post))
+            if each[0] in tagPostViewCountLifetimeSeries.index:
+                result.append(SearchTagsValueType(each[0],tagNames[each[0]],tagPostViewCountLifetimeSeries[each[0]],tagPost))
+            else:
+                result.append(SearchTagsValueType(each[0],tagNames[each[0]],0,tagPost))
+        
+        
         if len(result) > 0:
             if page and limit:
                 totalPages = math.ceil(len(result) / limit)
@@ -1975,13 +2693,13 @@ class Query(graphene.ObjectType):
         else:
             return SearchTagsValueListType(tags=[], page_info=PageInfoObject(nextPage=None, limit=None))
     
-    # Search Tags
+    # Search Tags Concat
     def resolve_searchTagsConcat(self, info, **kwargs):
         # User Id
         userId = kwargs.get('userId')
         page = kwargs.get('page')
         limit = kwargs.get('limit')
-
+        postCount = kwargs.get('postCount')
         if userId is not None:
             try:
                 User.objects.using('default').get(user_id=userId)
@@ -2004,36 +2722,103 @@ class Query(graphene.ObjectType):
                 raise BadRequestException("invalid request; searchContent provided is empty", 400)
         else:
             raise BadRequestException("invalid request; searchContent provided is invalid", 400)
+        if postCount is None or postCount < 1:
+            raise BadRequestException("invalid request; postCount provided is invalid", 400)
+
 
         result = []
+        try:
+            tags = Tag.objects.using('default').filter(tag_name__icontains = search_content).values('tag_id','tag_name')
+        except Tag.DoesNotExist:
+            raise NotFoundException("None tag exist containing the search content.")
 
-        post_tag_objs = PostTag.objects.using('default').filter(tag_id__tag_name__icontains=search_content).values_list(
-            'post_tag_id', 'post_id', 'tag_id')
-        # print(post_tag_objs)
-        post_obj_dict = {}
-        for each in post_tag_objs:
-            if each[1] >= 35:
-                tag_name = Tag.objects.using('default').get(tag_id=each[2])
-                try:
-                    if tag_name in post_obj_dict.keys():
-                        if len(post_obj_dict[tag_name]) < 9:
-                            post_obj_dict[tag_name].append(Post.objects.using('default').get(post_id=each[1]))
-                            # post_obj_list.append( Post.objects.using('default').get(post_id = each[1]))
-                        else:
-                            pass
-                    else:
+        TRENDING_DAYS = 10
+        tagIds = []
+        tagNames = {}
+        for each in tags:
+            tagIds.append(each['tag_id'])
+            tagNames[each['tag_id']] = each['tag_name']
+        end = datetime.datetime.now()   #start date and end date for trending
+        start = end -timedelta(days = TRENDING_DAYS)
+        posts = {}
+        # Getting lifetime and trending post count for the tagIds 
+        dfTagPostLifetime = pd.DataFrame(list(PostTag.objects.using('default').filter(tag_id__in = tagIds).values('post_id','tag_id','created_on')))
+        if dfTagPostLifetime.empty:
+            dfTagPostLifetime = pd.DataFrame(columns=['post_id','tag_id','created_on'])
+        tagPostCountLifetimeSeries = dfTagPostLifetime['tag_id'].value_counts()
+        dfTagPostLifetime['created_on'] = pd.to_datetime(dfTagPostLifetime.created_on).dt.tz_localize(None)
+        dfTagPostTrending = dfTagPostLifetime[(start <= dfTagPostLifetime['created_on'])]
+        tagPostCountTrendingSeries = dfTagPostTrending['tag_id'].value_counts()
+        for each in tagIds:
+            posts[each] = list(dfTagPostLifetime.loc[dfTagPostLifetime['tag_id'] == each, 'post_id'].nlargest(n=postCount))
 
-                        post_obj_dict[tag_name] = [Post.objects.using('default').get(post_id=each[1])]
-                except Post.DoesNotExist:
-                    pass
+
+        # Getting lifetime and trending post view count for the tagIds
+        dfTagPostViewLifetime = pd.DataFrame(list(PostView.objects.using('default').filter(post__posttag__tag_id__in = tagIds).values('post_id','post__posttag__tag_id','created_on')))
+        if dfTagPostViewLifetime.empty:
+            dfTagPostViewLifetime = pd.DataFrame(columns=['post_id','post__posttag__tag_id','created_on'])
+        tagPostViewCountLifetimeSeries = dfTagPostViewLifetime['post__posttag__tag_id'].value_counts()
+        dfTagPostViewLifetime['created_on'] = pd.to_datetime(dfTagPostViewLifetime.created_on).dt.tz_localize(None)
+        dfTagPostViewTrending = dfTagPostViewLifetime[(start <= dfTagPostViewLifetime['created_on'])]
+        tagPostViewCountTrendingSeries = dfTagPostViewTrending['post__posttag__tag_id'].value_counts()
+        
+        # Creating feature matrix to feed into mcdm function for generating relevancy score
+        tagFeatureList = []
+        BIAS = 1
+        for each in tagIds:
+            tempFeatureList = []
+                
+            if each in tagPostCountLifetimeSeries.index:
+                tempFeatureList.append(tagPostCountLifetimeSeries[each]+BIAS)
             else:
-                pass
-        # print(post_obj_dict)
-        for each in post_obj_dict.items():
-            # print(eac)
-            # print(len(each[1]))
-            result.append(SearchTagsValueType(each[0].tag_id, each[0].tag_name, each[1]))
+                tempFeatureList.append(BIAS)
 
+            if each in tagPostCountTrendingSeries.index:
+                tempFeatureList.append(tagPostCountTrendingSeries[each]+BIAS)
+            else:
+                tempFeatureList.append(BIAS)
+                
+            if each in tagPostViewCountLifetimeSeries.index:
+                tempFeatureList.append(tagPostViewCountLifetimeSeries[each]+BIAS)
+            else:
+                tempFeatureList.append(BIAS)
+
+            if each in tagPostViewCountTrendingSeries.index:
+                tempFeatureList.append(tagPostViewCountTrendingSeries[each]+BIAS)
+            else:
+                tempFeatureList.append(BIAS)  
+            
+            tagFeatureList.append(tempFeatureList)
+        
+        # Creating weight vector to reflect the importance of any feature of the tag    
+        POST_COUNT_LIFETIME_WEIGHT = .25
+        POST_COUNT_TRENDING_WEIGHT = .25
+        POST_VIEW_COUNT_LIFETIME_WEIGHT = .25
+        POST_VIEW_COUNT_TRENDING_WEIGHT = .25
+
+        w_vector = [POST_COUNT_LIFETIME_WEIGHT,
+                        POST_COUNT_TRENDING_WEIGHT,
+                            POST_VIEW_COUNT_LIFETIME_WEIGHT,
+                                POST_VIEW_COUNT_TRENDING_WEIGHT]   
+            
+
+        
+        # Calculating the relevancy score of each hashtag using multiplicative exponential weighting (MEW) method of Multi Criteria Decision Making (MCDM)
+        if(len(tagFeatureList)>0):
+            tag_rank = mcdm.rank(tagFeatureList, alt_names=tagIds, n_method="Linear1",w_vector= w_vector, s_method="MEW")
+        else:
+            tag_rank = []
+        
+        post = []
+        for each in tag_rank:
+            tagPost = []
+            for post in posts[each[0]]:
+                tagPost.append(TagPostListType(post))
+            if each[0] in tagPostViewCountLifetimeSeries.index:
+                result.append(SearchTagsValueType(each[0],tagNames[each[0]],tagPostViewCountLifetimeSeries[each[0]],tagPost))
+            else:
+                result.append(SearchTagsValueType(each[0],tagNames[each[0]],0,tagPost))
+        
         if len(result) > 0:
             if page and limit:
                 totalPages = math.ceil(len(result) / limit)
@@ -2053,6 +2838,7 @@ class Query(graphene.ObjectType):
 
         else:
             return []
+
 
     # Search Tag Posts
     def resolve_tagPosts(self, info, **kwargs):
@@ -2175,6 +2961,7 @@ class Query(graphene.ObjectType):
         userId = kwargs.get('userId')
         page = kwargs.get('page')
         limit = kwargs.get('limit')
+        postCount = kwargs.get('postCount')
         if userId is not None:
             try:
                 User.objects.using('default').get(user_id=userId)
@@ -2198,6 +2985,8 @@ class Query(graphene.ObjectType):
 
         else:
             raise BadRequestException("invalid request; searchContent provided is invalid", 400)
+        if postCount is None or postCount < 1:
+            raise BadRequestException("invalid request; postCount provided is invalid", 400)
 
         result = []
         venue_internal_objs = []
@@ -2221,7 +3010,7 @@ class Query(graphene.ObjectType):
                                         LocationObjectType(city.city_name, state.state_name, country.country_name,
                                                            city.latitude, city.longitude))
             posts = Post.objects.using('default').filter(venue_id=each[0])
-            result.append(SearchPlacesValueType(place_obj, posts[:9]))
+            result.append(SearchPlacesValueType(place_obj, posts[:postCount]))
 
 
         posts = []
@@ -2254,11 +3043,13 @@ class Query(graphene.ObjectType):
             return SearchPlacesValueListType(venues=[], page_info=PageInfoObject(nextPage=None, limit=None))
         return result
     
+    # Search Venues Concat
     def resolve_searchVenuesConcat(self, info, **kwargs):
         # User Id
         userId = kwargs.get('userId')
         page = kwargs.get('page')
         limit = kwargs.get('limit')
+        postCount = kwargs.get('postCount')
         if userId is not None:
             try:
                 User.objects.using('default').get(user_id=userId)
@@ -2282,6 +3073,9 @@ class Query(graphene.ObjectType):
 
         else:
             raise BadRequestException("invalid request; searchContent provided is invalid", 400)
+        # Post Count
+        if postCount is None or postCount < 1:
+            raise BadRequestException("invalid request; postCount provided is invalid", 400)
 
         result = []
         venue_internal_objs = []
@@ -2305,7 +3099,7 @@ class Query(graphene.ObjectType):
                                         LocationObjectType(city.city_name, state.state_name, country.country_name,
                                                            city.latitude, city.longitude))
             posts = Post.objects.using('default').filter(venue_id=each[0])
-            result.append(SearchPlacesValueType(place_obj, posts[:9]))
+            result.append(SearchPlacesValueType(place_obj, posts[:postCount]))
 
 
         posts = []
@@ -2336,7 +3130,6 @@ class Query(graphene.ObjectType):
         else:
             return []
         return result
-
 
     # Get Search History
     def resolve_searchHistory(self, info, **kwargs):

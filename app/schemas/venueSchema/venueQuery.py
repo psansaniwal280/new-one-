@@ -100,8 +100,14 @@ class Query(graphene.ObjectType):
                                                  type=MediaTypeObject(
                                                      type_id=media_venue_type.media_venue_type_id,
                                                      type_name=media_venue_type.media_venue_type_name)))
-
-                vendorVenue = VendorVenue.objects.using('default').get(venue_id=venue.venue_id)
+                
+                try:
+                    vendorVenue = VendorVenue.objects.using('default').get(venue_id=venue.venue_id)
+                    vendorVenueId = vendorVenue.vendor_venue_id
+                    vendorId = vendorVenue.vendor_id
+                except VendorVenue.DoesNotExist:
+                    vendorVenueId = None
+                    vendorId = None
                 venueObj = ViewVenueObjectType(venue_id=venueId,
                                                venue_type=venue_type.venue_type_name,
                                                language=language,
@@ -115,8 +121,8 @@ class Query(graphene.ObjectType):
                                                shared_by=shared_by,
                                                short_description=shortDescription,
                                                gallery=media,  # Media Object with {'id', 'url'}
-                                               vendor_venue_id=vendorVenue.vendor_venue_id,  # vendorVenue.vendor.name, vendorVenue.vendor.avatar, vendorVenue.vendor.bio_url, vendorVenue.vendor.short_description, vendorRating, venueRatingCount)   #Database Vendor Object
-                                               vendor_id=vendorVenue.vendor_id)
+                                               vendor_venue_id=vendorVenueId,  # vendorVenue.vendor.name, vendorVenue.vendor.avatar, vendorVenue.vendor.bio_url, vendorVenue.vendor.short_description, vendorRating, venueRatingCount)   #Database Vendor Object
+                                               vendor_id=vendorId)
                 return venueObj
         return None
 

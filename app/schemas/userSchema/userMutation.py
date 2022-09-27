@@ -261,13 +261,11 @@ class EditUserProfileMutation(graphene.Mutation):
             # -------BIO : adding the mentions' username into the respective tables in DB-----------.
             for m_username in mentioned_list:
                 try:
-                    userObjList = User.objects.using('default').values('user_id', 'username')
-                    for go in userObjList:
-                        if go['username'] == m_username:
-                            try:
-                                UserBioMention.objects.using('default').get(user_profile_id=userprofile.profile_id, user_id=go['user_id'])
-                            except UserBioMention.DoesNotExist:
-                                UserBioMention.objects.create(user_profile_id=userprofile.profile_id, user_id=go['user_id'])
+                    user = User.objects.using('default').get(username=m_username)
+                    try:
+                        UserBioMention.objects.using('default').get(user_profile_id=userprofile.profile_id, user_id=user.user_id)
+                    except UserBioMention.DoesNotExist:
+                        UserBioMention.objects.create(user_profile_id=userprofile.profile_id, user_id=user.user_id)
                 except User.DoesNotExist:
                     pass
 
@@ -349,18 +347,17 @@ class EditUsernameMutation(graphene.Mutation):
             if username is not None:
                 if (username and username.strip()):
                     try:
-                        username_list = User.objects.using('default').all()
-                        for u in username_list:
-                            if username == u.username and u.user_id != uid:
-                                raise ConflictException("conflict in request; username provided already used", 409)
+                        usr = User.objects.using('default').get(username=username)
 
-                        user.username = username
-                        user.email = str(user.email)
+                        if usr and usr.user_id!=uid :
+                            raise ConflictException("conflict in request; username provided already used", 409)
                         user.modified_on = datetime.datetime.now()
-                        user.save()
+                        user.email = str(user.email)
                         return EditUsernameMutation(message="Successfully updated username", username= username, user_id=uid)
                     except User.DoesNotExist:
                         user.username = username
+                        user.modified_on = datetime.datetime.now()
+                        user.email = str(user.email)
                         user.save()
                         return EditUsernameMutation(message="Successfully updated username", username= username, user_id=uid)
                 else:

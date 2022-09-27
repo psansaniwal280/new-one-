@@ -23,9 +23,13 @@ class Query(graphene.ObjectType):
 
     paymentOptions = graphene.Field(PaymentOptionField, userId=graphene.Int())
 
-    paymentPage = graphene.Field(PaymentPageObject, userId=graphene.Int(), bookingOptionId=graphene.Int(), bookingOptionPrice=graphene.Int(),
-                                 expVenueAvailabilityTimeslotId=graphene.Int(),
-                                 numOfPeople=graphene.Int(),
+    paymentPage = graphene.Field(PaymentPageObject,
+                                 billing_address_id=graphene.Int(),
+                                 userId=graphene.Int(required=True),
+                                 bookingOptionId=graphene.Int(required=True),
+                                 bookingOptionPrice=graphene.Int(required=True),
+                                 expVenueAvailabilityTimeslotId=graphene.Int(required=True),
+                                 numOfPeople=graphene.Int(required=True),
                                  basePrice=graphene.Int(),
                                  pricePay=graphene.Int(),
                                  baseDealAmt=graphene.Int(),
@@ -36,12 +40,13 @@ class Query(graphene.ObjectType):
                                  serviceAmtPay=graphene.Int(),
                                  baseTotalAmt=graphene.Int(),
                                  totalAmtPay=graphene.Int(),
-                                 startDate=graphene.String(),
+                                 startDate=graphene.String(required=True),
                                  endDate=graphene.String(),
-                                 venueId=graphene.Int()
+                                 venueId=graphene.Int(required=True)
                                  )
 
-    paymentStatusResult = graphene.Field(PaymentStatusResultObject, message=graphene.String(), response=PaymentPayloadObject(), paymentIntentId=graphene.String())
+    billingAddresses = graphene.List(BillingAddressesObject, userId=graphene.Int())
+    billingAddressDetails = graphene.Field(BillingAddressDetailsObject, userId=graphene.Int(), billingAddressId=graphene.Int())
 
     # Get Payment Info
     def resolve_paymentInfo(self, info, **kwargs):
@@ -146,25 +151,12 @@ class Query(graphene.ObjectType):
         print("result", result)
         return result
 
-    def resolve_paymentStatusResult(self, info, **kwargs):
-        message = kwargs.get("message")
-        response = kwargs.get("response")
-        paymentIntentId = kwargs.get("paymentIntentId")
-        payload = {
-            "message": message,
-            "response": response
-        }
-        # payload="hello"
-        PaymentSubscribe.broadcast(payload=payload, group=paymentIntentId)
-        return PaymentStatusResultObject(
-            success=True
-        )
-
     def resolve_paymentPage(self, info, **kwargs):
         userId = kwargs.get("userId")
+        billing_address_id = kwargs.get("billingAddressId")
         bookingOptionId = kwargs.get("bookingOptionId")
         bookingOptionPrice = kwargs.get("bookingOptionPrice")
-        expVenueAvailabilityTimeslotId = 1
+        expVenueAvailabilityTimeslotId = kwargs.get('expVenueAvailabilityTimeslotId')
         numOfPeople = kwargs.get('numOfPeople')
         basePrice = kwargs.get('basePrice')
         pricePay = kwargs.get('pricePay')
@@ -177,23 +169,82 @@ class Query(graphene.ObjectType):
         baseTotalAmt = kwargs.get('baseTotalAmt')
         totalAmtPay = kwargs.get('totalAmtPay')
         startDate = kwargs.get('startDate')
-        endDate = kwargs.get('endDate')
+        endDate = kwargs.get('endDate') if kwargs.get('endDate') else startDate
         venueId = kwargs.get('venueId')
-        # Verification.user_verify(userId)
-        # Verification.expVenueOption_verify(bookingOptionId)
+
+        user = Verification.user_verify(userId)
+        user_profile = Verification.user_profile(userId)
+        booking_option = Verification.expVenueOption_verify(bookingOptionId)
+        timeslot = Verification.exp_venue_timeslot(expVenueAvailabilityTimeslotId)
+        venue = Verification.venue_verify(venueId)
+        start_date = datetime.date(int(startDate.split('-')[0]), int(startDate.split('-')[1]), int(startDate.split('-')[2]))
+
+        Verification.past_date_verify(start_date.day, start_date.month, start_date.year)
+        if endDate:
+            end_date = datetime.date(int(endDate.split('-')[0]), int(endDate.split('-')[1]), int(endDate.split('-')[2]))
+            Verification.past_date_verify(end_date.day, end_date.month, end_date.year)
+
+        if billing_address_id:
+            billing_address = Verification.address_verify(billing_address_id, userId)
+        else:
+            try:
+                billing_address = BillingAddress.objects.using('payments').get(default_source=True, user_id=userId)
+            except BillingAddress.DoesNotExist:
+                raise NotFoundException("No default billing address is set")
+
         stripe.api_key = config('STRIPE_SEC_KEY')
+
+        if billing_address_id:
+            billing_address = Verification.address_verify(billing_address_id,userId)
+        else:
+            try:
+                billing_address = BillingAddress.objects.using('payments').get(default_source=True,user_id=userId)
+            except BillingAddress.DoesNotExist:
+                raise NotFoundException("No default billing address is set")
+
         try:
             customer = stripe.Customer.create(
-                id="cus_" + str(userId)
+                id="cus_" + str(userId),
+                address={
+                    # "city": billing_address.city,
+                    "country": billing_address.country_code_two_char,
+                    "postal_code": billing_address.zip,
+                    # "state": billing_address.state_code
+                },
+                description=str(user.user_id),
+                email=user.email,
+                name=user.username,
+                phone=user.phone_number,
+                # created=str(datetime.datetime.now().timestamp()),
+                # livemode=False
             )
         except Exception as e:
+
+            stripe.Customer.modify(
+                "cus_" + str(userId),
+                address={
+                    # "city": billing_address.city,
+                    "country": billing_address.country_code_two_char,
+                    "postal_code": billing_address.zip,
+                    # "state": billing_address.state_code
+                },
+                description=str(user.user_id),
+                email=user.email,
+                name=user.username,
+                phone=user.phone_number,
+                # created=str(datetime.datetime.now().timestamp()),
+                # livemode=False
+
+            )
             customer = stripe.Customer.retrieve("cus_" + str(userId))
+            print(customer)
 
         paymentIntent = stripe.PaymentIntent.create(
             amount=bookingOptionPrice,
-            currency='usd',
+            currency='inr',
             customer=customer['id'],
-            payment_method_types=['card'],
+            setup_future_usage='off_session',
+            description="good",  # str(bookingOptionId.booking_option_name),
             metadata={
                 "userId": userId,
                 "bookingOptionId": bookingOptionId,
@@ -228,3 +279,32 @@ class Query(graphene.ObjectType):
             ephemeralKey_id=ephemeralKey.secret
 
         )
+
+    def resolve_billingAddressDetails(self, info, **kwargs):
+        userId = kwargs.get('userId')
+        billingAddressId = kwargs.get('billingAddressId')
+        Verification.user_verify(userId)
+        billing_details = Verification.address_verify(billingAddressId, userId)
+        Verification.single_address_default(userId)
+        return BillingAddressDetailsObject(
+            billing_address_id=billing_details.billing_address_id,
+            billing_name=billing_details.billing_name,
+            userId=billing_details.user_id,
+            email=billing_details.email,
+            mobile_phone=billing_details.mobile_phone,
+            country_name=billing_details.country_name,
+            country_code_two_char=billing_details.country_code_two_char,
+            city=billing_details.city,
+            state=billing_details.state,
+            state_code=billing_details.state_code,
+            zip=billing_details.zip,
+            address=billing_details.address,
+            default_source=billing_details.default_source
+        )
+
+    def resolve_billingAddresses(self, info, **kwargs):
+        userId = kwargs.get('userId')
+        Verification.user_verify(userId)
+        Verification.single_address_default(userId)
+        billing_addresses = BillingAddress.objects.using('payments').filter(user_id=userId).values('billing_address_id', 'default_source')
+        return billing_addresses

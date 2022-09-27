@@ -4,7 +4,7 @@ from .models import *
 # admin.site.register(Post)
 # admin.site.register(PostLike)
 # admin.site.register(PostVenue)
-# admin.site.register(User)
+admin.site.register(User)
 # admin.site.register(Venue)
 # admin.site.register(VenueExternal)
 # admin.site.register(VenueInternal)
