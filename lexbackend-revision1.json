@@ -1,10 +1,11 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-east-1:625624247458:task-definition/lextesting:2",
+    "taskDefinitionArn": "arn:aws:ecs:us-east-1:625624247458:task-definition/lextesting:3",
     "containerDefinitions": [
         {
-            "name": "Lextesting",
-            "image": "625624247458.dkr.ecr.us-east-1.amazonaws.com/lexbackendtest:738c52c30fd4f4a401ec733f35b6938d030e190",
+            "name": "lex",
+            "image": "625624247458.dkr.ecr.us-east-1.amazonaws.com/lexbackendtest:fffaefafb98c9f0e54abffd46c864ba2b9d0c856",
             "cpu": 0,
+            "links": [],
             "portMappings": [
                 {
                     "containerPort": 80,
@@ -13,23 +14,36 @@
                 }
             ],
             "essential": true,
+            "entryPoint": [],
+            "command": [],
             "environment": [],
+            "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
+            "secrets": [],
+            "dnsServers": [],
+            "dnsSearchDomains": [],
+            "extraHosts": [],
+            "dockerSecurityOptions": [],
+            "dockerLabels": {},
+            "ulimits": [],
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
+                    "awslogs-create-group": "true",
                     "awslogs-group": "/ecs/lextesting",
                     "awslogs-region": "us-east-1",
                     "awslogs-stream-prefix": "ecs"
-                }
-            }
+                },
+                "secretOptions": []
+            },
+            "systemControls": []
         }
     ],
     "family": "lextesting",
     "executionRoleArn": "arn:aws:iam::625624247458:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 2,
+    "revision": 3,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -46,6 +60,9 @@
             "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
         },
         {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.17"
+        },
+        {
             "name": "ecs.capability.execution-role-ecr-pull"
         },
         {
@@ -53,6 +70,9 @@
         },
         {
             "name": "ecs.capability.task-eni"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
         }
     ],
     "placementConstraints": [],
@@ -63,12 +83,22 @@
     "requiresCompatibilities": [
         "FARGATE"
     ],
-    "cpu": "256",
-    "memory": "512",
+    "cpu": "512",
+    "memory": "1024",
     "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2022-10-04T13:49:48.344Z",
+    "registeredAt": "2022-10-04T14:24:51.508Z",
     "registeredBy": "arn:aws:iam::625624247458:root",
-    "tags": []
+    "tags": [
+        {
+            "key": "ecs:taskDefinition:createdFrom",
+            "value": "ecs-console-v2"
+        },
+        {
+            "key": "ecs:taskDefinition:stackId",
+            "value": "arn:aws:cloudformation:us-east-1:625624247458:stack/ECS-Console-V2-TaskDefinition-32dd0e77-3c89-4ed7-9130-91b3a6abf53e/4b00d070-43f0-11ed-8eaa-129b0a0656e5"
+        }
+    ]
 }
